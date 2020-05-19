@@ -140,7 +140,7 @@ I think of this as an evolution equation; think of $t$ as time. It will be usefu
 \begin{align}
 F_N(0,h) &= \rc N \log \sum_\si \sum_\si \exp\pa{h \sum_i \si_i}\\
 &= \rc N \log \sum_\si \prodo iN \exp(h\si_i)\\
-&= \rc N \log \pa{e^h+e^{-h}}^N\\
+&= \rc N \log \pa{e^h+e^{-h}}^N = \log(e^h+e^{-h})\\
 F_N(0,h) &= F_1(0,h) =: \psi(h).
 \label{e:pde2}
 \end{align}•
@@ -331,6 +331,8 @@ f(0,\cdot)&=\psi.
 \footnote{Is there a modification for the pre-limit PDE in $F_N$? There would be some Brownian motion. $f$ will be the some expecation of some exponential of Brownian motion. For our application, we will not have a completely closed formula for $F_N$, so we cannot write a formula of this form before passing to the limit.}
 Note the last term is related to the convex dual of the nonlinearity: the convex dual of $p\mapsto p^2$ is $q\mapsto \fc{q^2}4$. See~\cite{evans2010partial}.
 \begin{exr}
+Suppose that $f$ solves $\pl_t f- (\pl_hf)^2=0$ and $f(0,h)=\psi(h) = \log(e^h+e^{-h})$. 
+
 Show that for $t>0$ small that $\pl_h f(t,0) = 0$. You can use the Hopf-Lax formula.
 
 For $t<\iy$ large, $\pl_h^+f(t,0)>0> \pl_h^-f(t,0)$; there is a phase transition in the derivative. %deriv on positive side
