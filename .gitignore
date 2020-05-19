@@ -10,6 +10,7 @@
 #########################
 
 *.aux
+*.bbl
 *.bcf
 *.blg
 *.dvi
@@ -17,6 +18,7 @@
 *.ilg
 *.ind
 *.log
+*.nlg
 *.nlo
 *.nls
 *.out
