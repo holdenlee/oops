@@ -5,12 +5,20 @@ We consider the problem of estimating a large rank-one matrix, given noisy obser
 References:
 \begin{itemize}
 \item
-Paper: \cite{mourrat2018hamilton}
+Paper: \cite{mourrat2018hamilton}, \url{https://arxiv.org/abs/1811.01432}.
 \item
-Book: \cite{friedli2017statistical}, available at \url{https://www.unige.ch/math/folks/velenik/smbook/index.html}
+Book for background material: \cite{friedli2017statistical}, available at \url{https://www.unige.ch/math/folks/velenik/smbook/index.html}
+\item Other approaches
+\begin{itemize}
+\item
+Lelarge-Miolane: \cite{lelarge2019fundamental}, \url{https://arxiv.org/abs/1611.03888}
+\item 
+Barbier-Macris: \cite{barbier2019adaptive}, \url{https://arxiv.org/abs/1705.02780}
+\end{itemize}•
 \end{itemize}• 
+%Lelarge and Miolane have a paper on this rank-one estimation problem (probably the first one with a complete solution, and beautifully written), but the people who construct the characteristics for finite N are Barbier-Macris.
 
-\subsection{2020/5/18 Lecture 1}
+\subsection*{2020/5/18 Lecture 1}
 
 Suppose students are assigned one of two dormitories. They put on a sorting hat, which decides which dorm they go in.
 
@@ -21,10 +29,10 @@ What is $\max_{\si\{\pm 1\}^N} \sum J_{ij}\si_i\si_j$ as $N\to \iy$?
 Because the $J_{ij}$ can be positive or negative, we can't make all the students happy. Thus we can say there are \vocab{frustrations} in the problem. These models are called spin glasses in the literature.
 It's difficult to find the optimum: making local moves, you may have to decrease the objective before increasing it.
 
-I want to consider a softer version of the maximum. We look at the \vocab{spin glass model}
+I want to consider a softer version of the maximum. We look at the \vocab{spin glass model}\footnote{Note that the normalization is $\rc N$ instead of $\rc{\sqrt N}$ because here the $J_{ij}=1$.}
 \begin{align*}
 \E \rc N\log \sum_{\si\in \{\pm 1\}^N}\exp\pa{
-\fc{\be}{\sqrt N}\sumo{i,j}M J_{ij} \si_i\si_j
+\fc{\be}{\sqrt N}\sumo{i,j}N J_{ij} \si_i\si_j
 }
 \end{align*}•
 If $\be$ is large this is dominated by the maximum. 
@@ -63,7 +71,7 @@ Our derivation is not standard; if you want to see a more standard derivation se
 
 
 
-\subsubsection{Definitions}
+\subsection{Definitions}
 
 We want to study the probability measure that to each $\si\in \{\pm1\}^N$, associates a weight proportional to 
 \begin{align*}
@@ -129,10 +137,11 @@ is that the $h$-derivative is the mean magnetization~\eqref{e:pd-h}.
 
 What do we do with~\eqref{e:pde1} and~\eqref{e:pde2}?  
 
-\subsubsection{Interlude on Hamilton-Jacobi equation}
+\subsection{Interlude on Hamilton-Jacobi equation}
 
 Let's take a step back and think about what the equation is saying. We need to think about what it means to be a solution of 
 \begin{align}
+\label{e:hj}
 \pl_t f - (\pl_h f)^2&=0.
 \end{align}•
 The first thing to look for is a $C^1$ function that solves the equation pointwise. What's the problem with this?
@@ -157,6 +166,218 @@ What's the notion of convergence for solutions as $N\to \iy$? All functions are 
 \item 
 HJ equation can be solved by characteristics. Is there a probabilistic interpretation of the PDE method of characteristics?
 I'll try to bypass it. 
-Lelarge, Miolane use different techniques: construct characteristics for finite $N$.
-The method I present is more convenient, you don't need to follow characteristics closely. Look at whether characteristics are contracting or expanding. % inward or outward pointing.
+%Lelarge, Miolane 
+% 11:40
+%Lelarge-Miolane: https://arxiv.org/abs/1611.03888
+%Barbier-Macris: https://arxiv.org/abs/1705.02780
+Barbier and Macris \cite{barbier2019adaptive} 
+use different techniques: construct characteristics for finite $N$.
+The method I present is more convenient, you don't need to follow characteristics closely, just look at whether characteristics are contracting or expanding. % inward or outward pointing.
 \end{itemize}•
+
+\subsection*{2020/5/19 Lecture 2}
+
+Recall that we showed $\pl_t F_N - (\pl_h F_N)^2 = \rc N \pl_h^2 F_N$  \eqref{e:pde1}, and hoped the limit object will solve the equation
+\begin{align*}
+\pl_t F_N - (\pl_h F_N)^2 &=0
+\end{align*}•
+We have to think about what it means to solve the equation. Because of phase transitions, we don't expect them to be $C^1$.
+We need to lower our expectations about what being a solution means.
+
+Every Lipschitz function is differentiable almost everywhere. What if we just ask the equation to be satisfied almost everywhere?
+The problem is that the solution is not unique (given a initial value at $t=0$, there are multiple possible solutions). Here are some examples.
+\begin{itemize}
+\item
+0 is a solution.
+\item
+$(t,h)\mapsto t+h$ or $t-h$.
+\item
+From these 3 solutions, we can construct another solution, the tent function
+\begin{align*}
+f(t,h) &=\begin{cases}
+t+h,&-t\le h\le 0\\
+t-h,&0\le h\le t\\
+0,&\text{else.}
+\end{cases}•
+\end{align*}•
+We have an infinite number of solutions by taking combinations of these.
+\end{itemize}•
+But these are not the solutions we care about! We know the solution should be convex in the $h$ variable; the tent function is not convex. If we add in this condition, then we get a unique solution.
+\begin{df}
+We say that a Lipschitz function $\R_+\times \R\to \R$ is a \vocab{weak solution} of the HJ equation~\eqref{e:hj} if
+\begin{enumerate}
+\item
+(HJ) is satisfied almost everywhere.
+\item
+For every $t\ge 0$, the mapping $h\mapsto f(t,h)$ is convex.\footnote{It suffices to be semi-convex: there is a lower bound on the Hessian.}
+\end{enumerate}•
+\end{df}
+\begin{pr}[Uniqueness]
+If $f$ and $g$ are two weak solutions of the HJ equation with $f(0,\cdot)=g(0,\cdot)$, then $f=g$.
+\end{pr}
+Why do we want this?
+This proposition says that two solutions with same initial condition are equal. What we want is actually a refinement of the statement: we want to compare the actual solution (to \eqref{e:pde1}) for $N$ large to the solution of the HJ equation.
+ % $N$ is large, want to compare to . Refinement of statement. 
+Instead of two solutions being equal, we want to show the almost-solution and the solution are close. 
+%This is a simplification. 
+
+\begin{proof}[Proof sketch.]
+Denote $w=f-g$. We have that almost everywhere
+\begin{align*}
+\pl_t w&= (\pl_hf)^2 - (\pl_hg)^2\\
+&= \ub{(\pl_h f+\pl_hg)}{=:b} \pl_h w.
+\end{align*}•
+Then 
+\begin{align*}
+\pl_t w - b\pl_h w&=0\text{ (a.e.)}
+\end{align*}•
+The derivative of $b$ is positive.\footnote{For higher dimensions, the divergence of this vector field has a sign. This says that the flows of the vector field being convergent or divergent.}
+The rough idea is to look at how the integral $I(t)$ evolves:
+\begin{align*}
+I(t) &= \int w(t,h)\,dh.
+\end{align*}•
+%worry its infinite
+Suppose this is well-defined. Then integrating by parts (suppose there are no boundary terms)
+\begin{align*}
+\pl_t I(t) = \int\pl_t w &= \int b \pl_w\\
+&=-\int \ub{\pl_h b}{\ge0} w
+\end{align*}•
+%if f above b, it will become smaller. If negative, go back to 0.
+This says that $I(t)$ wants to come back to 0.
+Some problems with this proof:
+\begin{enumerate}
+\item
+We pretended $w$ has a fixed sign.
+\item We integrated over whole space. This is a problem because of boundary terms when integrating by parts.
+\end{enumerate}•
+
+Now let's be more rigorous. Let $\phi(x) = \fc{x^2}{1+x^2}$, $v=\phi(w)=\phi(f-g)$. Showing $w=0$ is equivalent to showing $v=0$. We have %chain rule?
+\begin{align*}
+\pl_t v - b\pl_h v&=0.
+\end{align*}•
+Now $v$ has a fixed sign. This solves item 1.
+
+Denote $L=\ve{\pl_h f}_{L^\iy}+\ve{\pl_h g}_{L^\iy} + 1$. 
+Fix $T<\iy$, and study
+%sign of interval we integrate over shifts. fix finite time.
+\begin{align*}
+J(t) :&= \int_{-L(T-t)}^{L(T-t)} v(t,h)\,dh\\
+&= \int_{-R_t}^{R_t} v
+\end{align*}•
+Note $J$ is Lipschitz in $t$, so it has a derivative a.e.,
+\begin{align*}
+\pl_t J &=\int_{-R_t}^{R_t} \pl_t v - L(v(t,R_t)+v(t,-R_t))\\
+\int_{-R_t}^{R_t} b \pl_h v
+&=-\int_{-R_t}^{R_t} (\pl_h b)v + [bv]_{-R_t}^{R_t}.
+\end{align*}•
+%tendency to let $J$ increase
+The term $[bv]^{R_t}_{R_t}$ may have a tendency to let $J$ increase. We hope it can be compensated by the $-$ terms: because $|b|\le L$.
+\begin{align*}
+\pl_t J &\le -\int_{-R_t}^{R_t} \ub{(\pl_h b)}{\ge 0}\ub{v}{\ge 0}\le 0\\
+\pl_t J&\le J.
+\end{align*}
+We know $J(0)=0$ and $J\ge 0$. We conclude that $J\equiv 0$, and $v=0$ a.e. Because it is Lipschitz, $v=0$ and $f=g$.
+\end{proof}
+To be fully rigorous, we should justify interchanging the derivative and integral, and differentiating $b$ (since $f,g$ are only Lipschitz, and may not be twice differentiable).
+\begin{exr}[for credit]
+Make this proof rigorous.
+
+Hint: convolve with a function to make it smooth. See the book \cite{evans2010partial}.
+\end{exr}
+%convexity preserved under pointwise limits. f_N convex for each N, limit f should be convex.
+What makes the proof work is that the nonlinearity $H$ is convex:
+\begin{align*}
+\pl_t f - H(\nb f)&=0.
+\end{align*}•
+Difficulty comes in when $H$ is not convex or concave.
+%non-convex Legendre transform in stat mech. these indicate non-stability or phase coexistence. There are cases where the free energy is not convex. There is a more general notion of Legendre transform, which also applies to non-convex functions.
+%non-str convex funs, still have to be cvs
+
+Any limit point of a solution should be a solution: You can try to run the proof, show the sequence of functions is a Cauchy sequence, and the limit is a solution.
+
+We can write down a formula for the solution.
+\begin{pr}[Hopf-Lax formula]
+Let $\psi$ be convex and Lipschitz.\footnote{It suffices to be locally semi-convex: for every $\de>0$, there exists $C_\de<\iy$ such that for all $\ge \de$, $h\mapsto f(t,h) + C_\de h^2$.
+(Note the lower bound is degenerate as $t\to 0$.)
+More generally, this is true under mild regularity assumptions, though we have to define weak solution differently.} 
+The function
+\begin{align*}
+f(t,h) &= \sup_{h'\in \R} \pa{\psi(h-h') - \fc{(h')^2}{4t}}
+\end{align*}•
+%cvx lip
+is the weak solution of
+\begin{align*}
+\pl_t f - \pa{\pl_h f}^2 &=0\\
+f(0,\cdot)&=\psi.
+\end{align*}•
+%convex and Lipschitz. For any regularity, continuous. Convexity assumption, reword weak solution
+\end{pr}
+\footnote{Is there a modification for the pre-limit PDE in $F_N$? There would be some Brownian motion. $f$ will be the some expecation of some exponential of Brownian motion. For our application, we will not have a completely closed formula for $F_N$, so we cannot write a formula of this form before passing to the limit.}
+Note the last term is related to the convex dual of the nonlinearity: the convex dual of $p\mapsto p^2$ is $q\mapsto \fc{q^2}4$. See~\cite{evans2010partial}.
+\begin{exr}
+Show that for $t>0$ small that $\pl_h f(t,0) = 0$. You can use the Hopf-Lax formula.
+
+For $t<\iy$ large, $\pl_h^+f(t,0)>0> \pl_h^-f(t,0)$; there is a phase transition in the derivative. %deriv on positive side
+\end{exr}
+
+\subsection{Back to Curie-Weiss}
+It's not necessarily true that convergence of the function tells us something about the derivatives.
+\begin{pr}
+If $(t,h)$ is a point of differentiability (in $h$) of $f$, and if $F_N\to f$ (pointwise), then 
+\begin{align*}
+\pl_h F_N(t,h) &\to \pl_h f(t,h).
+\end{align*}•
+\end{pr}
+\begin{proof}
+$F_N$ is convex in $h$, so
+\begin{align*}
+F_N(t,h') &\ge  F_N(t,h) +\ub{\pl_h F_N(t,h)}{\text{bounded}}(h'-h).
+\end{align*}•
+Because the derivatives are bounded, we can take a subsequence along which $\pl_h F_N(t,h)\to p$.
+Then
+\begin{align*}
+f(t,h') &\ge f(t,h) + p(h'-h), 
+\end{align*}•
+and $p$ must be $\pl_h f(t,h)$.
+%fully rigorous
+\end{proof}
+\paragraph{Convergence of $F_N$.}
+%perturb of uniqueness arg
+We have
+\begin{align*}
+\pl_t F_N - (\pl_h F_N)^2 &= \rc N \pl_h^2 F_N.
+\end{align*}•
+We want $F_N$ to be close to the HJ solution. Let $w=F_N-f$; then
+\begin{align*}
+\pl_t w - b \pl_h w &= \rc N \pl_h^2 F_N\\
+\text{where } b&= \pl_h F_N + \pl_h f.
+\end{align*}•
+Let $v=\phi(w)$. 
+Before, the difference solved the same equation, but now we have to be more careful. 
+\begin{align*}
+\pl_t v - b \pl_h v &= \phi'(w) \rc{N}\pl_h^2F_N.
+\end{align*}•
+The argument is similar, but the RHS is different here. Define
+\begin{align*}
+J(t) &=\int_{-R_t}^{R_t} v(t,h)\,dh.
+\end{align*}•
+We have an extra term
+\begin{align*}
+\pl_t J &\le ... + \int_{-R_t}^{R_t}\ub{\phi'(w)}{\le 1} \rc N \ub{\pl_h^2 F_N(t,h)}{\ge0}\,dh \\
+\pl_t J &\le \rc N \int_{-R_t}^{R_t} \pl_h^2 F_N(t,h) \,dh
+=\rc{N} [\pl_h F_N]_{-R_t}^{R_t} \le \fc 2N.
+\end{align*}
+%don't need sign
+because this is the integral of a derivative.
+Recall $J(0)=0$. So $J(t)\le \fc{2t}{N}$.
+%close in L1, L\iy
+\begin{exr}
+Clean up this proof! How do you get pointwise convergence?
+\end{exr}
+
+In the rank-1 case, we find some quantities similar to $F_N$. We have a similar situation with a function which satisfies a similar equation, and want to show it converges to the true solution. We need some $L^1$ estimate.
+
+\paragraph{Key point:}
+%The key point is the following.
+If there are ``error terms on the right hand side," we need to estimate it in $L^1$ in the $h$ variable uniformly in $h$ (locally). 
+We want a ``local $L_t^\iy,L_h^1$ estimate." 
