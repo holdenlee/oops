@@ -190,22 +190,22 @@ The method I present is more convenient, you don't need to follow characteristic
 
 \subsection*{2020/5/19 Lecture 2}
 
-Recall that we showed $\pl_t F_N - (\pl_h F_N)^2 = \rc N \pl_h^2 F_N$  \eqref{e:pde1}, and hoped the limit object will solve the equation
+Recall that we showed $\pl_t F_N - (\pl_h F_N)^2 = \rc N \pl_h^2 F_N$ \eqref{e:pde1}, and hoped the limit object will solve the equation~\eqref{e:hj},
 \begin{align*}
-\pl_t F_N - (\pl_h F_N)^2 &=0
-\end{align*}•
-We have to think about what it means to solve the equation. Because of phase transitions, we don't expect them to be $C^1$.
+\pl_t f- (\pl_h f)^2 &=0.
+\end{align*}
+We have to think about what it means to solve the equation. Because of phase transitions, we don't expect solutions to be $C^1$.
 We need to lower our expectations about what being a solution means.
 
 Every Lipschitz function is differentiable almost everywhere. What if we just ask the equation to be satisfied almost everywhere?
-The problem is that the solution is not unique (given a initial value at $t=0$, there are multiple possible solutions). Here are some examples.
+The problem is that the solution is not unique (given the initial value at $t=0$, there are multiple possible solutions). Here are some examples.
 \begin{itemize}
 \item
 0 is a solution.
 \item
 $(t,h)\mapsto t+h$ or $t-h$.
 \item
-From these 3 solutions, we can construct another solution, the tent function
+From these 3 solutions, we can construct another solution with the ``tent function,"
 \begin{align*}
 f(t,h) &=\begin{cases}
 t+h,&-t\le h\le 0\\
@@ -213,8 +213,8 @@ t-h,&0\le h\le t\\
 0,&\text{else.}
 \end{cases}•
 \end{align*}•
-We have an infinite number of solutions by taking combinations of these.
-\end{itemize}•
+We have an infinite number of solutions by taking combinations of translations of these.
+\end{itemize}
 But these are not the solutions we care about! We know the solution should be convex in the $h$ variable; the tent function is not convex. If we add in this condition, then we get a unique solution.
 \begin{df}
 We say that a Lipschitz function $\R_+\times \R\to \R$ is a \vocab{weak solution} of the HJ equation~\eqref{e:hj} if
@@ -229,7 +229,7 @@ For every $t\ge 0$, the mapping $h\mapsto f(t,h)$ is convex.\footnote{It suffice
 If $f$ and $g$ are two weak solutions of the HJ equation with $f(0,\cdot)=g(0,\cdot)$, then $f=g$.
 \end{pr}
 Why do we want this?
-This proposition says that two solutions with same initial condition are equal. What we want is actually a refinement of the statement: we want to compare the actual solution (to \eqref{e:pde1}) for $N$ large to the solution of the HJ equation.
+This proposition says that two solutions with same initial condition are equal. What we want is actually a refinement of the statement: we want to compare finite-$N$ solution (to \eqref{e:pde1}) for $N$ large to the solution of the HJ equation.
  % $N$ is large, want to compare to . Refinement of statement. 
 Instead of two solutions being equal, we want to show the almost-solution and the solution are close. 
 %This is a simplification. 
@@ -242,9 +242,9 @@ Denote $w=f-g$. We have that almost everywhere
 \end{align*}•
 Then 
 \begin{align*}
-\pl_t w - b\pl_h w&=0\text{ (a.e.)}
+\pl_t w - b\pl_h w&=0\text{ (a.e.)}.
 \end{align*}•
-The derivative of $b$ is positive.\footnote{For higher dimensions, the divergence of this vector field has a sign. This says that the flows of the vector field being convergent or divergent.}
+The derivative of $b$ is positive.\footnote{For higher dimensions, the divergence of this vector field has a fixed sign, which says that the flows of the vector field being convergent or divergent.}
 The rough idea is to look at how the integral $I(t)$ evolves:
 \begin{align*}
 I(t) &= \int w(t,h)\,dh.
@@ -252,7 +252,7 @@ I(t) &= \int w(t,h)\,dh.
 %worry its infinite
 Suppose this is well-defined. Then integrating by parts (suppose there are no boundary terms)
 \begin{align*}
-\pl_t I(t) = \int\pl_t w &= \int b \pl_w\\
+\pl_t I(t) = \int\pl_t w &= \int b \pl_hw\\
 &=-\int \ub{\pl_h b}{\ge0} w
 \end{align*}•
 %if f above b, it will become smaller. If negative, go back to 0.
@@ -264,11 +264,11 @@ We pretended $w$ has a fixed sign.
 \item We integrated over whole space. This is a problem because of boundary terms when integrating by parts.
 \end{enumerate}•
 
-Now let's be more rigorous. Let $\phi(x) = \fc{x^2}{1+x^2}$, $v=\phi(w)=\phi(f-g)$. Showing $w=0$ is equivalent to showing $v=0$. We have %chain rule?
+Now let's be more rigorous. Let $\phi(x) = \fc{x^2}{1+x^2}$, $v=\phi(w)=\phi(f-g)$. Showing $w=0$ is equivalent to showing $v=0$. We have by factoring out $\phi'(w)$ that %chain rule?
 \begin{align*}
 \pl_t v - b\pl_h v&=0.
 \end{align*}•
-Now $v$ has a fixed sign. This solves item 1.
+Now $v$ has a fixed (positive) sign. This solves item 1.
 
 Denote $L=\ve{\pl_h f}_{L^\iy}+\ve{\pl_h g}_{L^\iy} + 1$. 
 Fix $T<\iy$, and study
@@ -277,19 +277,20 @@ Fix $T<\iy$, and study
 J(t) :&= \int_{-L(T-t)}^{L(T-t)} v(t,h)\,dh\\
 &= \int_{-R_t}^{R_t} v
 \end{align*}•
-Note $J$ is Lipschitz in $t$, so it has a derivative a.e.,
+Note $J$ is Lipschitz in $t$, so it has a derivative a.e. By the Fundamental Theorem of Calculus,
 \begin{align*}
 \pl_t J &=\int_{-R_t}^{R_t} \pl_t v - L(v(t,R_t)+v(t,-R_t))\\
-\int_{-R_t}^{R_t} b \pl_h v
+\int_{-R_t}^{R_t} \pl_t v=\int_{-R_t}^{R_t} b \pl_h v
 &=-\int_{-R_t}^{R_t} (\pl_h b)v + [bv]_{-R_t}^{R_t}.
 \end{align*}•
 %tendency to let $J$ increase
-The term $[bv]^{R_t}_{R_t}$ may have a tendency to let $J$ increase. We hope it can be compensated by the $-$ terms: because $|b|\le L$.
+The term $[bv]^{R_t}_{R_t}$ may be positive. %; have a tendency to let $J$ increase. 
+However, it will be compensated by the $-$ terms because $|b|\le L$.
 \begin{align*}
 \pl_t J &\le -\int_{-R_t}^{R_t} \ub{(\pl_h b)}{\ge 0}\ub{v}{\ge 0}\le 0\\
-\pl_t J&\le J.
+\pl_t J&\le 0.
 \end{align*}
-We know $J(0)=0$ and $J\ge 0$. We conclude that $J\equiv 0$, and $v=0$ a.e. Because it is Lipschitz, $v=0$ and $f=g$.
+We know $J(0)=0$ and $J\ge 0$. We conclude that $J\equiv 0$, and $v=0$ a.e. Because $v$ is Lipschitz, $v=0$ and $f=g$.
 \end{proof}
 To be fully rigorous, we should justify interchanging the derivative and integral, and differentiating $b$ (since $f,g$ are only Lipschitz, and may not be twice differentiable).
 \begin{exr}[for credit]
@@ -334,18 +335,19 @@ For $t<\iy$ large, $\pl_h^+f(t,0)>0> \pl_h^-f(t,0)$; there is a phase transition
 \end{exr}
 
 \subsection{Back to Curie-Weiss}
-It's not necessarily true that convergence of the function tells us something about the derivatives.
+%It's not necessarily true that 
+In general it's not true that convergence of functions implies convergence of their derivatives, so we need to prove the following.
 \begin{pr}
 If $(t,h)$ is a point of differentiability (in $h$) of $f$, and if $F_N\to f$ (pointwise), then 
 \begin{align*}
 \pl_h F_N(t,h) &\to \pl_h f(t,h).
-\end{align*}•
+\end{align*}
 \end{pr}
 \begin{proof}
 $F_N$ is convex in $h$, so
 \begin{align*}
 F_N(t,h') &\ge  F_N(t,h) +\ub{\pl_h F_N(t,h)}{\text{bounded}}(h'-h).
-\end{align*}•
+\end{align*}
 Because the derivatives are bounded, we can take a subsequence along which $\pl_h F_N(t,h)\to p$.
 Then
 \begin{align*}
@@ -376,7 +378,7 @@ J(t) &=\int_{-R_t}^{R_t} v(t,h)\,dh.
 \end{align*}•
 We have an extra term
 \begin{align*}
-\pl_t J &\le ... + \int_{-R_t}^{R_t}\ub{\phi'(w)}{\le 1} \rc N \ub{\pl_h^2 F_N(t,h)}{\ge0}\,dh \\
+\pl_t J &\le \ub{\int_{-R_t}^{R_t} b\pl_h v -L(v(t,R_t)+v(t,-R_t))}{\le 0}+ \int_{-R_t}^{R_t}\ub{\phi'(w)}{\le 1} \rc N \ub{\pl_h^2 F_N(t,h)}{\ge0}\,dh \\
 \pl_t J &\le \rc N \int_{-R_t}^{R_t} \pl_h^2 F_N(t,h) \,dh
 =\rc{N} [\pl_h F_N]_{-R_t}^{R_t} \le \fc 2N.
 \end{align*}
