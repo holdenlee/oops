@@ -2,25 +2,34 @@
 
 We consider the problem of estimating a large rank-one matrix, given noisy observations. This inference problem is known to have a phase transition, in the sense that the partial recovery of the original matrix is only possible if the signal-to-noise ratio exceeds a (non-zero) value. We will present a new proof of this fact based on the study of a Hamilton-Jacobi equation. This alternative argument allows to obtain better rates of convergence, and also seems more amenable to extensions to other models such as spin glasses. 
 
+References:
+\begin{itemize}
+\item
+Paper: \cite{mourrat2018hamilton}
+\item
+Book: \cite{friedli2017statistical}, available at \url{https://www.unige.ch/math/folks/velenik/smbook/index.html}
+\end{itemize}• 
+
 \subsection{2020/5/18 Lecture 1}
 
-Students are assigned one of two dormitories. They put on a sorting hat, which decides which dorm they go in.
+Suppose students are assigned one of two dormitories. They put on a sorting hat, which decides which dorm they go in.
 
 The students are $i\in \{1,\ldots, N\}$. An assignment is $\si\in \{\pm 1\}^N$. 
 The sorting had optimizes the quality of interaction between $i$ and $j$, $J_{ij}$. Suppose $(J_{ij})$ are independent standard Gaussians. The larger $J_{ij}$ is, the more that $i$ and $j$ like to be together. We want to maximize $\si\mapsto \sum J_{ij} \one_{\{\si_i=\si_j\}}$. By a linear transformation this is equivalent to maximizing $\sum J_{ij} \si_i\si_j$.
 
-What is $\max_{\si\{\pm 1\}^N} \sum J_{ij}\si_i\si_j$ as $N\to \iy$.
+What is $\max_{\si\{\pm 1\}^N} \sum J_{ij}\si_i\si_j$ as $N\to \iy$?
 Because the $J_{ij}$ can be positive or negative, we can't make all the students happy. Thus we can say there are \vocab{frustrations} in the problem. These models are called spin glasses in the literature.
 It's difficult to find the optimum: making local moves, you may have to decrease the objective before increasing it.
 
-I want to consider a softer version of the maximum. We look at 
+I want to consider a softer version of the maximum. We look at the \vocab{spin glass model}
 \begin{align*}
 \E \rc N\log \sum_{\si\in \{\pm 1\}^N}\exp\pa{
 \fc{\be}{\sqrt N}\sumo{i,j}M J_{ij} \si_i\si_j
 }
 \end{align*}•
 If $\be$ is large this is dominated by the maximum. 
-This is like a relaxation of the problem. We should expect what's inside is order $N$, so we divide by $N$.
+This is like a relaxation of the problem. We should expect what's inside is order $N$, so we divide by $N$.\footnote{Can we fix the number of $+1$'s and $-1$'s? You can change the reference measure; this can be encoded as changing the reference measure.
+$\be=0$ is summing over reference measure. $\be\to \iy$ recovers the maximum. $\be$ small is high temperature, $\be$ large is small temperature.}
 
 Parisi in the late 70's (1979) proposed an answer for what this becomes as $N\to \iy$. It's a fairly complicated formula. 
 
@@ -29,31 +38,30 @@ Guerra 03 and Talagrand 06 proved it rigorously. I find it mysterious; I want to
 %hard to understand 
 This seems an innocent modification, but I could not understand what to write instead of the complicated formula! %good sign to think more.
 
-This is called the spin-glass model.
+%This is called the spin-glass model.
 
 Now I consider rank-one matrix esimation/inference. The question is statistical: we only observe a noisy version of a rank-one matrix. Can we recover information about it?
 
 %Consider it a large matrix. 
-A concrete setting: you are Netflix, you want to make recommendations for your customers. A simple model is that whether or not a person likes a movie is captured by a few parameters of the movie (action, introspection, sad/happy, etc.) and customer, and is a linear function of the parameters. Then you have a large low-rank matrix. A simplification is that it's a matrix of rank 1. I'll describe rank 1, but it's not hard to generalize. 
-
-Another example is community detection. The US is polarized, so to guess whether two people will be friends, maybe there is a binary variable that will predict this.
-
-The common thread is the relation with certain partial differential equations, called Hamilton-Jacobi equations.
-
-The Curie-Weiss model is a simple model that can be solved in many ways. I want to emphasize the method that uses intuition with Hamilton-Jacobi equations. Next when we turn to rank-1 matrix estimation, the proof will be almost the same. 
-
-Our derivation is not standard; if you want to see a more standard derivation see Friedli and Velenik \url{https://www.unige.ch/math/folks/velenik/smbook/index.html}.
-
-QA:
+Here are some concrete settings where this is useful:
+%A concrete setting: 
 \begin{itemize}
 \item
-Can you meaningfully recover information about the rank-1 matrix? In the Ising model there is a phase transition between an ordered and disordered state. In this inference problem there is also a phase transition. When signal-to-noise ratio is too small (weak), you cannot recover meaningful information. After the threshold, you can recover partial information. 
+You are Netflix, you want to make recommendations for your customers. A simple model is that whether or not a person likes a movie is captured by a few parameters of the movie (action, introspection, sad/happy, etc.) and customer, and is a linear function of the parameters. Then you have a large low-rank matrix. A simplification is that it's a matrix of rank 1. I'll describe rank 1, but it's not hard to generalize. 
 \item
-Can we fix the number of $+1$'s and $-1$'s? You can change the reference measure; this can be encoded as changing the reference measure.
-%understand generalize to 
-
-$\be=0$ is summing over reference measure. $\be\to \iy$ recovers the maximum. $\be$ small is high temperature, $\be$ large is small temperature.
+%Another example is 
+Community detection: The US is polarized, and there is a binary variable that will predict whether two people will be friends.
 \end{itemize}•
+
+The common thread is the relation with certain partial differential equations, called \vocab{Hamilton-Jacobi equations}.
+
+The \vocab{Curie-Weiss model} is a simple model that can be solved in many ways. I want to emphasize the method that uses intuition with Hamilton-Jacobi equations. Next when we turn to rank-1 matrix estimation, the proof will be almost the same. 
+
+Our derivation is not standard; if you want to see a more standard derivation see Friedli and Velenik~\cite{friedli2017statistical}.
+
+\emph{Can you meaningfully recover information about the rank-1 matrix?} In the Ising model there is a phase transition between an ordered and disordered state. In this inference problem there is also a phase transition. When signal-to-noise ratio is too small (weak), you cannot recover meaningful information. After the threshold, you can recover partial information. 
+
+
 
 \subsubsection{Definitions}
 
@@ -77,7 +85,7 @@ You might say: this is the normalization constant, we care about the measure. Th
 %inside order N.
 %extensive quantity 
 %in first 1/\sqrt N,  because centered.
-\paragraph{Moment generating function}
+\paragraph{Moment generating function.}
 Differentiating gives
 \begin{align}
 \label{e:pd-h}
@@ -123,7 +131,7 @@ What do we do with~\eqref{e:pde1} and~\eqref{e:pde2}?
 
 \subsubsection{Interlude on Hamilton-Jacobi equation}
 
-Let's take a step back and think about what the equation is saying. We need to thin kabout what it means to be a solution of 
+Let's take a step back and think about what the equation is saying. We need to think about what it means to be a solution of 
 \begin{align}
 \pl_t f - (\pl_h f)^2&=0.
 \end{align}•

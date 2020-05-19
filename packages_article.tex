@@ -1,0 +1,98 @@
+\documentclass[12pt]{article}
+\usepackage{etex}
+%this prevents the "No room for a new \dimen" error that comes from loading too many packages (tikz+xy in particular)
+
+%load geometry first (sets up page)
+\usepackage[top=1.2in, bottom=1.2in, left=1in, right=1in]{geometry}
+
+%main packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{bbm}
+\usepackage{bm}
+%\usepackage{asymptote}
+\usepackage{cancel}
+\usepackage{cmap}
+\usepackage{csquotes}
+\usepackage{enumerate}
+\usepackage{enumitem}%resume lists
+\usepackage{esint}%allows \ointclockwise, \ointctrclockwise, \var...
+\usepackage{fancyhdr}
+\usepackage{listings}
+\lstset{
+	basicstyle=\small\ttfamily,
+	keywordstyle=\color{blue},
+	language=python,
+	xleftmargin=16pt,
+}
+\usepackage{longtable}
+\usepackage{makeidx}
+%\usepackage{marvosym}%doesn't work
+\usepackage{mathdots}%iddots: dots going northeast
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+%\usepackage{hyperref}
+%\usepackage{sidecap}
+\usepackage{stackrel}
+\usepackage{stmaryrd}%\mapsfrom
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{ctable}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{wasysym}
+\usepackage{wrapfig}
+\usepackage{yhmath}
+%\usepackage{yhmath}%arcs
+\usepackage[all,cmtip]{xy}%Commutative diagrams
+%\usepackage[usenames,dvipsnames]{xcolor}%tikz loads xcolor
+
+
+%\usepackage[usenames,dvipsnames]{color} % Required for specifying custom colors and referring to colors by name
+%\usepackage[pdftex]{hyperref} % For hyperlinks in the PDF
+%\hypersetup{
+%  colorlinks=true,
+%  linkcolor=MyBlue, 
+%  citecolor=MyRed,
+%  urlcolor= MyBlue
+%}
+%load hyperref last
+\usepackage{hyperref}
+%https://tex.stackexchange.com/questions/96350/problem-with-algorithmic-and-hyperref
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+%\usepackage{listings}
+%\lstset{
+%	basicstyle=\small\ttfamily,
+%	keywordstyle=\color{blue},
+%	language=python,
+%	xleftmargin=16pt,
+%}
+%this causes an error. No idea why
+\usepackage[backend=biber,style=alphabetic,maxbibnames=99]{biblatex}
+
+\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,%
+    decorations.pathreplacing,decorations.pathmorphing,shapes,%
+    matrix,shapes.symbols,shadows,fadings}
+
+%\input xy
+%\xyoption{all}
+
+%http://www.simonsilk.com/content/simonsilk/2011-jun/latex-list-notations-nomenclature
+\usepackage[refpage]{nomencl}
+\renewcommand{\nomname}{List of Notations}
+\renewcommand*{\pagedeclaration}[1]{\unskip\dotfill\hyperpage{#1}}
+\makenomenclature
+%The first line invokes the nomenclature package, and the option refpage means that the list will include, for each symbol in the list,  the page number on which you added it with the \nomenclature command. Leave it out to remove page numbers. The second line is the title at the top of the list of notations. The third line changes the page numbers in the list so they are right-justified with a line of dots connecting them back to the description of the symbol. By default, they follow the description after a comma and the word "page." The last line tells Latex you're using nomenclature so it will generate and look for the associated intermediate files during successive runs.
+
+\makeindex
+
+
+%exclude subsubsections
+\setcounter{tocdepth}{2}
+

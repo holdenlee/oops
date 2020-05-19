@@ -1,19 +1,14 @@
-\def\filepath{C:/Users/holden/Dropbox/Math/templates}
 
-\input{\filepath/packages_article.tex}
-\input{\filepath/theorems_with_boxes.tex}
-\input{\filepath/macros.tex}
-\input{\filepath/formatting.tex}
-%\input{\filepath/other.tex}
 
-%\def\name{NAME}
-
-%\input{\filepath/titlepage.tex}
+\input{packages_article.tex}
+\input{theorems_with_boxes.tex}
+\input{macros.tex}
+\input{formatting.tex}
 
 \pagestyle{fancy}
 %\addtolength{\headwidth}{\marginparsep} %these change header-rule width
 %\addtolength{\headwidth}{\marginparwidth}
-\lhead{Machine Learning Seminars}
+\lhead{Online Open Probability School (OOPS)}
 \chead{} 
 \rhead{} 
 \lfoot{} 
@@ -23,6 +18,7 @@
 %\renewcommand{\footrulewidth}{.3pt}
 \setlength\voffset{0in}
 \setlength\textheight{648pt}
+\addbibresource{bib.bib}
 
 \begin{document}
 
@@ -31,5 +27,6 @@
 \input{matrix-estimation-hje}
 %INSERT_HERE
 
+\printbibliography
 
 \end{document}
