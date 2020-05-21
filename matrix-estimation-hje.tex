@@ -426,7 +426,7 @@ where $W=(W_{ij})$ are independent standard Gaussians. (We don't assume symmetry
 
 For example, we want to understand
 \begin{align*}
-\text{mmse}_N(t) &= \rc{N^2}  \int_{\wh \te} \E\ba{|\ol x \ol x^\top - \wh \te (Y)|^2}\\
+\text{mmse}_N(t) &= \rc{N^2}  \inf_{\wh \te} \E\ba{|\ol x \ol x^\top - \wh \te (Y)|^2}\\
 & = \rc{N^2} \E \ba{|\ol x\ol x^\top - \E[\ol x\ol x^\top |Y]|^2}.
 \end{align*}•
 where infimum over all estimators. We assume we can find the best possible estimator given the data, which is the conditional expectation given $Y$.
@@ -436,11 +436,11 @@ where infimum over all estimators. We assume we can find the best possible estim
 Informally, 
 \begin{align*}
 \Pj\ba{\ol x=x \text{ and }Y=y}
-&= dP_N(x)\,dy\, \exp\pa{-\rc 2 \ab{Y-\sfc{2t}{N}\ol x\ol x^\top }^2}
+&= dP_N(x)\,dy\, \exp\pa{-\rc 2 \ab{Y-\sfc{2t}{N} x x^\top }^2}
 \end{align*}•
 Now compute the conditional law,
 \begin{align*}
-\Pj[\ol x= x|Y] &= \fc{\exp\pa{-\rc 2 \ab{Y-\sfc{2t}{N}\ol x\ol x^\top }^2}\,dP_N(x)}{\int \exp\pa{-\rc 2 \ab{Y-\sfc{2t}{N}\ol x\ol x^\top }^2}\,dP_N(x)}
+\Pj[\ol x= x|Y] &= \fc{\exp\pa{-\rc 2 \ab{Y-\sfc{2t}{N}x x^\top }^2}\,dP_N(x)}{\int \exp\pa{-\rc 2 \ab{Y-\sfc{2t}{N}x' x^{\prime\top} }^2}\,dP_N(x)}
 \end{align*}•
 Expand the exponent and remove $-\rc 2|Y|^2$ (which doesn't depend on $t,x$) to obtain the following.
 \begin{df}
@@ -451,7 +451,7 @@ H_N^\circ (t,x) &= \sfc{2t}N Y \cdot xx^\top - \fc tN |x|^4.
 \end{df}
 Here $Y$ is the sum of 2 terms, $\sfc{2t}N \ol x \ol x^\top +W$. Substituting and expanding gives
 \begin{align*}
-H_N^\circ (t,x) &= \sfc{2t}{N} x\cdot Wx + \fc{2t}N(x\cdot \ol x)^2 - \rc tN |x|^4.
+H_N^\circ (t,x) &= \sfc{2t}{N} x\cdot Wx + \fc{2t}N(x\cdot \ol x)^2 - \fc tN |x|^4.
 \end{align*}•
 The first term is the important term; it is like the spin glass model. 
 The other terms will help us. They aren't negligible, but they are here to make out life easier. 
@@ -485,9 +485,9 @@ More generally,
 \E\an{f(x,x')} &= \E\an{f(x,\ol x)}
 \end{align*}•
 \end{pr}
-What is $x$ and why is it different from $\ol x$? Suppose if we look at $Y$, we learn nothing about $x$; then $\ol x$ is a resample. If $Y$ reveal perfect information on $\ol x$, then $x=\ol x$. The general case is like an interpolation between these trivial cases.
+What is $x$ and why is it different from $\ol x$? Some intuition: Suppose that if we look at $Y$, we learn nothing about $\ol x$; then $x$ is a resample. If $Y$ reveals perfect information on $\ol x$, then $x=\ol x$. The general case is like an interpolation between these trivial cases.
 
-The independent copy $\ol x$ is called a \vocab{replica}.
+The independent copy $x'$ is called a \vocab{replica}.
 
 This is not trivial, it's not saying $x=\ol x$. It is only true because I average outside. 
 
@@ -588,9 +588,12 @@ Using integration by parts,
 \end{align*}
 This is Gaussian integration by parts.
 \begin{exr}[for credit]
+\begin{enumerate}
+\item
 Prove Lemma~\ref{l:me1} using Gaussian integration by parts and Nishimori.
 \item
 Relate mmse with $\pl_t \ol F_N$.
+\end{enumerate}
 \end{exr}
 For Proposition~\ref{p:me2}, letting $A$ be a random variable, notice that 
 \begin{align*}
