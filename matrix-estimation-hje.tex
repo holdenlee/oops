@@ -18,9 +18,11 @@ We consider the problem of estimating a large rank-one matrix, given noisy obser
 References:
 \begin{itemize}
 \item
-Paper: \cite{mourrat2018hamilton}, \url{https://arxiv.org/abs/1811.01432}.
+Paper: \cite{mourrat2018hamilton}, \url{https://cims.nyu.edu/~jcm777/HJinfer.pdf}, \url{https://arxiv.org/abs/1811.01432}.
 
-Approach based on weak solutions: \cite{mourrat2019hamilton}, \url{https://arxiv.org/abs/1904.05294}
+Approach based on weak solutions: \cite{mourrat2019hamilton}, \cite{https://cims.nyu.edu/~jcm777/HJrank.pdf}, \url{https://arxiv.org/abs/1904.05294}
+
+
 \item
 Book for background material: \cite{friedli2017statistical}, available at \url{https://www.unige.ch/math/folks/velenik/smbook/index.html}
 \item Other approaches
@@ -246,7 +248,7 @@ Then
 \begin{align*}
 \pl_t w - b\pl_h w&=0\text{ (a.e.)}.
 \end{align*}•
-The derivative of $b$ is positive.\footnote{For higher dimensions, the divergence of this vector field has a fixed sign, which says that the flows of the vector field being convergent or divergent.}
+Because $f,g$ are convex in $h$, the derivative of $b$ is positive.\footnote{For higher dimensions, the divergence of this vector field has a fixed sign, which says that the flows of the vector field being convergent or divergent.}
 The rough idea is to look at how the integral $I(t)$ evolves:
 \begin{align*}
 I(t) &= \int w(t,h)\,dh.
@@ -266,7 +268,7 @@ We pretended $w$ has a fixed sign.
 \item We integrated over whole space. This is a problem because of boundary terms when integrating by parts.
 \end{enumerate}•
 
-Now let's be more rigorous. Let $\phi(x) = \fc{x^2}{1+x^2}$, $v=\phi(w)=\phi(f-g)$. Showing $w=0$ is equivalent to showing $v=0$. We have by factoring out $\phi'(w)$ that %chain rule?
+Now let's be more rigorous. Let $\phi(x) = \fc{x^2}{1+x^2}$, $v=\phi(w)=\phi(f-g)$. Showing $w=0$ is equivalent to showing $v=0$. We have by the chain rule that %chain rule?
 \begin{align*}
 \pl_t v - b\pl_h v&=0.
 \end{align*}•
@@ -286,7 +288,7 @@ Note $J$ is Lipschitz in $t$, so it has a derivative a.e. By the Fundamental The
 &=-\int_{-R_t}^{R_t} (\pl_h b)v + [bv]_{-R_t}^{R_t}.
 \end{align*}•
 %tendency to let $J$ increase
-The term $[bv]^{R_t}_{R_t}$ may be positive. %; have a tendency to let $J$ increase. 
+The term $[bv]^{-R_t}_{R_t}$ may be positive. %; have a tendency to let $J$ increase. 
 However, it will be compensated by the $-$ terms because $|b|\le L$.
 \begin{align*}
 \pl_t J &\le -\int_{-R_t}^{R_t} \ub{(\pl_h b)}{\ge 0}\ub{v}{\ge 0}\le 0\\
@@ -387,7 +389,8 @@ We have an extra term
 =\rc{N} [\pl_h F_N]_{-R_t}^{R_t} \le \fc 2N.
 \end{align*}
 %don't need sign
-because this is the integral of a derivative.
+%because this is the integral of a derivative.
+where $|\pl_h F_N|\le 1$ follows from~\eqref{e:pd-h}. 
 Recall $J(0)=0$. So $J(t)\le \fc{2t}{N}$.
 %close in L1, L\iy
 \begin{exr}
@@ -400,3 +403,226 @@ In the rank-1 case, we find some quantities similar to $F_N$. We have a similar 
 %The key point is the following.
 If there are ``error terms on the right hand side," we need to estimate it in $L^1$ in the $h$ variable uniformly in $h$ (locally). 
 We want a ``local $L_t^\iy,L_h^1$ estimate." 
+
+\subsection*{2020/5/21 Lecture 3}
+
+\subsection{Matrix estimation problem}
+
+We saw how to justify the solution in the limit for the Curie-Weiss model, showing error term disappears. Now we consider the matrix estimation problem. This has already been solved by other people. The first that gave a complete solution of this problem is~\cite{lelarge2019fundamental}. Shortly after,~\cite{barbier2019adaptive} gave another proof. 
+
+We consider the problem in~\cite{mourrat2018hamilton} using the approach in~\cite{mourrat2019hamilton}.
+
+%iid
+
+Problem: Let $\ol x = (\ol x_1,\ldots, \ol x_N)$ be a vector of bounded independent random variables with law $P_N=P^{\ot N}$. For some $t>0$, we observe
+\begin{align*}
+Y &= \sfc{2t}N \ol x \ol x^\top +W
+\end{align*}•
+where $W=(W_{ij})$ are independent standard Gaussians. (We don't assume symmetry.)
+
+%We observe matrix $Y$.
+%I don't assume any symmetry.
+%I'll assume we can find the best possible estimator given the data.
+
+For example, we want to understand
+\begin{align*}
+\text{mmse}_N(t) &= \rc{N^2}  \int_{\wh \te} \E\ba{|\ol x \ol x^\top - \wh \te (Y)|^2}\\
+& = \rc{N^2} \E \ba{|\ol x\ol x^\top - \E[\ol x\ol x^\top |Y]|^2}.
+\end{align*}•
+where infimum over all estimators. We assume we can find the best possible estimator given the data, which is the conditional expectation given $Y$.
+%%look for best $\wh \te$ that minimizes, it's the conditional expectation.
+%projecting into L2 space.
+
+Informally, 
+\begin{align*}
+\Pj\ba{\ol x=x \text{ and }Y=y}
+&= dP_N(x)\,dy\, \exp\pa{-\rc 2 \ab{Y-\sfc{2t}{N}\ol x\ol x^\top }^2}
+\end{align*}•
+Now compute the conditional law,
+\begin{align*}
+\Pj[\ol x= x|Y] &= \fc{\exp\pa{-\rc 2 \ab{Y-\sfc{2t}{N}\ol x\ol x^\top }^2}\,dP_N(x)}{\int \exp\pa{-\rc 2 \ab{Y-\sfc{2t}{N}\ol x\ol x^\top }^2}\,dP_N(x)}
+\end{align*}•
+Expand the exponent and remove $-\rc 2|Y|^2$ (which doesn't depend on $t,x$) to obtain the following.
+\begin{df}
+Define
+\begin{align*}
+H_N^\circ (t,x) &= \sfc{2t}N Y \cdot xx^\top - \fc tN |x|^4.
+\end{align*}•
+\end{df}
+Here $Y$ is the sum of 2 terms, $\sfc{2t}N \ol x \ol x^\top +W$. Substituting and expanding gives
+\begin{align*}
+H_N^\circ (t,x) &= \sfc{2t}{N} x\cdot Wx + \fc{2t}N(x\cdot \ol x)^2 - \rc tN |x|^4.
+\end{align*}•
+The first term is the important term; it is like the spin glass model. 
+The other terms will help us. They aren't negligible, but they are here to make out life easier. 
+In summary, the conditional law of $\ol x|Y$ has the form of a Gibbs measure, with the most important part looking like the spin glass case.
+
+Denote 
+\begin{align*}
+\an{f(x)} &= \fc{\int f(x) \exp(H_N^\circ (t,x))\,dP_N(x)}{\int \exp(H_N^\circ (t,x))\,dP_N(x)}.
+\end{align*}•
+The important difference with the Curie-Weiss model is that $H_N^\circ (t,x)$ is still random. 
+
+\begin{exr}[for credit]
+Make this rigorous: Show that
+\begin{align*}
+\an{f(x)} &= \E[f(\ol x)|Y].
+\end{align*}•
+\end{exr}
+
+Why is this model, which looks like the spin glass model, simpler than the spin glass model? The important property is the following.
+\begin{pr}[Nishimori]
+\begin{align*}
+\E\an{f(x)} &= \E[f(\ol x)]\\
+\E\an{f(x)g(x')} &= \E[\an{f(x)}\an{g(x)}]\\
+&=\E[\an{f(x)}\E[g(\ol x)|Y]]\\
+%insert into conditional expecation and remove conditioning
+&= \E\an{f(x) g(\ol x)}.
+\end{align*}•
+where $x'$ is an independent copy of $x$ under $\an{\cdot}$.
+More generally,
+\begin{align*}
+\E\an{f(x,x')} &= \E\an{f(x,\ol x)}
+\end{align*}•
+\end{pr}
+What is $x$ and why is it different from $\ol x$? Suppose if we look at $Y$, we learn nothing about $x$; then $\ol x$ is a resample. If $Y$ reveal perfect information on $\ol x$, then $x=\ol x$. The general case is like an interpolation between these trivial cases.
+
+The independent copy $\ol x$ is called a \vocab{replica}.
+
+This is not trivial, it's not saying $x=\ol x$. It is only true because I average outside. 
+
+This will help us identify the partial differential equation; we can link it back to the original signal. 
+
+%parameter that allows you to say something about strength of signal. If signal-to-noise too small, can't recover.
+
+We will identify the PDE and compute the mmse by looking at the derivative in the limit, you can recover the phase transition.
+
+Here $\ol x$ is the original random vector, and $x$ is our best guess for $\ol x$ given what we've seen. 
+
+%study, apply same strategy
+We want to take the log and look for a PDE. But I only have $t$ in this function. If I describe the Curie-Weiss model and had not thought of adding the $h$; then I would be stuck, I can differentiate in $t$ many times and not find a equation. The relation was between derivatives in $t$ and $h$. I have $t$, but what do I relate it to? We play the same game, add a $h$ parameter. Sufficient to relate derivatives.
+
+We have a quadratic term; I would like to add a linear term in $x$ in the model. We want to do this with a constraint: I don't want to destroy the Nishimori property. For Curie-Weiss this was easy, but for spin glasses it's subtle, not easy to figure out in general.
+%conditional expectation structure.
+
+\emph{We need to enrich the model somehow!}
+
+It has to be rich enough to relate derivatives, and simple enough to compute what happens. Suppose we also observe, %linear observation on $\ol x$
+\begin{align*}
+\sqrt{2h}\ol x + z
+\end{align*}•
+where $z$ is a standard Gaussian vector. 
+%W, z noise terms
+Now I recompute the conditional law of $\ol x$ given this rich observation,
+\begin{align*}
+H_N(t,h,x) &= H_N^\circ (t,x) + \sqrt{2h} x\cdot z  + 2h x\cdot \ol x - h|x|^2.
+\end{align*}•
+The important part is the term $\sqrt{2h} x\cdot z$.
+%CW with random magnetic field with gaussians.
+
+Now I can define the free energy,
+\begin{align*}
+F_N(t,h) &= \rc N \E\log \int \exp(H_N(t,h,x)) \,dP_N(x)\\
+\ol F_N(t,h) &= \E F_N(t,h) %\rc N \E\log \int \exp(H_N(t,h,x)) \,dP_N(x).
+\end{align*}•
+%normalizing constant, or mgf. 
+I take the expectation because the expression inside depends on the randomness in the noise.
+\begin{thm}
+$\ol F_N\to f$ (local uniform convergence) which is a solution of 
+\begin{align*}
+\pl_t f - (\pl_h f)^2 &= 0&\text{on }\R_+\times \R_+\\
+f(0,\cdot) &= F_1(0,\cdot)
+\end{align*}•
+\end{thm}
+%only nonneg
+%local uniform convergence
+%uniformly LIp
+Note $\ol F_N(0,\cdot)$ does not depend on $N$.
+
+\subsection{Main steps}
+
+The proof has two parts. First we relate the derivates to a variance.
+\begin{pr}
+\begin{align*}
+\pl_t \ol F_N - (\pl_h\ol F_N)^2 &= \rc{N^2} \E\an{(x\cdot \ol x - \E\an{x\cdot \ol x})^2}.
+\end{align*}•
+\end{pr}
+Next, we find a way to express this variance in terms of other things. In the Curie-Weiss model we also described this in terms of derivatives. Here we don't have an equality.
+\begin{pr}\label{p:me2}
+We have
+\begin{align*}
+\E\an{(x\cdot \ol x - \E\an{x\cdot \ol x})^2}
+&\le \rc N \pl_h^2 \ol F_N + \E[(\pl_h F_N- \pl_h \ol F_N)^2]
+\end{align*}•
+\end{pr}
+The last term is still random, so we have to control it.
+
+I will justify why this is true, and how to conclude the main result.
+For the first part, we use the following.
+\begin{lem}\label{l:me1}
+\begin{align*}
+\pl_h \ol F_N &= \E\an{\fc{x\cdot \ol x}{N}}\\
+\pl_t \ol F_N &= \E\an{\pf{x\cdot\ol x}N^2}.
+\end{align*}•
+\end{lem}
+
+The key ingredient is It\^o calculus without It\^o. 
+Letting $X$ be a standard gaussian, 
+\begin{align*}
+\E[\exp(\sqrt{2t}X-t)]&=1.
+\end{align*}•
+(Taking the expectation of Brownian motion and subtracting $t$, we get a constant. Here $\sqrt{2t}X$ is like $B_{2t}$.)
+Differentiating with respect to $t$ we should get 0.
+\begin{align*}
+\E\ba{
+\pa{
+\rc{\sqrt{2t}}X-1
+}\exp(\sqrt{2t}X-t)
+}&=0.
+\end{align*}•
+How to see this without It\^o calculus? It's something about gaussians. $x\exp(-\fc{x^2}2)$ want to come together and be integrated out. %only thing I can do is IbP
+Using integration by parts,
+\begin{align*}
+\int x \exp(\sqrt{2t}x-t) \exp\pa{-\fc{x^2}2}\,dx
+&= \int \sqrt{2t}\exp(\sqrt{2t}x-t) \exp\pa{-\fc{x^2}2}\,dx.
+\end{align*}
+This is Gaussian integration by parts.
+\begin{exr}[for credit]
+Prove Lemma~\ref{l:me1} using Gaussian integration by parts and Nishimori.
+\item
+Relate mmse with $\pl_t \ol F_N$.
+\end{exr}
+For Proposition~\ref{p:me2}, letting $A$ be a random variable, notice that 
+\begin{align*}
+\E\an{(A-\E\an{X})^2}
+&= \E\an{(A-\an{A})^2} 
++ \E[(\an{A}-\E\an{A})^2].
+\end{align*}
+%like orthogonality of L_2 martingale increments.
+We do expectation one step at a time.
+The first term looks like Curie-Weiss, and produces $\rc N \pl_h^2 \ol F_N$. The second term is new, and produces $\pl_h F_N - \pl_h\ol F_N$.
+
+The new ingredient is a classical concentration estimate. The Efron-Stein %gaussian conc
+inequality shows $\E[|F_N-\ol F_N|^2]$ is small.
+%Because we are allowed to do this averaging, 
+
+Phase transition in $t$: For small $t$, we have $\E[\ol x_1]=0$, $\pl_t f=0$; then it detaches itself from 0, $\pl_t f>0$.
+%understand mmse
+Before the transition, you have maximal error; then the error reduces.
+
+We've talked about best estimation when there are unlimited resources? People believe there is another regime where it is possible but hard to learn something about $\ol x$.
+
+Convergence rate: In the Curie-Weiss, we got the rate for free. In this case, if you follow through, you can get rates. In the paper~\cite{mourrat2019hamilton} I was not careful. %Main estimate I gave here, error term in paper. 
+It's not straightforward to reconstruct the argument in this talk for paper. In the finite-rank case it's not clear that $\ol F_N$ is convex. I only know lower bound on convexity, %, lower-bounded by constant, 
+which blows up when $h\to 0$. In the rank-1 case it's convex. From the argument here ,you can get good, $N^{-a}$ convergence (check integration by parts). Certainly you can get $N^{-1/4}$ without a problem. 
+
+For $p$ spin, we consider $\pl_t f - (\pl_h f)^p$ instead. Perhaps you can get $|\pl_t f-(\pl_h f)^3|\le \fc{C}{N} (\pl_h^2 f)^{1/2}$. 
+%viscocity solutions and maximal principle, you don't want to flip the sign of the Laplacian, but you know in advance the function is convex, you will not create in the wrong side.
+
+%p-spin
+%under which conditions is it possible to map a lattice model into a stochastic process through HJ equations. Is it possible to see Mckean-Vlasov equations as a generalization of this mapping?
+
+%spin-glass context. algorithm, finds configuration, as high as possible, maximum. 
+%Eliran Subag, up to some level. 
+%LM. 
+
