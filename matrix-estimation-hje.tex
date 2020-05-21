@@ -18,9 +18,9 @@ We consider the problem of estimating a large rank-one matrix, given noisy obser
 References:
 \begin{itemize}
 \item
-Paper: \cite{mourrat2018hamilton}, \url{https://cims.nyu.edu/~jcm777/HJinfer.pdf}, \url{https://arxiv.org/abs/1811.01432}.
+Paper: \cite{mourrat2018hamilton}, \url{https://cims.nyu.edu/~jcm777/HJinfer.pdf} %, \url{https://arxiv.org/abs/1811.01432}.
 
-Approach based on weak solutions: \cite{mourrat2019hamilton}, \cite{https://cims.nyu.edu/~jcm777/HJrank.pdf}, \url{https://arxiv.org/abs/1904.05294}
+Approach based on weak solutions: \cite{mourrat2019hamilton}, \url{https://cims.nyu.edu/~jcm777/HJrank.pdf} %, \url{https://arxiv.org/abs/1904.05294}
 
 
 \item
@@ -440,7 +440,7 @@ Informally,
 \end{align*}•
 Now compute the conditional law,
 \begin{align*}
-\Pj[\ol x= x|Y] &= \fc{\exp\pa{-\rc 2 \ab{Y-\sfc{2t}{N}x x^\top }^2}\,dP_N(x)}{\int \exp\pa{-\rc 2 \ab{Y-\sfc{2t}{N}x' x^{\prime\top} }^2}\,dP_N(x)}
+\Pj[\ol x= x|Y] &= \fc{\exp\pa{-\rc 2 \ab{Y-\sfc{2t}{N}x x^\top }^2}\,dP_N(x)}{\int \exp\pa{-\rc 2 \ab{Y-\sfc{2t}{N}x' x^{\prime\top} }^2}\,dP_N(x')}
 \end{align*}•
 Expand the exponent and remove $-\rc 2|Y|^2$ (which doesn't depend on $t,x$) to obtain the following.
 \begin{df}
@@ -597,7 +597,7 @@ Relate mmse with $\pl_t \ol F_N$.
 \end{exr}
 For Proposition~\ref{p:me2}, letting $A$ be a random variable, notice that 
 \begin{align*}
-\E\an{(A-\E\an{X})^2}
+\E\an{(A-\E\an{A})^2}
 &= \E\an{(A-\an{A})^2} 
 + \E[(\an{A}-\E\an{A})^2].
 \end{align*}
