@@ -1,0 +1,143 @@
+
+\section{Critical and near-critical percolation (Gady Kozma)}
+
+Critical and near-critical percolation is well-understood in dimension 2 and in high dimensions. The behaviour in intermediate dimensions (in particular 3) is still largely not understood, but in recent years there was some progress in this field, with contributions by van den Berg, Cerf, Duminil-Copin, Tassion and others. We will survey this recent progress (and a few older but not sufficiently known results).
+
+Prerequisites: The Fortuin-Kasteleyn-Ginibre (FKG) and van den Berg-Kesten (BK) inequalities. See e.g. Chapter 2 of Duminil-Copin's lecture notes \url{https://www.ihes.fr/~duminil/publi/2017percolation.pdf} or almost any book on percolation theory. 
+
+Slides: \url{https://www.math.ubc.ca/Links/OOPS/slides/Kozma_1.pdf}
+
+\subsection*{2020/5/25 Lecture 1}
+
+Let's start with basic definitions. Examine the graph $\Z^d$ for $d\ge 2$, with edges between nearest neighbors (in $L^1$ norm). I'm most interested in dimension 3.
+
+For $p\in [0,1]$, keep every edge with probability $p$ and delete it withprobability $1-p$, independently for each edge. For background, see Grimmett's book. (The book is a little outdated; none of the results I prove will be in the book.)
+
+There is some $p_c\in (0,1)$ (critical $p$) such that for $p<p_c$, all components (``clusters") of the resulting graph are finite, while for $p>p_c$, there is a unique infinite cluster. 
+Existence of $p_c$ is a consequence of the 0-1 law.
+
+This course is about what happens at $p_c$. The behaviour at and near $p_c$ is not well understood, except if $d=2$ or $d>6$. We're interested in the statistics of finite clusters, which has very peculiar properties in all cases we know.
+
+We'll focus on recent advances. The Aizenman-Kesten-Newman argument from the 80's, originally used to prove uniqueness, plays an important role The argument is in a paper of Cerf in 2015. This is an important piece to understand what is happening at criticality.
+
+What's charming about percolation theory, is that you have to say what is happening at $p_c$ without knowing what the value of $p_c$ is.
+From a combinatorial point of view: you have some quantity which has an exponential and polynomial correction; you want to understand the polynomial correction without knowing the exponential part. This seems impossible.
+
+\begin{thm}
+$\E_{p_c}(|\mathscr C(0)|)=\iy$.
+\end{thm}
+Notation: $0$ is the point with all coordinates 0, $\mathscr C(x)$ is the cluster containing $x$. The expected size of the cluster is infinity. Even if it is always finite, it has large tails---it has no finite first moment.
+\begin{proof}
+Fix $p$ and denote $\chi = \E_p(|\mathscr C(0)|)$. Let
+\begin{align*}
+\ep&< \rc{4d\chi}
+\end{align*}•
+We will show that at $p+\ep$ there is no infinite cluster. Consider $p+\ep $ percolation as if we (1) take $p$-percolation and (2) then ``sprinkle" each edge with probability $\ep$. For a vertex $x$ and a sequence of directed edges $e_1,\ldots ,e_n$,
+denote by $E_{x,e1,...,en}$ the event that 0 is connected to $x$ by a path $\gamma_1$ in $p$-percolation from 0 to $e_1$ then $e_1$ is sprinkled, then there is a path $\ga_2$ from $e_1$ to $e_2$ then $e_2$  is sprinkled and soon. We end with a path $\ga_{n+1}$ from $e_n$ to $x$. We require all the $\gamma_i$ to be \emph{disjoint}. Clearly $0\lra x$ in $p+\ep$-percolation if and only if there exist some $e_1,\ldots,e_n$ (possibly empty) such that $E_{x,e_1,\ldots, e_n}$ hold.
+Then $(0\lra x) = \bigcup_{n=0}^{\iy}\bigcup_{e_1,\ldots, e_n} E_{x,e_1,\ldots, e_n}$ and by the union bound
+\begin{align*}
+\Pj_{p+\ep} (0\lra x) &\le \sumz n\iy \sum_{e_1,\ldots, e_n}\Pj(E_{x,e_1,\ldots, e_n}).
+\end{align*}•
+This is the probability in the setting where edge has 3 states: $p$, $\ep$, or closed (missing).
+
+By the BK inequality, this is
+\begin{align*}
+&\le \sumz n\iy \sum_{e_1,\ldots, e_n} \Pj_p(0\lra e_1^-)\Pj_p(e_1^+\lra e_2^-)\cdots \Pj_p(e_n+\lra x)\ep^n.
+\end{align*}•
+(The paths are disjoint witnesses.)
+
+Summing over all $x$ gives
+\begin{align*}
+\chi(p+\ep) &\le \sumz n\iy \ep^n \sum_{e_1,\ldots, e_n} \Pj_p(0\lra e_1^-)\Pj_p(e_1^+\lra e_2^-)\cdots \Pj(e_n^+\lra x).
+\end{align*}•
+(The number of $x$ that $e_n^+$ is connected to is the size of $|\mathscr (0)|$.)
+%this is all the geometry, then straightforward args
+Summing over $x$ gives one $\chi(p)$ which we can take out of the sum
+\begin{align*}
+\sumz n\iy \ep^n \chi(p) \sum_{e_1,\ldots, e_n} \Pj_p(0\lra e_1^-)\Pj_p(e_1^+\lra e_2^-)\cdots \Pj(e_{n-1}+\lra x).
+\end{align*}•
+Even though $e_n^+$ does not appear in the summand we are summing over it. $e_n^+$ has $2d$ possibilities. Summing over $e_n^-$ gives another $\chi$ term. Taking both out of the sum gives
+\begin{align*}
+&= \sumz n\iy \ep^n \cdot 2d\chi(p)^2 \sum_{e_1,\ldots, e_{n-1}} \Pj_p(0\lra e_1^-)\cdots \Pj_p (e_{n-2}^+\lra e_{n-1}^-)\\
+&= \sumz n\iy \ep^n (2d)^n \chi(p)^{n+1}<\iy.
+\end{align*}•
+This shows $p+\ep_c$, contradiction. 
+
+(Set of $p$'s for which it is finite is an open set, so at the boundary of the set $\chi$ cannot be finite. We used finiteness at the end of the proof.)
+
+The argument also gives 
+\begin{align*}
+\chi(p) &\ge \rc{4d(p_c-p)}
+\end{align*}•
+for all $p<p_c$. 
+\end{proof}
+%Grimmett, p. 265 equivalent but phrased using differential inequalities instead of this more explicit geometric series argument
+%Grimmett Theorem 6.1 is basically this argument. 
+%This looks more robust than comparing with branching process.
+%generalize to transitive graph
+%transitivity, sum does not depend on $e_n^+$. Percolation on groups, take home.
+%even without transitivity it gives that $\sup_v E|C(v)|$ is infinite at $p_c$.
+
+\grbox{
+van den Berg-Kesten inequality: 
+%Suppose we have $n$ independent bits. 
+%witness is the path itself
+Let $E$ be an event on $\{\pm 1\}^n$. We say that an $A\subeq \{1,\ldots, n\}$ is a witness for $E$ (this is an event itself, denote by $\om$ the parameter) if any $\om'$ such that $\om'_i=\om_i$ for all $i\in A$ satisfies that $\om'\in E$. For example, for the event $0\to x$, any path between 0 and $x$ can serve as a witness.
+
+For two events $E$ and $F$ we denote by $E\circ F$ the event that they have disjoint witnesses. Then 
+\begin{align*}
+\Pj(E\circ F)&\le \Pj(E)\Pj(F).
+\end{align*}•
+(van den Berg-Kesten 1985 for increasing $E$ and $F$, Reimer 1997 for arbitrary $E$ and $F$)
+}
+
+We saw we can argue at $p_c$ using a argument by contradiction. We'll see another example of this argument.
+
+For a set $S\sub \Z^d$ denote by $\pl S$ the set of $x\in S$ with a neighbour $y\nin S$. 
+\begin{thm}
+Let $S\sub \Z^d$ be some finite set containing 0. Then
+\begin{align*}
+\sum_{x\in \pl S} \Pj_{p_c} (0\xlra S x) &\ge 1.
+\end{align*}•
+\end{thm}
+%edges retained open, removed closed.
+\begin{proof}[Proof sketch.]
+Let $x\in \Z^d$. If $0\lra x$ then there exists $0=y_1,\ldots, y_n=x$ such and open paths $\ga_i$ such that 
+\begin{enumerate}
+\item
+$\ga_i$ is from $y_i$ to $y_{i+1}$ and is contained in $y_i+S$.
+\item 
+The $\ga_i$ are disjoint. 
+\end{enumerate}•
+We have $n\ge r|x|$ for some number $r>0$ that depends on $S$. (Here $|x|$ is $L^1$ norm.)
+A calculation similar to the previous proof shows that
+\begin{align*}
+\Pj(0\lra x) &\le \sum_{n\ge r|x|} \pa{\sum_{y\in \pl S} \Pj_{p_c}(0\xlra S y)}^n.
+\end{align*}•
+If the value in the parenthesis is smaller than 1, then $\Pj(0\lra x)$ decays exponentially in $|x|$, contradicting the previous theorem.
+%$n^d$ vertices. finite.
+\end{proof}
+%first time path left ellipse. Then around that point. First time leave
+%don't need finite susceptibility, exp growth
+
+A full proof can be found in H. Duminil-Copin and V. Tassion. 
+
+\begin{thm}[Menshikov, Aizenman-Barsky]
+For any $p<p_c$, $\chi(p)<\iy$. 
+\end{thm}
+This is a deeper theorem.
+
+We need to know at the first step that there's one phase transition. Otherwise, there could be $p_1,p_2$, such that below $p_1$ all clusters are finite and expectations are finite, between $p_1$ and $p_2$ there is all clusters are finite but expectations are infinite, and $>p_2$, there is an infinite cluster with positive probability. That would be a completely different picture!
+%identification of these critical points is cornerstone of understanding percolation.
+%lemma of cerf uses this theorem
+
+%stuff known. more corollaries. by cerf. 
+%Lemma of Cerf, $\Pj_{p_c} (x\xlra{\La_{2n}}y)\ge cn^{-C}$. 
+%then applications. $\Pj_{p_c} (x\stackrel{\lra}{\lra}y)\le Cn^{-C}$. Connected in 2 disjoint clusters, probability quite small. 
+
+What happens for $d>6$? %60 page paper
+Remote paths of clusters develop independently, as if the other doesn't exist. There's a lot of space. They never get to meet. 
+%Results in high dimensions Cachy-Harr and Gordan-Slate
+
+%finite range interactions, treat 7-D systems
+
