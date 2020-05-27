@@ -11,14 +11,14 @@ Slides: \url{https://www.math.ubc.ca/Links/OOPS/slides/Kozma_1.pdf}
 
 Let's start with basic definitions. Examine the graph $\Z^d$ for $d\ge 2$, with edges between nearest neighbors (in $L^1$ norm). I'm most interested in dimension 3.
 
-For $p\in [0,1]$, keep every edge with probability $p$ and delete it withprobability $1-p$, independently for each edge. For background, see Grimmett's book. (The book is a little outdated; none of the results I prove will be in the book.)
+For $p\in [0,1]$, keep every edge with probability $p$ and delete it withprobability $1-p$, independently for each edge. For background, see Grimmett's book. (The book is a little outdated; I'll discuss results not in the book.) %none of the results I prove will be in the book.)
 
 There is some $p_c\in (0,1)$ (critical $p$) such that for $p<p_c$, all components (``clusters") of the resulting graph are finite, while for $p>p_c$, there is a unique infinite cluster. 
 Existence of $p_c$ is a consequence of the 0-1 law.
 
 This course is about what happens at $p_c$. The behaviour at and near $p_c$ is not well understood, except if $d=2$ or $d>6$. We're interested in the statistics of finite clusters, which has very peculiar properties in all cases we know.
 
-We'll focus on recent advances. The Aizenman-Kesten-Newman argument from the 80's, originally used to prove uniqueness, plays an important role The argument is in a paper of Cerf in 2015. This is an important piece to understand what is happening at criticality.
+We'll focus on recent advances. The Aizenman-Kesten-Newman argument from the 80's, originally used to prove uniqueness, plays an important role. The argument is in a paper of Cerf in 2015. This is an important piece to understand what is happening at criticality.
 
 What's charming about percolation theory, is that you have to say what is happening at $p_c$ without knowing what the value of $p_c$ is.
 From a combinatorial point of view: you have some quantity which has an exponential and polynomial correction; you want to understand the polynomial correction without knowing the exponential part. This seems impossible.
@@ -120,7 +120,8 @@ If the value in the parenthesis is smaller than 1, then $\Pj(0\lra x)$ decays ex
 %first time path left ellipse. Then around that point. First time leave
 %don't need finite susceptibility, exp growth
 
-A full proof can be found in H. Duminil-Copin and V. Tassion. 
+A full proof can be found in H. Duminil-Copin and V. Tassion \cite{duminil2016new}.
+%A new proof of the sharpness of the phase transition for Bernoulli percolation on
 
 \begin{thm}[Menshikov, Aizenman-Barsky]
 For any $p<p_c$, $\chi(p)<\iy$. 
@@ -141,3 +142,228 @@ Remote paths of clusters develop independently, as if the other doesn't exist. T
 
 %finite range interactions, treat 7-D systems
 
+\subsection*{2020/5/27 Lecture 2: The Aizenman-Kesten-Newman argument}
+
+%\begin{thm}
+%Let $S\sub \Z^d$ be some finite set containing 0. Then $\sum_{x\in \pl S} \Pj_{p_c} (0\xlra S x)\ge 1$. 
+%\end{thm}
+%Two applications:
+%\begin{lem}[K-Nachmias, 2011]
+%For any $x\in \pl \La_n$, $\La_n:=[-n,n]^d$,
+%\begin{align*}
+%\Pj_{p_c}
+%\end{align*}•
+%\end{lem}
+%\begin{lem}[Cerf, 2015]
+%
+%\end{lem}
+Today we'll be getting out of the '80's (though this argument is from the 80's). 
+
+We start with the idea of using exploration. (This is the one most important takeaway from today's lecture.) We demonstrate this idea with a simple lemma. Recall $\mathscr C(0)$ is the cluster containing 0 (everything connected to 0 via open edges).
+\begin{lem}
+Let $E$ be the number of open edges in $\sC(0)$ and let $B$ be the number of closed edges in the boundary. There are $C$ and $c$ such that for any $n$,
+\begin{align*}
+\Pj_p (B+E\le n, |(1-p)E-pB|> \la \sqrt n) &\le Ce^{-c\la^2}.
+\end{align*}•
+\end{lem}
+The important part is the $(1-p)E-pB$ part. Consider $p=\rc2$, so we have roughly the same amount of open and closed edges.
+\begin{proof}
+We define sets of edges $\phi = S_0\sub S_1\sub \cdots$ for $i\le n$ as follows. Assume at step $i$ there exists some edge $e\nin S_i$ such that there is an open path in $S_i$ from 0 to one of the vertices of $e$.
+We choose one such $e$ arbitrarily (e.g., by lexicographic order) and define $S_{i+1}:=S_i\cup \{e\}$. (Expose the cluster one edge at a time.) If no such $e$ exists (and this happens when $|S_i|=B+E$), let $S_{i+1}=S_i$.
+
+Let 
+$$X_i = (1-p)\pat{\#open edges in $S_i$} - p\pat{\#closed edges in $S_i$}.$$
+The key point is \emph{$X_i$ is a martingale} ($\E[X_{i+1}|X_i]=0$). 
+%at every step no info
+
+The lemma follows from Azuma-Hoeffding.
+\end{proof}
+\begin{thm}[Azuma-Hoeffding]
+If $X_i$ is a martingale and if $|X_{i+1}-X_i|\le m$ for some numbers $m_i$, then for any $M$,
+\begin{align*}
+\Pj(|X_n-X_0|) &\le 2\exp\pf{-M^2}{2\sumo iN m_i^2}.
+\end{align*}
+\end{thm}
+
+This is a flexible argument. You can start from a set of vertices (not just one), or you can add additional stopping conditions.
+%complicated stopping conditions
+I'll show one variation.
+\begin{lem}
+Let $S\sub \La$ be the set of vertices connected to the boundary. Let $E$ be the number of open edges between vertices of $S$ and let $B$ be the number of closed edges with at least one vertex in $S$ and both vertices in $\La$. Let $X=(1-p)E-pB$. Then
+\begin{align*}
+\Pj(|X|>\la n^{d/2}) &\le Ce^{-c\la^2}.
+\end{align*}•
+\end{lem}
+Start from the boundary and examine edges inside the box in arbitrarily order until I discover all vertices connected to the boundary by open paths.
+
+%Cerf 2015
+\begin{df}
+Let $A,B$ be subsets of $E\subeq \Z^d$. We denote by
+\begin{align*}
+A\stackrel{\xlra E}{\lra} B
+\end{align*}•
+the event that there are 2 disjoint clusters in $E$ which intersect both $A$ and $B$. We write $A\stackrel \lra\lra$ to mean $A\stackrel{\xlra E}{\lra} \pl E$.
+%We write...
+\end{df}
+This is not the same as having 2 disjoint paths. It's stronger. Not only are they disjoint, they are in disjoint clusters. 
+\begin{thm}
+Let $V$ be the number of edges $(x,y)$ in $\La_n$ such that $\{x,y\}\stackrel \lra\lra \pl \La_n$, i.e., both $x$ and $y$ are connected to $\pl \La_n$ but $x\stackrel{\La_n}{\not\lra} y$. Then $\E(V)< Cn^{d-\rc2} \sqrt{\log n}$. 
+\end{thm}
+Clusters can meet outside $\La_n$. This proof is a simplification due to Gandolfi-Grimmett-Russo \cite{gandolfi1988uniqueness} (a nice 4-page paper).
+\begin{proof}
+For $S\subeq \La_n$ define $X(S)$ to be 
+\begin{align*}
+&(1-p)\pat{\# open edges between 2 vertices of $S$}\\
+&-p\pat{\# closed edges with at least 1 vertex in $S$, both in $\La_n$}
+\end{align*}
+Let $\sC_1,\sC_2,\ldots $ be all the clusters in $\La_n$ that touch the boundary. Then
+\begin{align*}
+X\pa{\bigcup_i \sC_i} - \sum_i X(\sC_i) &=pV.
+\end{align*}•
+This formula is the essence of the proof.
+%Let's see what an open edge contributes. 
+\begin{itemize}
+\item
+For an open edge: It's necessarily in one cluster. It contributes $1-p$ in both terms, which cancel out.
+\item
+For a closed edge with both points in the same cluster: It contributes $p$ to both terms.
+\item
+What's left is the event that the closed edge goes between 2 clusters: It is counted twice in the sum, so contributes $-p+2p=p$.
+\end{itemize}•
+
+The exploration argument shows that with high probability
+\begin{align*}
+\ab{X\pa{\bigcup \sC_i}}&<Cn^{d/2}\sqrt{\log n}&
+|X(\sC_i)|&<C\sqrt{|\sC_i|} \sqrt{\log n}
+\end{align*}•
+for all $i$.
+%probabilist cheap way out
+%prob poly in n
+
+By Cauchy-Schwarz,
+\begin{align*}
+\sum_i \sqrt{|\sC_i|} &\le \sqrt{\sum_i |\sC_i|}\sqrt{\sum_i 1}\le \sqrt{n^d}\sqrt{n^{d-1}}=n^{d-\rc 2}.
+\end{align*}•
+(The number of clusters is bounded by the size of the boundary.)
+With high probability can be made to mean ``with probability $>1-n^{-1/2}$" and we are done.
+\end{proof}
+
+You can get an estimate for a single edge, by using the theorem for $2n$.
+\begin{cor}
+For $x$ a neighbour of 0, 
+\begin{align*}
+\Pj(\{0,x\}\stackrel \lra\lra\pl\La_n) &< C\sfc{\log n}{n}.
+\end{align*}•
+\end{cor}
+%one I like for no obvious reason
+%Take a box
+By changing from where you explore you
+can get all kinds of results. For example, if L is the union of all
+clusters reaching the left side of $\La_n$ and R is the union of all
+clusters reaching the right side of $\La_n$ then
+\begin{align*}
+X(L\cup R) - X(L)-X(R)
+\end{align*}•
+teaches something about edges connected to both the left and
+the right. Hutchcroft has a version where one explores from
+random points.
+
+\begin{thm}
+Let $S\sub \Z^d$ be some finite set containing 0. Then $\sum_{x\in \pl S} \Pj_{p_c} (0\xlra S x)\ge 1$. 
+\end{thm}
+Two applications:
+\begin{lem}[K-Nachmias, 2011]
+For any $x\in \pl \La_n$, $\La_n:=[-n,n]^d$,
+\begin{align*}
+\Pj_{p_c}(0\xlra{\La_n} x) &\ge c\exp(-C\log^2 n).
+\end{align*}•
+\end{lem}
+\begin{lem}[Cerf, 2015]
+For any $x,y\in \La_n$, 
+\begin{align*}
+\Pj_{p_c} (x\xlra{\La_{2n}}y) &\ge cn^{-C}
+\end{align*}•
+We can take $C=2d^2-2d$.
+\end{lem}
+All constants $c,C$ might depend on the dimension.
+\begin{proof}
+Assume first that $x,y$ are on the same line (and the distance is even): $x-y=(2k,0,\ldots, 0)$, $k\le n$. By the theorem there exists $z\in \pl \La_k$ such that
+\begin{align*}
+\Pj(0\xlra{\La_k}z) &\ge \rc{2d|\pl \La_k|}\ge \fc{c}{k^{d-1}}.
+\end{align*}•
+%most interested in reflection
+By rotation and reflection symmetry we may assume $z$ is in
+some face of $\La_k$, for example $z_1 = k$. Let $\ol z$ be the reflection of $z$
+in the first coordinate i.e. $z =(-z_1, z_2, \ldots, z_d)$. By reflection
+symmetry we also have $\Pj(0\xlra{\La_k} \ol z) \ge ck^{1-d}$. Translating z to x
+and $\ol z$ to $y$ gives
+\begin{align*}
+\Pj(x\xlra{x+\La_k} x+z) , \Pj(y\xlra{y+\La_k} y+\ol z) &\ge \fc{c}{k^{d-1}}.
+\end{align*}•
+But $x+z=y+\ol z$. 
+
+Since $x+\La_k\sub \La_{2n}$ and ditto for $y+\La_k$, we can write
+\begin{align*}
+\Pj(x\xlra{\La_{2n}} x+z) , \Pj(y\xlra{\La_{2n}} y+\ol z) &\ge \fc{c}{k^{d-1}}.
+\end{align*}•
+By FKG, 
+\begin{align*}
+\Pj(x\xlra{\La_{2n}}y) \ge \Pj(x\xlra{\La_{2n}} x+z) , \Pj(y\xlra{\La_{2n}} y+\ol z) &\ge \fc{c}{k^{2d-2}}.
+\end{align*}•
+
+With a slightly smaller $c$, we
+can remove the requirement that the distance between $x$ and $y$
+is even. If they are not on a line, we define
+\begin{align*}
+x=x_0,\ldots, x_d=y
+\end{align*}•
+such that each couple $x_i,x_{i+1}$ differ by only one coordinate. Hence $\Pj(x_i\xlra{\La_{2n}}x_{i+1}) \ge cn^{2-2d}$. Using FKG again gives
+\begin{align*}
+\Pj(x\xlra{\La_{2n}}y) &\ge \Pj(x_0\xlra{\La_{2n}}x_1, \cdots ,x_{d-1}\xlra{\La_{2n}}x_d)\\
+&\ge \prodo id \Pj(x_{i-1}\xlra{\La_{2n}} x_i) \ge \fc{c}{n^{2d^2-2d}}.
+\end{align*}•
+\end{proof}
+\begin{thm}[Fortuin-Kasteleyn-Ginibre, Harris]
+A function $f:\{\pm1\}^n$ is called increasing if it (weakly) increases in every coordinate. For any 2 increasing functions $f,g$, 
+\begin{align*}
+\E[fg] &\ge \E[f]\E[g].
+\end{align*}•
+\end{thm}
+
+
+This was recently improved to $cn^{-d^2}$ by van den Berg and Don.
+Their proof has an interesting topological component (Brouwer's fixed point theorem).
+
+
+\begin{thm}[Cerf, 2015]
+$\Pj_{p_c}(\La_{n^c} \stackrel \lra\lra \pl \La_n) \le Cn^{-c}$ for $c>0$ small enough.
+More precisely, 
+\begin{align*}
+\Pj_{p_c}(\La_{n^{1/(8d^2+8d)-o(1)}} \stackrel \lra\lra \pl \La_n) \le Cn^{-1/4}
+\end{align*}•
+\end{thm}
+Prove using the lemma.
+%generalize for arb p
+\begin{itemize}
+\item
+The theorem actually holds for all $p$.
+%patching, analysis argument
+\item
+Cerf had a scheme for improving the exponents: repeat the following.
+\begin{enumerate}
+\item
+Get a better estimate for the number of clusters from $\pl \La_{2n}$ to $\pl \La_n$.
+\item
+Looking at $\sum \sqrt{|\sC|}$, get a better estimate for $\Pj(\{0,x\}\stackrel \lra\lra \pl \La)$. 
+\item
+Get a better estimate for $\Pj(\La_{n^c} \stackrel \lra\lra \pl \La_n)$. (Use a patching argument.)
+\end{enumerate}•
+Unfortunately, the end result was not a big improvement over $\rc 2$.
+(The exponent is $-\fc{2d^2+3d-3}{4d^2+5d-5}$.)
+\end{itemize}•
+
+%Fix $p$ and let $n\to \iy$, then known already. Not the same as saying fix $n$, and this holds uniformly for $p$.
+%proof not significantly different. 
+
+%any improvement on the 2-arm prob usually sheds some new light on 3d percolation so any improvement is interesting.
+%Kesten: if get to n^{-2} can prove something spectacular?
