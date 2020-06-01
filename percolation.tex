@@ -367,3 +367,124 @@ Unfortunately, the end result was not a big improvement over $\rc 2$.
 
 %any improvement on the 2-arm prob usually sheds some new light on 3d percolation so any improvement is interesting.
 %Kesten: if get to n^{-2} can prove something spectacular?
+
+\subsection*{2020/5/28 Lecture 3}
+
+%\begin{lem}
+%Call a cluster $\sC$ in $\La_n$ ``large" if it intersects $\fc 78$ of the cubes of side-length $n^\eta$ in $\La_n$. Then
+%\begin{align*}
+%\Pj_{p_c} (\exists \text{ large cluster})&\le 1-c.
+%\end{align*}•
+%\end{lem}
+%(The exact number is not important; any number in $(0,1)$ will do.)
+%This is a critical phenomenon. 
+%
+%\begin{thm}[Duminil-Copin-K-Tassion, unpublished]
+%For $d\ge 3$ and some $\nu = \nu(d)>0$, $\Pj_{p_c}(\La_{n^\nu} \not\lra \pl \La_n) > Cn^{-d}$.
+%\end{thm}
+%\begin{proof}
+%Examine one $\nu$ (whose value will be chosen later) and assume by contradiction that this probability is, in fact, larger than $1-Cn^{-d}$. Then, with probability $>1-n^{-d\nu}$, 
+%%sum over all boxes, still small.
+%\emph{each} box $a+\La_{n^\nu}$, $a\in \La_n$ is connected to $a+\pl\La_n$. Denote this event by $A$. In particular, all boxes in $\La_{n/4}$ are connected to $\pl \La_{n/2}$. 
+%(During this proof, whenever we say ``cluster" we mean a cluster in $\La_n$ that intersects $\La_{n/4}$ and $\pl \La_{n/2}$. 
+%%take union bound
+%
+%%The event $A$ implies all $n^\nu$ boxes in $\La_{n/2}$
+%For every cluster $\sC$ let $N(\sC)$ be the number of $n^\nu$-subboxes of $\La_{n/2}$ that intersect $\sC$. Under $A$ we have, by concavity %Bernoulli's inequality.
+%$$n^{(1-\nu)d}\lesssim \sum_{\sC} N(\sC)\le 
+%\pa{\sum_{\sC} N(\sC)^{(d-1)/d}}^{d/(d-1)}.
+%$$
+%%how many clusters there are, what is the distribution of the size?
+%I add the condition that the clusters is small.
+%By the lemma (there is large probability there is no large cluster), 
+%\[
+%\E \sum_{\sC\text{ small}} N(\sC)^{(d-1)/d} \ge cn^{(1-\nu)(d-1)}. 
+%\]
+%%happen with prob close to 1.
+%%0.01 there is no large
+%
+%%union bd factor $n^d/n^\nu$?
+%%$d(1-\nu)$
+%The proof of Gandolfi-Grimmett-Russo shows that
+%\begin{align*}
+%\Pj(0\stackrel \lra\lra \pl \La_{n/4}) &\le Cn^{-d/2} + C(\log n) n^{-d} \E \sum_{\sC}\sqrt{|\sC|}
+%\end{align*}•
+%%sqroot crucial
+%%intermediate claim
+%where the sum is over clusters in $\La_{n/2}$.
+%There are technicalities with $n/4$ and $n/2$. A variation of the argument, also due to Cerf, shows that one can take the sum only over $\sC$ in $\La_n$ that intersects $\La_{n/4}$ and $\pl \La_{n/2}$. With Cerf's lemma, 
+%%from 2 neighboring points
+%\begin{align*}
+%\Pj(\La_{2n^\nu}\stackrel \lra\lra \pl \La_{n/4}) &\le Cn^{C\nu}\Pj(0\stackrel \lra\lra \pl \La_{n/4})\\
+%&\le Cn^{-d/2+C\nu} + Cn^{-d+C\nu} \E \sum_{\sC} \sqrt{N(\sC)}.
+%\end{align*}•
+%%second term important
+%
+%The isoperimetric inequality in $\Z^d$ (a version for boxes) shows that for every small $\sC$ we have at least $cN(\sC)^{(d-1)/d}$ subboxes of $\La_{n/2}$ which intersect $\sC$ but have a neighboring box that does not intersect $\sC$. (This is some kind of local isoperimetric inequality. It's important that we say ``for every small $\sC$": small boxes do not reach more than a constant fraction of boxes. If a cluster reaches all boxes, the set is empty.)
+%Let $Q$ be such a box and let $Q'$ be its neighbour that does not intersect $\sC$. Under event $A$, this implies $Q\cup Q'$ is connected to distance $n/4$ by 2 disjoint clusters.
+%
+%There is some over-counting in this argument, every $2n^\nu$ box might be counted for every cluster that intersects it. We bound the over-counting crudely by the volume of the box, $Cn^{d\nu}$. Overall we get, under $A$,
+%\begin{align*}
+%\#\{\text{such boxes}\} &\ge cn^{-d\nu} \sum_{\sC\text{ small}} N(\sC)^{(d-1)/d}.
+%\end{align*}•
+%Taking expectations we will get a contradiction:
+%\begin{align*}
+%C n^{(1-\nu)d} \Pj(\La_{2n^\nu} \stackrel \lra\lra \pl \La_{n/4}) &\ge cn^{-d\nu} \E \sum_{\sC\text{ small}}N(\sC)^{(d-1)/d}/
+%\end{align*}•
+%Together these give 
+%$$\E\sum_{\sC\text{ small}} N(\sC)^{(d-1)/d} \le Cn^{d/2+C\nu} + Cn^{C\nu} \sum_{\sC}\E\sqrt{N(\sC)}.$$
+%...
+%THus
+%\begin{align*}
+%\sum_{\sC\text{ small}} \sqrt{N(\sC)}\ge ...
+%\end{align*}•
+%\end{proof}
+%The proof in a nutshell:
+%\begin{itemize}
+%\item
+%The AKNC argument gives 
+%\begin{align*}
+%\Pj(\La_{n^\nu} \stackrel \lra\lra \La_n) &\le \text{uninteresting terms }n^{-d}\sum\sqrt{|\sC|}.
+%\end{align*}•
+%\item
+%The contradictory assumption (all boxes are connected---sum of boundary covers everything), the isoperimetric inequality and the fact that there are no large clusters give
+%\begin{align*}
+%\Pj(\La_{n^\nu} \stackrel \lra\lra \La_n) &\ge \text{uninteresting terms }n^{-d}
+%\sum |\sC|^{(d-1)/d}.
+%\end{align*}•
+%\end{itemize}•
+%These are contradictory. We need $d\ge3$ to get a contradiction. In 3-D, the boundary is greater than $\sqrt{}$. %The result works in 2-D using a different argument.
+%
+%%1/(2d) in higher dim
+%Remarks:
+%\begin{itemize}
+%\item
+%Going through the calcuation gives $\nu < \fc{d-2}{d^3+4d^2+d-2}$ so say, $1/64$ at $d=3$.
+%\item
+%The theorem holds also at $d=2$ (known since the 80's, with a different proof).
+%\end{itemize}•
+%
+%See: dependencies diagram II in slides. (Cerf's inequality is in wrong direction.) We use criticality explicitly in the bolded boxes.
+%\begin{enumerate}
+%\item
+%Increase $p$ slightly, there is still no infinite cluster, contradict you are at criticality.
+%\item
+%Increase $p$ slightly, construct infinite cluster.
+%\end{enumerate}•
+%
+%Other results:
+%%p. 45
+%\begin{lem}
+%If there is an infinite cluster with positive probability ($\te:=\Pj(0\lra \iy)>0$) then for every $\ep>0$ there exists $n$ such that for any set $A\subeq \La_n$ intersecting both $\{0\}$ and $\pl \La_n$ we have $\Pj(A\lra \iy)>1-\ep$. ($A\lra \iy$ means $|\sC(A)|=\iy$.)
+%\end{lem}
+%Classical results: 
+%\begin{itemize}
+%\item
+%Close but not quite correct statement: $n\times n\times n$ box, the probability there is a path that goes from the left to right is at least a constant. At criticality, this works in all dimensions.
+%(Kesten's book on Percolation)
+%%not as pleasant as Grimmett.
+%\item
+%At criticality, the probability of being connected to the boundary is
+%$\Pj_{p_c}(0\lra \pl \La_n) > cn^{(1-d)/2}$.
+%%
+%\end{itemize}•

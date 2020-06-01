@@ -1,0 +1,231 @@
+\section{Branching random walks: some recent results and open questions (Nina Gantert)}
+
+ We give an introduction to branching random walks and their continuous counterpart, branching Brownian motion. We explain some recent results on the maximum of a branching random walk and its relation to point processes, as well as a connection with fragmentations. The focus will be on open questions.
+
+Preparatory reading: Lyons and Peres, Probability on Trees and Networks \url{http://pages.iu.edu/~rdlyons/prbtree/prbtree.html}, Chapters 5.1 (Galton-Watson branching processes) and 13.8 (Tree-indexed random walks)
+
+Further reading:
+\begin{itemize}
+\item
+Zhan Shi, Branching Random Walks, \url{https://www.lpsm.paris/pageperso/zhan/brw.html}
+\item
+Julien Berestycki, Topics on Branching Brownian motion, \url{http://www.stats.ox.ac.uk/~berestyc/Articles/EBP18_v2.pdf}
+\item
+Ofer Zeitouni, Branching Random Walks and Gaussian Fields, \url{http://www.wisdom.weizmann.ac.il/~zeitouni/pdf/notesBRW.pdf}
+\end{itemize}•
+
+%Piotr Dyszewski: Branching random walks and stretched exponential tails
+%
+%We will consider a branching process with a spacial component on the real line. After birth each individual performs an independent step according a stretched exponential (or Weibull) law. We will give a detailed description of the asymptotic behaviour of the position of the rightmost particle. The talk is based on a ongoing project with Nina Gantert and Thomas H?felsauer.
+%Sam Johnston: The extremal particles of branching Brownian motion
+
+\subsection*{2020/6/1 Lecture 1}
+
+There are two ingredients for a branching random walk (BRW):
+\begin{enumerate}
+\item
+Offspring law $p(\cdot)$ with $\sumo k\iy p(k)=1$. Assume $\sumo k\iy kp(k)>1$. Often we assume $p(0)=0$ to simplify.
+\item 
+Displacement law: Random variable $X$ with $\Var(X)>0$. 
+\end{enumerate}•
+Then
+\begin{enumerate}
+\item
+Start with one particle at 0, particles produce offspring according to $p(\cdot)$.
+\item 
+Offspring take displacements according to $X$ (all particles behave independently).
+\end{enumerate}•
+%graph, spa
+How does this crowd of particles behave?
+
+There is a continuous analogue, branching Brownian motion (BBM) (see talk on Friday).
+It follows Brownian motion and after an exponential lifetime, it splits into 2 particles which continue to follow Brownian motion (and splitting after exponential lifetime, and so on).
+
+We first consider BRW. I will look at it as a tree-indexed random walk in the following sense. Note the Browian motion and branching are independent.
+
+First build a Galton-Watson (GW) process according to $p(\cdot)$. Then label edges with iid random variables distributed as $X$.  
+%put iid random variables on the edge of the tree.
+
+Let $D_n$ be the vertices in generation $n$. Then $|D_n|$ is the Galton Watson process.
+
+The position of a particle $v$ is the sum of the random variables (displacements) on the edges leading to the vertex $v$: 
+\begin{align*}
+S_v &= \sum_{e\in [0,v]} X_e
+\end{align*}
+%position of particle $v$.
+Recall the following.
+\begin{thm}
+If $m:=\sumz k\iy kp(k)>1$ then $\Pj(T\text{ infinite})>0$.
+
+Here $m$ is the reproduction number. %hear about in the news
+\end{thm}
+If $p(0)>0$, we can look at $\Pj^*[\cdot]  =\Pj[\cdot ||D_n|>0, \forall n]$. This event has positive probability.
+
+The collection $(S_v)_{v\in D_n}$ are random variables which are not independent.
+
+%I'll give some results and open questions.
+
+There is a more general model: 
+%simultaneous production of offspring and displacement
+Particles produce ``offspring and displacements" at once according to some point process.
+
+For example, the point process could be:
+\begin{itemize}
+\item
+produce particles at position 1 and -1,
+\item
+produce 3 particles at positions 3,
+\end{itemize}•
+each with probability $\rc2$. There is dependence between siblings, and displacements are not independent of tree.
+
+Many things I will say will generalize to the general model.
+
+The first question I will address is the behavior of the rightmost particle:
+\begin{align*}
+M_n &=\sup_{v\in D_n} S_v.
+\end{align*}•
+This is the maximum of variables with are not independent. %I want to say how the cloud spreads in space.
+Assume the exponential moment condition
+\begin{align*}
+\E[e^{\la X}] &<\iy
+\end{align*}•
+for some $\la>0$ and define a large deviation rate function
+\begin{align*}
+I(y) &= \sup_\la [\la y - \log \E[e^{\la X}]]
+\end{align*}•
+%l.d. rate
+It is a fact that for $y>\E[X]$, 
+$$\rc{n} \log \Pj[S_n\ge ny]\to -I(y).$$
+
+You can proved one direction quite easily:
+\begin{align*}
+\Pj(S_n>ny) &\le \E[e^{\la S_n}]e^{-\la ny}\\
+&= e^{-n I(y)}
+\end{align*}•
+by Chebyshev's inequality and optimizing the RHS over $\la$. %$\la=\ol \la$ optimal.
+Define
+\begin{align*}
+x^* &= \sup \set{s\ge \E[X]}{I(s)\le \log m}.
+\end{align*}•
+We have the following old result.
+\begin{thm}[Biggins, Hammersley, Kingman]
+\begin{align*}
+\fc{M_n}n &\to x^*&\Pj^*\text{-a.s.}
+\end{align*}•
+\end{thm}
+The method of proof is useful.
+\begin{exr}
+Assume the theorem.
+\begin{enumerate}
+\item
+Let $X\stackrel d=N(0,1)$. Compute $x^*$.
+\item 
+Suppose $p(3)=1$, $\Pj[X=0]=\rc 2 = \Pj[X=1]$. Compute $x^*$. Do we have $\Pj[M_n=n,\forall n]>0$?
+\item
+Same as (ii) if $p(2)=1$.
+\end{enumerate}•
+\end{exr}
+I'll give my favorite proof of the theorem.
+
+\paragraph{Intuition:} At time $n$, we have $\approx m^n$ particles. For each $v\in D_n$, $\Pj(S_u\ge ny) \approx e^{-n I(y)}$. We have 2 competing effects: the probability decays exponentially but the number of particles increase exponentially. These effects shold balance: if
+\begin{align*}
+e^{-n I(y)} \ub{e^{n\log m}}{m^n} &=1
+\end{align*}•
+then $y=x^*$.
+
+\begin{proof}
+\begin{enumerate}
+\item
+First moment method: This will give an upper bound. %for the speed
+\begin{align*}
+\Pj[M_n \ge ny] &\le \E\ba{\sum_{v\in D_n} I_{S_v\ge ny}}\\
+&= \ub{\E [|\De_n|]}{m^n}\ub{\Pj[S_n\ge ny]}{\le e^{-nI(y)}}.
+\end{align*}•
+using the independence assumption.
+Hence, if $I(y) > \log m$, then 
+\begin{align*}
+\sum_u \Pj[M_u \ge ny] &<\iy\\
+\implies \limsup \fc{M_n}n&\le y.
+\end{align*}
+\item 
+Embedded tree: Assume $y<x^*$. Choose $\ep>0$ such that $I(y)-2\ep<\log m$. Then using the lower bound
+\begin{align*}
+\Pj[S_k\ge ky] &\ge e^{-k(I(y)-\ep)}
+\end{align*}•
+for $k\ge k_0(\ep)$. I don't have strict inequality $e^{-kI(y)}$, I have an $\ep$.
+
+Now I'm doing a kind of percolation: 
+\begin{itemize}
+\item
+keep $v\in D_k$ if $\fc{S_v}k \ge y$
+\item
+delete $v$ otherwise
+\item
+go at level $2k$, etc.
+\end{itemize}•
+Continue only vertices which I kept at the first step, where the mean is large enough.
+\end{enumerate}•
+Now I have an embedded GW-tree $\wt T\sub T$. If $\wt T$ is infinite, the maximum is at least $y$.
+% With positive probability, the maximum is at least $y$.
+
+Question: what is $\wt m$? We have
+\begin{align*}
+\wt m &= m^k \Pj[S_k \ge ky]\\
+&\ge e^{k\log m} e^{-k(I(y)-\ep)} \ge e^{\ep k}>1
+\end{align*}•
+for $k$ large enough.
+Then 
+\begin{align*}
+\Pj[\lim_{n\to \iy} \inf \fc{M_n}{n} \ge y] &>0.
+\end{align*}•
+
+Now we need a 0-1-law for inherited properties. Call a property $A$ of trees \vocab{inherited} if each finite trees has $A$, and if $T$ has $A$, then all descendant trees of the children of the root have it. 
+Then $\Pj^*[T\text{ has }A]\in \{0,1\}$.
+Thus we conclude the probability is 1.
+\end{proof}
+\begin{proof}[Proof of 0-1 law]
+We have
+\begin{align*}
+\Pj[T\text{ has }A] &= \E[\Pj[T\text{ has }A||D_1|]]\\
+&\le \E[\Pj[T^{(1)}\text{ has }A,\ldots, T^{(|D_1|)}\text{ has }A]||D_1|]
+&\text{inherited property}\\
+&= \E[\Pj[T\text{ has }A]^{|D_1|}]&\text{independence}
+\end{align*}•
+Hence 
+\begin{align*}
+\ga :=\Pj[T\text{ has }A] &\le f(\Pj[T\text{ has }A])
+\end{align*}•
+where $f(s) =\sumz k\iy s^kp(k)= \E[s^{|D_1|}]$. 
+So $q\le \ga \le f(\ga)$.
+On the other  hand
+%extinction probability
+\begin{align*}
+\Pj[T\text{ has }A] &\ge 0\\
+q:&= \Pj[\lim_{n} |D_n|=0]
+\end{align*}•
+This means that 
+\begin{align*}
+\Pj[T\text{ has }A] &\in \{q,1\}.
+\end{align*}•
+(The probability is in $[q,1]$ because it is at least as big as the probability of finiteness. The function $f(s)$ is convex---its second derivative is positive---so its graph is below the line connecting the two fixed points.)
+%orig measure p
+But if we condition, we get
+\begin{align*}
+\Pj^*[T\text{ has }A]&\in \{0,1\}
+\end{align*}•
+%The event $\{\liminf M_n<nY\}$ (complement of considered event) is inherited.
+%Look at the following property $A$:
+%$$A=\{T\text{ finite}\}\cup \{\liminf \fc{M_n}n\le y\}.$$
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
