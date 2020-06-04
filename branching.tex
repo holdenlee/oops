@@ -46,7 +46,7 @@ We first consider BRW. I will look at it as a tree-indexed random walk in the fo
 First build a Galton-Watson (GW) process according to $p(\cdot)$. Then label edges with iid random variables distributed as $X$.  
 %put iid random variables on the edge of the tree.
 
-Let $D_n$ be the vertices in generation $n$. Then $|D_n|$ is the Galton Watson process.
+Let $D_n$ be the vertices in generation $n$. Then $|D_n|$ is the Galton-Watson process.
 
 The position of a particle $v$ is the sum of the random variables (displacements) on the edges leading to the vertex $v$: 
 \begin{align*}
@@ -97,7 +97,7 @@ I(y) &= \sup_\la [\la y - \log \E[e^{\la X}]]
 It is a fact that for $y>\E[X]$, 
 $$\rc{n} \log \Pj[S_n\ge ny]\to -I(y).$$
 
-You can proved one direction quite easily:
+You can prove one direction quite easily:
 \begin{align*}
 \Pj(S_n>ny) &\le \E[e^{\la S_n}]e^{-\la ny}\\
 &= e^{-n I(y)}
@@ -110,7 +110,7 @@ x^* &= \sup \set{s\ge \E[X]}{I(s)\le \log m}.
 We have the following old result.
 \begin{thm}[Biggins, Hammersley, Kingman]
 \begin{align*}
-\fc{M_n}n &\to x^*&\Pj^*\text{-a.s.}
+\fc{M_n}n &\to x^*,\quad \Pj^*\text{-a.s.}
 \end{align*}•
 \end{thm}
 The method of proof is useful.
@@ -218,14 +218,319 @@ But if we condition, we get
 %$$A=\{T\text{ finite}\}\cup \{\liminf \fc{M_n}n\le y\}.$$
 \end{proof}
 
+\subsection*{2020/6/2 Lecture 2}
 
+\begin{rem}
+If $\Pj[X\ge t] = e^{-ct^r}$ where $0<r<1$ (stretched exponential tails) and $\E[X^2]<\iy$ (finite second moment) then $$\rc{n}\log \Pj[S_n\ge n^{1/r} y]\to -cy^n\text{ as }n\to \iy.$$
+%deviation controlled by max
+The same arguments give that 
+\begin{align*}
+\fc{M_n}{n^{1/r}} \to x^* = \pf{\log m}{c}^{1/r}.
+\end{align*}•
+Note the position of the rightmost particle grows faster than linearly. $x^*$ is such that the two effects balance: the number of particles growing exponentially, and the probability decreasing exponentially (with a power).
+See the talk ``Stretched exponential tails," on Friday, by Piotr Dyszewski.
+\end{rem}
 
+\begin{rem}
+Let $X,X_1,X_2,\ldots $ be iid, $S_n=\sumo in X_i$. Let $S_n, S_n^{(1)},S_n^{(2)},\ldots$ be iid. Let $\wt M_n = \max_{1\le i\le |D_n|} S_n^{(i)}$. We showed by a union bound that %$m^n$ particles 
+\begin{align*}
+\Pj[\wt M_n \ge ny] &\le m^n \Pj[S_n\ge ny]\\
+\limsup \fc{\wt M_n}{n} &\le x^*.
+\end{align*}•
+\end{rem}
+We can compare $M_n$ (from the BRW) and $\wt M_n$: The maximum of the branching random walk is smaller than the maximum of the independent random walks.
+\begin{lem}\label{l:brw1}
+$M_n\le \wt M_n$. (Here $\le$ means stochastically dominated.)
+\end{lem}
+The result is not surprising because there are more independent random variables involved in $\wt M_n$.
+\begin{lem}\label{l:brw2}
+Let $(X_i)_{i\ge 1}$, $(Y_i)_{i\ge 1}$ be independent, and $(Y_i)_{i\ge 1}$ identically distributed. Then %we can compare the maxima in the following sense
+\begin{align*}
+\max_{1\le i\le n}(X_i + Y_1) &\le \max_{1\le i\le n}(X_i+Y_i).
+\end{align*}•
+\end{lem}
+\begin{exr}
+Prove Lemma~\ref{l:brw2}.
+\end{exr}
+\begin{proof}[Proof of Lemma~\ref{l:brw1}]
+Proof is by induction. 
+Apply the induction hypothesis to the subtrees of the root. By lemma 2, we can replace the identical variables in the edges coming from the root with iid variables, and get something larger.
+\end{proof}
+\begin{exr}
+\begin{enumerate}
+\item
+Show $\fc{\wt M_n}{n}\to x^*$. %One direction was already proved.
+\item
+Suppose $\Pj[X=1] = \al = 1-\Pj[X=-1]$. 
+%lattice-valued random walk
+Will the cloud visit 0 infinitely often? I.e., 
+\begin{align*}
+\ga &= \Pj[S_v = 0 \text{ for some }v\in D_u, \text{ for infinitely many }n].
+\end{align*}•
+%For 1 particle: when \al=1/2
+%(If $\al$ gets close to 1 this gets less likely.)
+Find conditions on $\al$ and $m$ such that $\ga=0$ or such that $\ga>0$.
+%condition will involve branching.
+%1st moment for ub, embedded tree for lb.
+%not claiming necessary and sufficient.
+\item
+Do the same for a tree-indexed (branching) Markov chain. We have a Galton-Watson tree with a Markov chain: 
+\begin{enumerate}
+\item
+particles reproduce according to $p(\cdot)$
+\item
+offspring takes a step according to %the Markov chain 
+$q(x,\cdot)$, where $q(x,y)_{x,y\in S}$ are transition probabilities of an irreducible Markov chain, with $S$ countable.
+\end{enumerate}•
+Take $0\in S$, define $\ga$ as before. 
+Find conditions on $m$, %mean of branching
+$q(\cdot, \cdot)$ such that $\ga=0$ or $\ga >0$.
 
+This is a generalization of the previous example.
+\end{enumerate}•
+\end{exr}
+To solve the recurrence-transience questions, re-run the argument we saw yesterday. I don't claim they are necessary and sufficient in all cases, but in almost all cases. (The arguments do not determine what happens at the critical point.)
 
+What is the second order term, i.e., $M_n - nx^*\sim $? E. A\"id\'ekou proved the following.
+\begin{thm}
+Suppose 
+\begin{itemize}
+\item
+$X$ is non-lattice (this is important),
+\item 
+$X$ has finite exponential moments,
+$\E[e^{\la X}]<\iy$ for all $\la\in \R$. 
+\item 
+$\log m \in \text{int}\set{y}{I(y)<\iy}$ (int means interior).
+\item
+$\E[|D_1|^{1+\de}]<\iy$ for some $\de>0$.
+\end{itemize}•
+ Then
+\begin{align*}
+\Pj[M_n- x^*n + \fc{3}{2\ol \la }\log n\le t]
+&\xra{n\to \iy} \E[\exp(-CZ_\iy e^{-t})]
+\end{align*}•
+where $\ol \la = I'(x^*)$ and $Z_\iy$ is the a.s. limit of $Z_n = -\sum_{v\in D_n} (S_v-nx^*) e^{\ol \la (S_v - nx^*)}$.
+%one has to prove this converges
+\end{thm}
+This is the Gumbel distribution with a random shift.
+\begin{exr}
+Check that $(Z_n)$ is a martingale with respect to $(\cal F_n)$, $\cF_n=\si\pat{``up to level n"}$, the ``derivative martingale."
+\end{exr}
+The limit of the martingale is strictly positive. 
+Showing it converges is more difficult; the result goes back to Biggins.
 
+The theorem was first proved for Brownian motion, and took 20 years before it was shown for branching random walks.
+%so shi
+%plausibility argument
 
+An easier theorem is the following. %for reference model. 
+\begin{thm}
+Assume the same assumptions, $p(m)=1$. Then
+\begin{align*}
+\Pj[\wt M_n - x^* n + \rc{2\ol \la }\log n\le t]
+\xra{n\to \iy} \exp(-Ce^{-\ol \la t}). 
+\end{align*}•
+\end{thm}
+The reference model also gives a Gumbel distribution. Note the second term has a different constant. I'll give a proof sketch; it can easily be made precise in the gaussian case. 
+\begin{proof}[Proof sketch]
+Note that for $a_n=o(\sqrt n)$, using the non-lattice assumption, by the Bahaduv-Rao Theorem,
+\begin{align*}
+\Pj[S_n > nx^* - a_n] &\approx \fc{C}{\sqrt n} e^{-nI(x^*-\fc{a_n}{n})}.
+\end{align*}•
+(Here $\approx$ means if you divide you will have bounds by constants.)
+But 
+\begin{align*}
+nI(x^*-\fc{a_n}n) &= n\ub{I(x^*)}{\log m} - \ub{I'(x^*)}{\ol \la}a_n + o(1).
+\end{align*}
+Plugging in and noting $\wt M_n$ is a maximum of independent $S_n$'s gives
+\begin{align*}
+\Pj[\wt M_n \le nx^* - a_n]
+&\sim \pa{1-\fc{C}{m^n\sqrt n} e^{\ol \la a_n + o(1)}}^{m^n}.
+\end{align*}•
+Choose $a_n = \fc{\log n}{2\ol \la} - t$ to get this probability converges:
+\begin{align*}
+\Pj[\wt M_n \le nx^* - a_n]
+&\sim \exp(-Ce^{-\ol \la t}+o(1)).
+\end{align*}•
+\end{proof}
+\begin{exr}
+\begin{enumerate}
+\item
+Make this argument precise for $X\stackrel d= N(0,1)$. 
+\item
+Prove that $\E\ba{\fc{\wt M_n}n}\to x^*$ and conclude
+\begin{align*}
+\limsup_{n\to \iy} \E\ba{\fc{M_n}n} &\le x^*.
+\end{align*}•
+\end{enumerate}•
+\end{exr}
+There are plenty of open questions for $d\ge 2$. The field starts with BBM: J Berestycki, B. Mallein, J. Schweinsberg...
 
+\subsection*{2020/6/4 Lecture 3}
 
+Today there will be less proofs and more open questions.
 
+Consider an example of a BRW with killing: $p(2)=1$, $\Pj[X=0] = 1-p$ and $\Pj[X=1]=p$. 
+By the exercise in Lecture 1, we know how the maximum will behave. I'll ask a different question now. 
 
+A ray is $v_0,v_1,v_2,v_3,\ldots$ where $v_0$ is the root and $v_{i+1}$ is a child of $v_i$. Is there a nearly optimal ray? Define
+\begin{align*}
+\rh(\ep, p) &= \Pj[\exists \text{ infinitely ray such that }S_{v_j} \ge (x^*-\ep) j, \forall j\ge 1]\\
+&= \Pj[\text{``nearly optimal ray"}]
+\end{align*}•
+This comes up in computer science in search trees. I'm ``killing" all particles below the line with slope $x^*-\ep$.
+%infimum of means
 
+Question: $\rh(\ep,\rh)\sim $? for fixed $p$, as $\ep\to 0$. %simple cases
+\begin{itemize}
+\item
+For $p>\rc 2$, $x^*=1$, with positive probability there is an optimal ray, so $\rh(\ep, \rh)\not\to0$ as $\ep\to 0$.
+\item
+For $p=\rc2$, this is much less clear. We don't have an infinite cluster if we keep edges with 1. We have $\rh(\ep, p)\sim c\ep$.
+
+This goes back to Robin Pemantle; he also formulated a conjecture for $p<\rc 2$. 
+
+Take $\ep=\rc n$ ($n=\rc{\ep}$). To survive until time $n$, you need to have 1's up to time $n$. The probability is bounded by 
+\begin{align*}
+\Pj_{\rc 2}[\exists \text{ ray with only 1's up to level }n]&\sim \fc2n.
+\end{align*}•
+This is the probability a critical GW process suvives up to generation $n$, which is known to be $\sim \fc 2n$.
+% In a critical branching process, the probability to survive up to level $n$ is $\sim \fc 2n$.
+
+The argument gives an upper bound: If you survive infinitely you have to survive to level $n$. You can give a lower bound with a more involved branching process argument.
+\item
+For $p<\rc n$, 
+\begin{align*}
+\log \rh(\ep, p)&\sim \fc{-c(p)}{\sqrt \ep} \text{ for }\ep\to 0.
+\end{align*}•
+This is a result by NG, Y. Hu, and Z. Shi. %We proved it by looking at the bran %Yueyun
+The idea is similar but the implementation is more involved.
+%implementation is 
+
+Replace the large deviation estimate for \emph{endpoint} of path, which has the same law as sum of iid random variable, with large deviations for the \emph{whole path}.
+%at heart of survival prob asymptotics
+
+%transform linearly above certain line
+
+\begin{thm}[Mogulskii]
+Let $Y_1,Y_2,\ldots$ be iid with $\E[Y_i]=0$, $\E[|Y_1|^{2+\de}]<\iy$, $S_n = \sumo in Y_i$, $g_1(\cdot)$, $g_2(\cdot)$ continuous, $g_1(0)<0<g_2(0)$. Then
+\begin{align*}
+\fc{a_n^2}{n}
+\log \Pj[g_1\pf in \le \fc{S_i}{a_n} \le g_2\pf in, 1\le i\le n]
+&\to 
+\exists (g_1,g_2,\si^2)
+\end{align*}•
+Here $a_n\to \iy$, but $\fc{a_n}{\sqrt n}\to 0$.
+\end{thm}
+ This decays slower than exponential. 
+This is at the heart of the survival probability.
+%above a certain slope
+\end{itemize}•
+
+I'll mention another model with selection, the $N$-BRW.
+\begin{itemize}
+\item
+Keep only the $N$ individuals with the largest positions.
+\end{itemize}•
+This was introduces by Buouet, Derrida, Mueller, and Meunier. Let $M_{n,N}=\max_{v\in D_{n,N}}S_v$. Then
+\begin{align*}
+\fc{M_{n,N}}{n}\xra{n\to \iy} x_N^*\text{ a.s.}
+\end{align*}•
+(Has the largest one has always been the largest, or do other particles pass it?)
+It is clear that $x_N^*\le x^*$; the question is how does the difference behave?
+\begin{thm}[J. B\'erard, J.-B. Gouer\'e]
+For $p(2)=1$, $\E[e^{\la X}]<\iy$ for all $\la \in \R$. Then
+\begin{align*}
+x^* - x_N^* \sim \fc{c}{(\log N)^2}\text{ for }N\to \iy.
+\end{align*}•
+\end{thm}
+J. B\'erard and P. Maillard showed for heavy-tailed $X$ that
+\begin{align*}
+\Pj[X>t] &\sim \rc{t^\al}, \quad 0<\al<2.
+\end{align*}•
+%heuristic reason why related to random walk with killing.
+%P(X>x)\sim c, x^{-\alpha}, for any \alpha>0. conv of the stairs process
+
+I'll give a heuristic argument of how this is related to the survival probability of BRW with killing.
+
+The following two events are comparable:
+\begin{enumerate}
+\item
+BRW with killing at slope $x^*-\ep$, starting with $N$ particles, survives.
+\item 
+$N$-BRW moves at a speed $\ge x^*-\ep$.
+\end{enumerate}•
+In  
+(1) the probability is $1-(1-\rh(\ep))^N$. 
+
+So in 
+(2), $x^*-x_N^*$ should be of order $\ep=\ep(N)$ with $\ep$ such that $\rh(\ep)\approx \rc{N}$.
+%law of \epsilon
+
+But since $\rh(\ep)\approx e^{-\fc{c}{\sqrt \ep}}\approx \rc N$, then we have $\ep\approx \fc{c}{(\log N)^2}$. The proof does not use this heuristic, but confirms it.
+The proof is relatively technical; it would be nice to have a simple proof.
+
+I'll give another example with selection, the L-BRW.
+\begin{itemize}
+\item
+Keep only the individuals within (spatial) distance $L$ to the maximum $M_n$, remove all the others.
+\end{itemize}•
+Define
+\begin{align*}
+x_L^* &= \lim_{n\to \iy}\fc{M_{n,L}}n.
+\end{align*}•
+It is clear that $x_L^*\le x_L$. %The conjecture (BDMM) is that 
+\begin{conj}[BDMM]
+$x_L^*\approx x^*$ %_L
+with $L=\log N$.
+\end{conj} 
+%$x^*-x_L^*=\fc{c}{L^2}$.
+This is open!
+This theorem has been confirmed for L-BBM by M. Pain (recent).
+%branching brownian motion
+
+BRW with interaction: As soon as you introduce interactions, the methods are less clear.
+%understand in epidemiological context
+
+Q: Take a BRW with some $X\stackrel d= N(0,1)$.  Fix $R\in \R$.
+\begin{itemize}
+\item
+kill two particles if they come too close: closer to $R$.
+\end{itemize}•
+Is the survival probability strictly positive?
+Even in 1-D the problem is completely open.
+
+\paragraph{Fragmentation process.} $(I_t)_{t\ge 0}$ is a collection of disjoint intervals $\subeq (0,1)$. An interval $(a,b)$ with $u=b-a$ splits  at rate $u^\al$ into $m$ subintervals $(a, a+\fc{u}{m},a+\fc{2u}m,\ldots, b)$. 
+Let $N_t(j)$ be the number of intervals $(a,b)$ at time time $t$ such that $b-a = m^{-j}$.
+
+We can see this as a multitype branching process.
+\begin{itemize}
+\item
+Multitype branching process: Types in $\N_0$. Particles die at a rate $q^j$ which depend on time, replaced by $m$ offspring of type $j+1$.
+
+Let $N_t(j)$ be the number of particles of type $j$ present at time $t$.
+\item
+The tree-indexed RW is not homogeneous anymore. On edges we have independence variables $(W_e)\stackrel d= \text{Exp}(q^n)$ if $e$ goes from level $n-1$ to level $n$.
+At time $t$, we have a certain number of particles which are present for some lifetime.
+
+Say $v$ is alive at time $t$ if $S_v\le t$, $S_{v_i}>t$ for all $1\le i\le m$ for all children $v_i$ of $v$.
+
+We can study $N_t=\sum_{n \ge 0} N_t(u)$.
+%Minimal type
+%smallest interval at time t.
+\item
+Work in progress with P. Dyszewski, S. Johnston, J. Puochno, and D. Schmid.
+\end{itemize}•
+\begin{thm}[Brennan, Durrett]
+$\E[N_t]\sim t^\be $ where $\be = \fc{\log m}{\log \rc q}$, $q=m^{-\al}$. 
+\end{thm}
+%$q$ related to $\al$.
+%number of vertices present at time t, sum over levels.
+%bound on rv's not iid but independent.
+%We believe we can refine the result.
+%limit laws
+%particle in gen g as corresponding to interval of length m^{-g}. how to translate q and alpha
+
+%heuristics on properties regarding BRW with local interactions.
+%I don't have conjecture for quantitative.
