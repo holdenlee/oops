@@ -534,3 +534,197 @@ $\E[N_t]\sim t^\be $ where $\be = \fc{\log m}{\log \rc q}$, $q=m^{-\al}$.
 
 %heuristics on properties regarding BRW with local interactions.
 %I don't have conjecture for quantitative.
+
+%\subsection{}
+%%Kristen-Stigum condition.
+%\begin{thm}
+%Take $X$ such that $\E X$ and $\E X^2=1$. 
+%Suppose that $X$ has a streteched exponential tail, i.e., $\Pj(X>t)\sim e^{-t^r}$. 
+%Then there are constants $\ga, \si, \al$ such that:
+%\begin{itemize}
+%\item
+%for $r\in (0,\fc 23]$, 
+%\begin{align*}
+%\fc{M_n-\al n^{1/r}}{\si n^{1/r-1}}
+%\end{align*}•
+%\end{itemize}•
+%%Either fluctuates or has 
+%\end{thm}
+%where exponent, behavior coming from. How to use heavy tails to your advantage?
+%
+%Let $(Z_n)$ be a Galton-Watson process with reproduction mean $m>1$. Assume for simplicity $\Pj[Z_1=0]=0$. Let $\bT\subeq \bigcup_{n\ge 0}\N^n$ be the corresponding Galton-Watson tree.
+%
+%Take $X_y$, $y\in \bT$ iid. For a vertex $x\in \bT$, $V(x) = \sum_{y\le x} X_y$. 
+%
+%The lack of exponential moments translates to the principle of ``one big jump." 
+%$\Pj[X>t]\sim e^{-t^r}$, $r\in (0,1)$ implies
+%\begin{align*}
+%\Pj[X_1+X_2>t] &\sim \Pj[\max\{X_1,X_2\}>t].
+%\end{align*}•
+%We try to get a large deviation result out of this phenomena. For $S_n = \sum_{1\le k\le n}X_k$, $X_n^*=\max_{1\le k\le n}X_k$, $\Pj[S_n>t_n]\sim$?
+%\begin{align*}
+%\Pj[S_n > cn^{1/r}] &\approx
+%\sup_s \Pj\ba{X_n^*> cn^{\rc r}-s}\Pj[S_{n-1}>s]\\
+%&\approx \sup_s n \exp\ba{-\pa{cn^{\rc r}-s}^r - \fc{s^2}{2n}}\\
+%&\approx \Pj\ba{X_n^* > cn^{\rc 3} - rc^{r-1}n^{2-\rc r}}\Pj\ba{S_{n-1}>rc^{r-1}n^{2-\rc r}}.
+%\end{align*}•
+%%Optimize.
+%The inequality can be rewritten $\fc{S_{n-1}}{\sqrt n}>rc^{r-1}n^{\fc 32-\rc r}$.
+%So $r=\fc 23$ is critical for behavior of deviations.
+%\begin{align*}
+%\Pj\ba{S_n> cn^{\rc r}} &\sim n\exp\ba{-c^r n + O(n^{3-\fc 23})}.
+%\end{align*}•
+%If $|x|=n$, then
+%\begin{align*}
+%V(x) \stackrel d S_n = \sumo kn X_k.
+%\end{align*}•
+%We get
+%\begin{align*}
+%\Pj\ba{M_n> cn^{\rc r}}&\le \E[Z_n] \Pj\ba{S_n>cn^{\rc r}}\\
+%&\sim m^n \exp\ba{-c^r n (1+o(1))}.
+%\end{align*}•
+%We want $-c^rn$ to balance out $m^n$. $\fc{M_n}{n^{\rc r}}\to \al =\log(m)^{\rc r}$.
+%
+%The first term in the asymptotic expansion of $M_n$ is related to the biggest displacement, i.e., $N_n=\max_{|y|\le n}X_y$.
+%After proper scaling, we get the Gumbel distribution with a random shift.
+%\begin{pr}
+%$$\fc{N_n-\al n^{\rc r}}{\si n^{\rc r-1}} \to^d H\stackrel d=\E[\exp\ba{-\ga' We^{-x}}].$$
+%\end{pr}
+%\begin{proof}
+%\begin{align*}
+%\Pj[N_n\le x_n] &\sim \E[\exp[-Y_n \Pj[X>x_n]]].
+%\end{align*}•
+%where $Y_n$...
+%
+%$m^{-n}Z_n$ is a positive martingale.
+%
+%%Assuming the KS condition, this will be nonnegative.
+%Take a concrete threshold $x_n = \al n^{\rc n}+\si n^{\rc r-1}x$ and compute $Y_n \Pj[X>x_n]$. 
+%Exponent $\rc r-1$ tailored so that it will cancel with derivative that comes up.
+%%Taylor expansion
+%$\al$ is taken so that $-\al^r n$ cancels with $m^n$.
+%\end{proof}
+%Concentrate on particles that had a big jump.
+%
+%When $r$ is big, see something that is almost exponential. Small $r$, small number of big jumps that contribute.
+%\begin{align*}
+%\#\set{|v|\le n}{X_v\approx \al n^{\rc r}}&\approx m^{o(n)}=\begin{cases}
+%...&...
+%\end{cases}•
+%\end{align*}•
+%
+%Color the edges green, color the edges below red. Look at paths from the greedn edges to the root. Orange: disjoint from other paths. Paint blue when meet each other.
+%\begin{align*}
+%V(x) &= \blu{R_1(x)}+{\color{orange}V_0(x)} + {\color{green}N(x)}+\redd{R_2(x)}.
+%\end{align*}•
+%Paths meet high up, blue bit is short, negligible.
+%
+%Maximum displacement grows faster than linearly. More likely happen in generation close to $n$. Red segments are short.
+%
+%Typical particles... Behavior should be asymptotically normal. Do the same optimization game. Contribution 
+%\begin{align*}
+%V_0(x) &= O(n^{2-\rc r}).
+%\end{align*}•
+%If $r<\fc 23$, $n^{2-\rc r} = o(n^{\rc r-1})$. %small compared to biggest
+%$$\fc{M_n-\al n^{\rc r}}{\si n^{\rc r-1}}\sim \fc{N_n-\al n^{\rc r}}{\si n^{\rc r-1}}\to^d H.$$
+%We can show $\fc{M_n-N_n}{n^{\rc r-1}}\to 0$. (rightmost particles vs. biggest fluctuation)
+%
+%$M_n \approx \max_x \{V_0(x) + N(x)\}$.
+%
+%What happens in the boundary case? If $r=\fc 23$, $n^{2-\rc r} = n^{\rc r-1}=\sqrt n$, so fluctuate.
+%$\cal N_x \stackrel d \Phi(\cdot)\stackrel d= \cal N(0,1)$. 
+%\begin{align*}
+%\fc{M_n-\al n^{\fc 32}}{\si\sqrt n} &\approx \max_x \bc{\fc{N(x)-\al n^{\fc 32}}{\si\sqrt n}+\rc \si \cal N_x}.
+%\end{align*}•
+%Decouple whole thing, so work with independent variables. 
+%$\fc{N(x)-...}{...}$ term transfer to $e^{-y}$, Gaussian rv transfers to $\Phi$ term. Still $c\cdot e^{-t}$.
+%
+%One big jump supplemented. Contribution hidden in constant $\ga$. Not continuous function of our parameters.
+%
+%\arxiv{2004.03871}.
+%
+%\subsection{The extremal particles of branching Brownian motion}
+%
+%\begin{itemize}
+%\item
+%Start with single particle at origin.
+%\item
+%Move like Brownian motion.
+%\item
+%At rate 1, particles split into 2.
+%\end{itemize}•
+%We are interested in the extremal particles: the few particles with highest spatial positions at large times $T$.
+%
+%We'll focus on 3 questions.
+%\begin{enumerate}
+%\item
+%Where are they?
+%\item
+%How did they get there? What is the trajectory of the particle with the highest spatial position at a large time $T$?
+%\item 
+%Are they closely related?
+%Take the two highest particles at a large time $T$. When did they most recently share a common ancestor?
+%\end{enumerate}•
+%%import results from BRW
+%$T$ is a huge time.
+%
+%Where are they? 
+%
+%Let $N_T$ be the number of particles alive at time $T$. Then $\E[N_T]=e^T$. If you consider the ratio $Z_t=\fc{N_t}{e^t}$, then $Z_t$ converges to a (random) limit. The height $Z_\iy$ is exponentially distributed with rate 1.
+%
+%According to the many-to-one formula, the expected number of particles above $y$ at time $T$ is $\E[N_T^{\ge y}] = \E[N_T] \Pj(B_T\ge y)$, where $B_T$ is position of Brownian motion at time $T$.
+%\begin{align*}
+%\E[N_T^{\ge y}] &= e^T \int_{y/\sqrt T}^\iy \rc{\sqrt{2\pi}}e^{-u^2/2}\,du.
+%\end{align*}•
+%Choose $y=y_T$ so that this quantity has order 1.
+%\begin{align*}
+%y&=\sqrt 2 T - \rc{2\sqrt 2}\log T + O(1).
+%\end{align*}•
+%Expected number of particles above is tiny, and below is huge. It is natural to guess that the highest particle in the process at time $T$ is $\sqrt 2 T - \rc{2\sqrt 2}\log T$. However, this is wrong! 
+%\begin{thm}[Bramson] 
+%The highest particle sits at $\sqrt 2 T - \fc{3}{2\sqrt 2}\log T+O(1)$ whp.
+%\end{thm}
+%On average there are loads of particles between expectation and reality, but usually there are no particles there.
+%
+%Hu and Shi: 
+%\begin{align*}
+%\limsup_t \fc{\max_T -\sqrt{2}t}{\log t}&=-\rc{2\sqrt 2}\\
+%\liminf_t \fc{\max_T -\sqrt{2}t}{\log t}&=-\fc3{2\sqrt 2}
+%\end{align*}•
+%``Hidden events" happen occasionally.
+%
+%How did they get there? 
+%We know the highest particle is near $\sqrt 2T - \fc{3}{2\sqrt 2}\log T$. A natural first guess:  The trajectory of the highest particle looks like Brownian motion conditioned on $B_T=\sqrt 2T - \fc{3}{2\sqrt 2}T$.  However, this process would occasionally go $O(\sqrt T)$ above $\sqrt 2t$. According to Hu and Hi, no one ever goes above $\sqrt t - \rc{2\sqrt 2}\log t$.
+%
+%A better guess: it shouldn't ever go above the line $\sqrt t - \rc{2\sqrt 2}\log t$.
+%
+%Theorem: Chen (2015) The past trajectory of the highest particle looks like Brownian motion conditioned to end up at $\sqrt 2T - \fc{3}{2\sqrt 2}\log T$, but conditioned to never go above the line $\sqrt t - \rc{2\sqrt 2}\log t$.
+%
+%Are they closely related?
+%
+%If we take 2 typical particles, it's not obvious when they were last related. 
+%Harris, J, and Roberts (2017)
+%Pick 2 particles uniformly at time $T$. Let $\Pi_T^{\text{UNI}}$ be the time of the common ancestor. Then
+%\begin{align*}
+%\lim_{T\to \iy} \Pj(\pi_T^{\text{UNI}}>s) &= \fc{2e^{-s}}{(1-e^{-s})^2}...
+%\end{align*}•
+%Pick particles according to Gibbs measure
+%\begin{align*}
+%\Pj^\be \pa{\text{Pick }(u,v)} &= \fc{e^{\be x_T^u}e^{\be x_T^v}}{...}
+%\end{align*}•
+%\begin{thm}[Derrida... Bovier]
+%Pick 2 different particles according to $\be$-Gibbs measure. If $\be>\sqrt 2$, then $\pi_T$ is either $O(1)$ or $T-O(1)$ with high probability (and both with positive probability). 
+%\end{thm}
+%Let $p_\be = \Pj^{\be\text{-Gibbs}}\pat{related early}$. Chen, Maduale, and Mallein calculated $p_\be$ explicitly. Poisson-Dirichlet distribution. $p_\be$ is decreasing in $\be$. $p_\be=1$ when $\be<1$.
+%Related work: Arguin, Bovier, Kistler (2011), Maduale (2017), Pain (2018).
+%
+%Recap:
+%\begin{enumerate}
+%\item
+%The highest particles are usually near $\sqrt 2T - \fc{3}{2\sqrt 2}\log T$ (but sometimes a bit higher!).
+%\item
+%Their trajectories look like Brownian bridges with repulsion.
+%\item
+%They are related either right at the start or right at the end.
+%\end{enumerate}•
+%%$\be\to \iy after T\to \iy. When $\be>2$ or $\sqrt 2$, extremely likely you pick the top 2.

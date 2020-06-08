@@ -1,0 +1,298 @@
+
+\section{Gibbsian line ensembles in integrable probability (Ivan Corwin)}
+
+Many important models in integrable probability (e.g. the KPZ equation, solvable directed polymers, ASEP, stochastic six vertex model) can be embedded into Gibbsian line ensembles. This hidden probabilistic structure provides new tools to control the behavior and asymptotics of these systems. In my first talk, I will discuss the Airy line ensemble and its origins and properties. In my second talk, I will discuss the KPZ line ensemble and explain how this structure is used to probe the temporal correlation structure of the KPZ equation. In my final talk, I will zoom out and discuss the origins of this hidden structure. 
+
+\begin{itemize}
+\item
+Webpage: \url{https://www.math.ubc.ca/Links/OOPS/abs_Corwin.php}
+\item
+Slides: \url{http://www.math.ubc.ca/Links/OOPS/slides/Corwin_1.png}
+\item
+Problems: \url{http://www.math.ubc.ca/Links/OOPS/slides/Corwin_problems.pdf}
+\end{itemize}•
+
+\subsection*{2020/6/8 Lecture 1}
+
+Message: Gibbsian line ensembles are
+\begin{itemize}
+\item
+interesting: come up in many probabilistic/combinatorial models and having (nontrivial) universal scaling limits.
+\item
+useful: tool in establishing regularity and characterizing limit behavior. %One of the themes is that if you understand marginal information, and have a gaugue property, then you get spatial and temporal regularity with a bit of work.
+\end{itemize}•
+
+Talks:
+\begin{enumerate}
+\item
+In this talk I'll focus on non-touching geometric random walk (RW) bridges and Schur process. I'll build from first principles. 
+%Not talk Gibbsian line ensemble 
+I'll talk about the structure as determinantal point process.
+\item
+Airy line ensemble, the universal object.
+\item
+KPZ line ensemble, and use it to understand temporal correlation of KPZ SPDE, a well-known stochastic PDE
+\end{enumerate}•
+
+%integrable origin, no time
+
+\subsection{Non-touching geometric random walks}
+
+Fix $M,N\ge 1$ and $a_1,\ldots, a_M;b_1,\ldots, b_N>0$, $a_ib_j<1$ (this comes from a normalization).
+
+Hold the starting and ending point constant. 
+Do a random walk, at times $1,\ldots, M+N-1$, have jumps with parameter $a_1,\ldots, a_M,b_N,\ldots, b_1$. Choose each of the jumps with a geometric distribution with the corresponding parameter.
+%For each height increase, get power the parameter to the height change.
+%Condition on ending at a certain height.
+
+More precisely, recall $X\sim \mathsf{geo}(q)$ if $\Pj(X=k)=(1-q)q^k$, $k\ge 0$. Then the $\mathsf{geo}(\vec a;\vec b)$ RW bridge is 
+\begin{align*}
+Y(s)-Y(s+1)\sim \begin{cases}
+\mathsf{geo}(a_s),&s=1,\ldots, M,\\
+\mathsf{geo}(b_{N+M-s}),&s=M,\ldots, M+N-1
+\end{cases}•
+\end{align*}•
+We consider $\{Y_i\}_{i=1}^\iy$ of $\mathsf{geo}(\vec a;\vec b)$ bridges conditioned on:
+\begin{itemize}
+\item
+$Y_i(0)=-i=Y_i(M+N)$
+\item
+Non-touching: they need to keep distance 1 apart (no touching at a corner).
+\end{itemize}•
+There are finitely many excited curves (curves that are not flat), because the number of excited curves is $\le \min\{M,N\}$, and once a curve is flat, all subsequent curves are flat.
+
+Picture when $M$ is fixed and $N\to \iy$: look at a sloped window of width $M^{2/3}$ and height $M^{1/3}$, and rescale. What happens when $M\to \iy$? As $M\to \iy$, this converges to the Airy line ensemble (which is a stationary object) minus a parabola. I'll explain this in the first 2 lectures.
+
+%nice limit shape with slope
+\begin{enumerate}
+\item
+Today we'll connect the bridge to a Schur process, and use this to relate to a determinantal point process, and get convergence for finite dimensional distributions. This proves convergence at any fixed number of times. This doesn't give functional convergence, tightness, invariance under resampling.
+\item (tomorrow)
+Tomorrow we'll show the Gibbs property, which results in tightness/functional convergence, which gives the Airy line ensemble.
+%condition on noncrossing
+\end{enumerate}•
+
+\paragraph{Schur process} It's the connection to Schur process that allows us to do calculations.
+Define $\la_i(0)\equiv 0$, and call $\la_i(s)=Y_i(s)+i$. For each $s$, $\la(s) = (\la_i(s))_i$ forms a partition:
+\begin{align*}
+\la_1(s)\ge \la_2(s) \ge\cdots \ge 0\text{ integers}
+\end{align*}•
+For example, $(4,4,2,1,1,0,0,0,\ldots)$ is a partition. 
+
+The size of a partition $\la$ is $|\la|=\sum \la_i$. 
+
+Two partitions $\la$ and $\mu$ are interlacing, $\la\ge \mu$ if $\la_1\ge \mu_1\ge \la_2\ge \mu_2\ge \cdots$
+
+A \vocab{skew Schur polynomial} in one variable $a$ is
+\begin{align*}
+S_{\la/\mu}(a) &= \one_{\la\ge \mu} \cdot a^{|\la|-|\mu|}.
+\end{align*}•
+\begin{exr}
+If $\{Y_i\}$ is a $\mathsf{geo}(\vec a;\vec b)$ bridge, then it pushes forward to a measure $\{\la_i\}$ with the following form
+\begin{align*}
+\Pj_{\vec a; \vec b}(\vec \la) &= Z(\vec a;\vec b)^{-1} \prodo iM S_{\la(s)/\la(s-1)} (a_s) \prodo sN S_{\la(M+N-s)/\la(M+N-s+1)}(b_s).
+\end{align*}•
+Here, $Z(\vec a, \vec b)$ is normalization.
+\end{exr}
+This is cumbersome but useful. We had our ensemble of curves. At each time, we form a partition by looking at the point process and doing this affine shift. The measure on this collection is given by the interlacing times $a,b$'s raised to the differences.
+\begin{exr}
+The marginal law of $\la(M)$, called the \vocab{Schur measure} is given by 
+\begin{align*}\Pj_{\vec a, \vec b}(\la(M)) &= Z(\vec a; \vec b)^{-1} s_{\la(M)}(\vec a) s_{\la(M)}(\vec b)
+\end{align*}
+where the \vocab{Schur polynomial} is
+\begin{align*}
+S_\la(\vec a) &= \sum_{(0,0,\ldots)=\phi =\la(0)\le \cdots \le \la(M)}\prodo sM S_{\la(s)/\la(s-1)} (a_s).
+\end{align*}•
+Show that 
+\begin{itemize}
+\item
+it is symmetric in the $a$ variables
+(This is not obvious; it is a beautiful fact about invariance of the system.)
+\item
+(bialternant formula) $s_\la(\vec a) = \fc{\det(a_i^{\la_j+M-j})_{i,j=1}^M}{\det(a_i^{M-j})_{i,j=1}^M}$. (These are Vandermonde determinants.)
+\item
+(partition function) $Z(\vec a; \vec b)=\prod_{i,j} (1-a_ib_j)^{-1}$. 
+Cauchy-Littlewood identity: $\sum_\la S_\la(\vec a)S_\la(\vec b) = Z(\vec a;\vec b)$. 
+
+Idea: prove something locally, 1-variable skew Cauchy-Littlewood identity. If I look at the product of 2 and sum, $\sum S_{\la/\ka}(a)S_{\mu/\ka}(b) = (1-ab)\sum_\nu S_{\nu/\la}(b) S_{\nu/\mu}(a)$. I can confirm this by hand. Interate this $mn$ times, get out a factor of $(1-ab)$ each time. Eventually you sum everything. This is a nice trick that generalizes. %this is easy to prove
+\end{itemize}•
+\end{exr}
+%This is exactly what I get by summing out.
+If I look at a middle slice, the probability can be written as a product of Schur polynomials, which themselves admit formulas with determinants. Next I'll describe the connection with determinantal point processes.
+
+The Schur process is a determinantal point process. I'll use this for asymptotics.
+
+%why geo? Nice description in terms of Schur poly, dpp.
+%Carlon-Macgregor formula
+%through that can do asymptotics
+
+%can define with arbitary jump rules
+%scaling limits, in complete generality, if have second moments, converge to Airy line ensemble
+%I don't think it's been worked out. nice to see that result
+%geometric: non-crossing, write in terms of determinants.
+
+%3
+\paragraph{Determinantal point processes}
+I'll show the Schur process is a DPP, to give asymptotics.
+\begin{thm}
+For $\la\sim \mathsf{Schur}(\vec a; \vec b)$, $\wt Y =\{\la_i-i+\rc 2\}_{i=1}^\iy$, a determinantal point process on $\Z+\rc 2$ with correlation kernel $K(i,j)$ where 
+%later show can be written explicitly with contour integrals
+\begin{align*}
+\sum_{i,j\in \Z+\rc 2} K(i,j)v^i w^{-j} &= \fc{Z(\vec a;v)Z(\vec b;w^{-1})}{Z(\vec b;v^{-1})Z(\vec a;w)}\sum_{k=\rc 2,\fc32,\ldots} \pf wv^k.
+\end{align*}
+%point process on the line
+%poisson
+%defined by the intensity. constant or function, number of points given by integral.
+%given by 2-variable function, correlation kernel.
+This means that $\forall n$, $\{x_1,\ldots, x_n\}\in \Z+\rc 2$ distinct
+\begin{align*}
+\Pj(\{x_1,\ldots, x_n\}\in \wt Y) &= \det(K(x_i,x_j))_{i,j=1}^n.
+\end{align*}•
+\end{thm}
+This will allow us to access asymptotic information about the system. The kernel is not getting more complicated as the system size grows.
+
+\begin{exr}
+\begin{align*}
+\Pj(\la_1\ge s) & =\sumz \ell\iy \fc{(-1)^\ell}{\ell!} \sum_{x_1,\ldots, x_\ell>s}\det(K(x_i,x_j))_{i,j=1}^\ell.
+\end{align*}•
+%integrate beyond point. inclusion exclusion
+\end{exr}
+There are two things left to do:
+\begin{itemize}
+\item
+Show where this formula comes from.
+\item
+Show where this formula goes (asymptotics).
+\end{itemize}•
+
+We show where this formula comes from. 
+The following theorem shows a certain class of measures is determinantal.
+%sound like rmt theor
+%progenitor of measures like the GUE from random matrix theory.
+\begin{df}
+An $N$-point biorthogonal ensemble is a probability measure on $\{x_1,\ldots, x_N\}$ of the form
+%N point correlation function
+\begin{align*}
+\Pj_N(\{x_1,\ldots, x_N\}) &= c_N \det(\phi_i(x_j))_{i,j=1}^N \det(\psi_i(x_j))_{i,j=1}^N
+\end{align*}•
+under the condition that the Gram matrix $G_{ij} = \sum_x \phi_i(x)\psi_j(x)$ is finite, so that there is a normalizing constant $c_N$.
+\end{df}
+\begin{thm}
+$\Pj_N$ is DPP with 
+\begin{align*}
+K(x,y) &= \sumo{i,j}N \phi_i(x)[G_{ij}]^{-\top} \psi_j(y)
+\end{align*}•
+\end{thm}
+\begin{exr}
+Prove this (use the Cauchy Binet theorem). %Expand in terms of products of signs of minors.
+\end{exr}
+%trace of kernel
+%density at location.
+\begin{exr}
+Apply to Schur measure (bialternate formula). Prove the $K(i,j)$ generating function formula. (Hint: use Cauchy determinant.)
+\end{exr}
+
+\paragraph{Asymptotics}
+
+What are we after? Let's go back to nonintersecting geometric random walks, and simplify by setting $M=N$, $a_i=b_j=q$, $N\nearrow \iy$. (Things actually simplify when we keep the parameters. The more parameters, the fewer options. The theory of Schur polynomials is natural. Then we degenerate.) %This is a general concept.
+
+There is a limit shape evolving, with two parts. One moving into open air, one invading the space beneath.
+
+What are some interesting questions about the picture?
+\begin{itemize}
+\item
+Limit shape.
+%midpoint. low density 1, high density 0. how interpolate
+Consider the midpoint line. How does the density interpolate from 1 to 0?
+It turns out that the bottom transition happens at $\fc{-2q}{1+q}N$; the top happens at $\fc{2q}{1-q}N$; and we can derive a formula for how it transitions.
+%easier to go up than down
+\begin{align*}
+\text{Density}(u) &= \fc{\arg(v_+)}{\pi}
+\end{align*}•
+where $v_{+/-}$ are complex conjugate roots of 
+\begin{align*}
+f'(v)&=0\\
+f(v) &= \log (1-q/v) - \log(1-qv)-u\log v.
+\end{align*}•
+(I'll try to prove this.)
+\item
+Local limits % (I won't prove this.)
+\begin{itemize}
+\item
+In the bulk, it has a limit, the discrete sine process.
+\item
+At the edge, it has a scaling limit to the Airy point process.
+It is a progenitor for proving the finite dimensional distribution results we're after.
+\end{itemize}•
+\item
+Linear statistics, large deviation principles...
+\end{itemize}•
+I'll try to explain where this comes from.
+
+$K(x,x) = \Pj(x\in \wt Y)$ is the density.
+
+Given a generating function, by using Cauchy's residue theorem, you can rewrite in terms of a double contour integral.
+\begin{exr}
+For $M=N$, $a_i=b_j=q$ for all $i,j$, letting $f(v) = \log(1-q/v) - \log(1-qv) - u\log v$.
+\begin{align*}
+K(uN,uN) &= \prc{2\pi i}^2\oint\oint \fc{\sqrt{vw}}{(v-w)vw}
+\exp\{N[f(v)-f(w)]\}\,dv\,dw
+\end{align*}•
+The contour over $w$ is a circle surrounding $q$; the contour over $v$ is outside the $w$-circle, and not containing $q^{-1}$.
+\end{exr}
+Density asymptotic: solve $f'(v)=0$. 
+%solve: distance 
+($f(v)$ as small as possible, $f(w)$ as large as possible, then can localize contribution of kernel. If I can't, I can find the main contribution. Given at critical points. So solving this is natural.)
+Solve discriminant$=0$. $u=\fc{2q}{1-q}, -\fc{2q}{1+q}$.
+\begin{itemize}
+\item
+$u>\fc{2q}{1-q}$:  Draw $\Re[f(v)]$: 
+There are 3 curves upon which is 0. See picture
+%\searrow1
+
+As long as I'm in this region, $\text{density}_N(u)\searrow 0$ exponentially fast.
+\item
+$\fc{2q}{1+q}<u<\fc{2q}{1-q}$, $v_{+/-}$ complex conjugate pairs.
+2 contours where $=0$, with 2 points of intersection, $v_+,v_-$. %+ - +. - outside
+%If $v$ contour goes into positive region, can be big. But may be oscillations. want to avoid worrying.
+Deform $v$ contour so that it sits in the $-$ region. $w$ is in the positive area. As I deformed, I encounter residues. We had $\int \fc{\sqrt{vw}}{(v-w)vw}\exp(\cdots)$. Using the residue theorem, get 
+\begin{align*}
+\text{density} &\approx \int_{v_-}^{v_+} \rc w \,dw - \int \int \cdots.
+\end{align*}•
+By the same argument as before, $\int\int\to 0$ at speed $\rc{\sqrt N}$. The first part gives $\fc{\arg(v_+)}{\pi}$.
+\item
+$u<\fc{-2q}{1+q}$. Density is $1-$(something going to 0 exponentially fast).
+\end{itemize}•
+%Summarize: We looked at this ensemble, and saw we can rewrite measure by Schur . 
+%admit DPP, because Schur poly are determinantal
+%idea about how to do asymptotics
+%not what I advertised
+%I showed easier versions of that
+%something we forgot. 
+%at beginning, use nonintersection rw.
+%nowhere did I use that
+%induce gibbs . how to resample conditioning.
+
+%today more rmt
+
+%brownian gibbs property
+%tomorrow: prob argument using gibbs property
+
+%continuum limit, q\to \iy, rescale partitions
+%det of exp, take limit of corr kernels
+%geo -> exponential (continuous)
+%or Poisson limit q to 0, nonintersection Poisson rw.
+%fix n, m\to \iy. bridges become Brownian, nonintersecting brownian bridges.
+%all accessible through same tech
+
+%Laplace's method : complex integrals. where is real contribution?
+%write in terms of $e^{}$.
+%hard: can oscillate.
+%I'd like to find where $f$ is large. $\int e^{Nf(z)}\,dz$. Problem: can spin around a circle, and cancel out.
+%Critical point: where imaginary part is not rapidly changing, can control with real part.
+
+%enforce non-crossing
+%Lvn to general, I don't think it works.
+
+%how to simulate: RSK correspondence. go from NxM matrix of geometric random variables, ij, geo(a_ib_j). easy to produce. exact combo mapping from that to ensemble of nonintersecting bridges, pushforward is schur process. rsk built as simple agloirithm. other ways as Markov dynamics, monotone coupling
+%https://arxiv.org/abs/1907.10160
