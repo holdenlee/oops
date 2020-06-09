@@ -1,6 +1,7 @@
 # Complied source #
 ###################
 
+*.pdf
 *.exe
 *.hi
 *.o
@@ -46,3 +47,7 @@ bower_components
 dist
 output
 .stack-work
+
+# Other
+
+Corwin_1.png

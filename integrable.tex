@@ -296,3 +296,524 @@ $u<\fc{-2q}{1+q}$. Density is $1-$(something going to 0 exponentially fast).
 
 %how to simulate: RSK correspondence. go from NxM matrix of geometric random variables, ij, geo(a_ib_j). easy to produce. exact combo mapping from that to ensemble of nonintersecting bridges, pushforward is schur process. rsk built as simple agloirithm. other ways as Markov dynamics, monotone coupling
 %https://arxiv.org/abs/1907.10160
+
+\subsection*{2020/6/9 Lecture 2}
+\subsection{Airy line ensemble}
+
+%last time: dpp
+%line ensemble from perspective of gibbs property
+%functional objects
+
+%other ensembles with useful gibbs property
+%apply to question on temporal correlations.
+
+%condition nontouching, start off staggered by 1
+%eventually terminate in flat paths. limit shape that arises
+%N, 2N
+
+Top live at $\fc{2q}{1-q}N$.
+Bottom live at $\fc{-2q}{1+q}N$.
+Study the edge of the ensemble, get Airy line ensemble. Take window of length $N^{2/3}$, (mesoscopic compared to the order $N$) and height $N^{1/3}$. Take a finite number of times, subtract off a parabola to center, showed convergence of the finite dimensional distribution to limiting DPP.
+
+Call the limiting ensemble $\cL_1,\cL_2,\ldots$ (starting from the top curve). We don't know there exists a continuous distribution. Prove convergence of random walk, start with finite dimensional distributions, then strengthen to functional CLT. How to strengthen from FDD to functional CLT?
+
+Let $\cal A_i(\cdot)=\cL_i(\cdot)+x^2$. The $\{\cal A_i\}$ are the Airy line ensemble. %(The original curves are the Airy line ensemble minus a parabola.)
+There are constants. % depend on location. 
+The reason you have parabolic behavior because the limiting shape has nonvanishing second derivative.
+
+\begin{thm}
+\begin{itemize}
+\item
+The above convergence can be strengthened to hold for curves, in locally uniform on compacts topology.
+\item
+The Airy line ensemble 
+$\cal A_i=\cL_i(x)+x^2$ is stationary process in $x$, with DPP FDD's.
+%collection of random curves
+\item
+$\cL$ enjoys non-intersecting Brownian Gibbs property:\footnote{This comes from conditioning random walks from non-intersection. The property translates into the limit.} %was exactly present in the 
+
+Fix $k_1\le k_2$, $a<b$. Then 
+\begin{align*}
+&\text{Law}(\cL_{[k_1,k_2]}[a,b]|\si_{\text{ext}})\\
+&= \text{Law}(\cL_{[k_1,k_2]}[a,b]|\si_{\text{boundary}})\\
+&= \text{Law}(k_2-k_1+1\text{ Brownian bridges conditioned on non-int. with themselves and }\cL_{k_1-1}[a,b],\cL_{k_2-1}[a,b])
+\end{align*}
+Here, $\si_{\text{ext}}$ has all information external to $\cL_{[k_1,k_2]}[a,b]$, and the first inequality says the only dependence is on boundary data.
+\end{itemize}•
+\end{thm}
+This is why it's called a Gibbs property. In lattice models, if you restrict to a region, the measure inside only depends on the boundary. There are only local interactions.
+
+%Vertical variable is index of curve. Horizontal variable is time, continuous.
+
+We'll sketch a ``proof" of this theorem from geometric RW and give applications.
+
+\begin{exr}
+A Brownian bridge (BB) enjoys a simple Brownian Gibbs property. The law between $a,b$ is the Brownian bridge connecting the endpoints.
+
+Use this to prove a.s. uniqueness of maximizer of BB.
+%stochastic analysis
+\end{exr}
+
+One of the reasons the Giibs inequality is so useful is that it gives rise to a comparison inequality. 
+There are others, like a FKG inequality that holds for this model, but I'll talk about this particular inequality
+%\begin{enumerate}
+%\item
+\subsubsection{Stochastic monotonicity}
+
+%Measure of all pairs of B
+If boundary data is coupled, then the same holds true for the law of nonintersecting Brownian bridge measure:
+If one set of boundary data is $\ge$ another set, then we can couple the conditional measures on Brownian bridges to also be ordered.
+
+A similar monotonicity holds for non-touching geo RW bridges.
+
+%lowest datat that will connect
+%run MC now
+%init condition ordered
+%MCMC, Metropolis dynamics to update configurations, in way that ... ordering.
+Poisson clock(x,k): When it rings, I flip a coin and change the height of each curve by $\pm 1$ if it leads to non-touching.
+%midpoint rings, +1
+(Doing that for one curve might violate non-touching, then for that curve I don't make the move; but if another doesn't violate, then move that one.)
+\begin{exr}
+\begin{itemize}
+\item
+Show this preserves order.
+\item
+Invariant measure $=$ geometric RW bridge on touching.
+%does it occur for other RW?
+\footnote{For general random walks, the condition on existence of this coupling is log-convexity.}
+%worked out in continuous context
+\end{itemize}•
+\end{exr}
+\begin{exr}
+Find a discrete RW (with 3 different choices) which violates stochastic monotonicity. In particular, for a 2-step bridge going from $0\to 0$ and $0\to 1$, there doesn't exist a coupling such that the bridge $0\to 0$ is $\le$ the bridge $0\to 1$.
+\end{exr}
+%\item 
+%Construct the Airy line ensemble (4 steps)
+%
+%Step 1: FDD convergence (Schur process). 
+%\end{enumerate}•
+
+\subsubsection{Construct the Airy line ensemble (4 steps)}
+
+\paragraph{Step 1: FDD convergence (Schur process). }
+
+This doesn't rule out exceptional behavior at random times.
+
+%spurious events occurring at random times
+
+\paragraph{Step 2: No big max.} Show on $[a,b]$ the top curve cannot get too high.
+%et indexed by N. of geo rand walk
+%tightness.
+%what happens in between doesn't blow up either.
+%stoch monotonicity translates to lower curve
+
+Consider a top curve between $a$ and $b$. Let's say that ``high" means getting to $R$. 
+%I'll argue that they sit 
+Define a stopping time $\chi$, the first time between $a$ and $\fc{a+b}2$ that I exceed $R$, 
+\begin{align*}
+\chi &= \inf_{x\in [0,\fc{a+b}2]}\set{x}{\cL_1^{(N)}\ge R}.
+\end{align*}•
+(By continuity, it equals $R$ at that point.) Say the surve is above $-R$.
+The Gibbs property holds true for random times, the Strong Gibbs property. 
+%knowledge of where it is is measurable with respect to the external field. 
+$[\chi, b]$ is a stopping domain: knowledge of where it is is measurable with respect to the external field. 
+The Strong Gibbs property says that on $[\chi,b]$, the law is that of the BB with $BB(\chi)=R$, $BB(b)=\cL_1^{(N)}(b)$ and on avoiding $\cL_2^{(N)}[\chi,b]$. 
+
+If $\chi$ exists there is a big max. We show that it's unlikely that $\chi$ exists.
+
+If we drop $\cL_2^{(N)}$, then the BB drops.
+On the event $\chi$ existing, look at what happens in between, and compare it to the linear interpolation between $\chi$ and $b$. The slope is bounded below. 
+
+%at midpoint, >R/2
+A BB has probability $\rc2$ of exceeding its linear %midpoint 
+interpolation at any given time. There is 50\% chance it will exceed linear interpolation $R/2$  at the midpoint $\fc{a+b}2$. On the event $\chi$ exists, it exceed $R/2$ with probability $\ge \rc 2$. Exactly distributed as original line ensemble. By tightness, probability is going to 0. So 
+\begin{align*}
+\Pj(\chi\text{ exist}) &\ge 2\Pj\pa{\cL_2\pf{a+b}2\ge \fc R2}.
+\end{align*}•
+The probability $\chi_1\pf{a+b}2\to 0$ as $R\to \iy$.
+
+\begin{exr}
+Use this argument to show that for BB with $B(0)=B(1)=0$, 
+\begin{align*}
+\Pj\pa{\max_{[0,\rc 2]} B(s)\ge R}&\le \Pj(B(1/2)\ge R/2).
+\end{align*}•
+\end{exr}
+%rule out jump up high, control using behavior at midpoint.
+
+%big max somewhere imply big max at deterministic location.
+%search half of space , big there implies big at boundary.
+
+We still need to establish tightness, not just that the max is not getting large. We need to argue curves are not getting too steep, because we want the distribution to be on continuous paths. 
+Paths converge to something with absolutely continuous Radon-Nikodym derivative wrt Brownian motion.
+
+\paragraph{Step 3: Good separation.}
+
+If curves are not separated, Gibbs curve will sample small space, and there could be exceptional behavior.
+
+%Suppose boundary conditions have good separation.
+
+At two points, we have good separation.
+This can be proved in two ways, using the Gibbs property, or DPP.
+
+I want to argue I can take a little block with some width, and stick it between the bottom curve and point. 
+Otherwise, the bottom curve becomes steeper, pushes itself up steeply, so we have issues (discontinuity) in limit. I need to rule this out.
+
+%Forget these blocks.
+Insert block at midpoint, spacer.
+
+Shift picture over, and show it's true at $a,b$.
+
+To show it's true at midpoint, use monotonicity argument.
+%replace by... at fininte part of interval
+Replace by a needle with sits at the midpoint, or the curve at the interval of the block.
+The most the curves will drop is at most that conditioned on avoiding the interval. 
+
+This gives the following type of problem. 
+Take a Brownian bridge, add a spike in the middle, condition to go above spike. You want to show that the distance between the spike and the BB isn't going to 0. It's not 0 as long as the height of the spike is bounded by $R$.
+%You need to argue 
+There's an argument there. 
+
+Then you have the blockers.
+%logconcavity
+%https://arxiv.org/pdf/1312.2600.pdf
+%monotone coupling in S8.2 of KPZ ensemble, (143)
+
+\paragraph{Step 4: Extract limit}
+%RND
+Show that the Radon-Nikodym derivative
+\begin{align*}
+\dd{\text{conditional measure}}{\text{free RWs}} &= \fc{\one_{\text{acceptance}}}{\Pj\pat{acceptance}}.
+\end{align*}•
+%normalize by prob of acceptance
+Once I have good separation between paths, that implies tightness of the acceptance probability.
+The argument is that once I have blockers, I can force my paths into places that don't intersect.
+Force up into good region above $R$, and will avoid the bottom curve. So I have strictly positive probability of acceptance that will stay positive in the limit.
+
+This implies tightness of the conditional measure. 
+%tightness of RW measure.
+
+Tightness of conditional measure and FDD implies functional convergence.
+
+The Airy$-x^2$ has non-intersection BGP.
+
+There's a lot of details.
+
+\subsubsection{Application}
+We went from discrete time regularity to regularity of the ensemble.
+As an application:
+\begin{thm}
+The top curve %Airy 2-process
+$\cL_1(x) = \cA_1(x)-x^2$ has a unique maximizer.
+%johannsen
+\end{thm}
+The exercise was to show BB has the same property.  Once we know this, all we need to do is the following.
+Take a big interval $[-R,R]$. The values there are small. 
+%conditioned on second curve. stay above.
+Top curve a.s. has unique maximizer. With probability $\to0$, there is no maximizer outside the interval. 
+Show you're likely to be high $>-R^2/2$ in the middle, and likely to never go $>-R^2/2$ beyond $\pm R$. 
+Take the union bound over intervals $[R,R+1]$, $[R+1,R+2]$,... 
+Adapt the no big max approach. We need the probabilities to be absolutely summable, use tail bounds. $\cL_1(0)$ is distributed according to the Tracy-Widom GUE, 
+\begin{align*}
+\Pj(\cL_1(0)\ge s) &\le e^{-cs^{3/2}}\\
+\Pj(\cL_1(0)\le s) &\le e^{-cs^3}.
+\end{align*}•
+We can also prove a localization result, $\Pj(|\text{maximizer}|>R) \le e^{-cR^3}$.
+\begin{exr}
+Fill in details.
+\end{exr}
+%discrete time continuous space
+
+%blocks in good sep step
+
+%I needed to argue that $\rc{\Pj\pat{acceptance}}$ is tight as $N\to \iy$. What does it mean for a probability to be tight? The probability is actually a random variable.
+%Look at the conditional distribution that a BB starting at $a$ ending at $b$ will not touch the second curve.
+%if big max, force up wouldn't be tight.
+%separation rule out another issue. derivative  high around a, becomes steep for a while.
+%what keeps the second curve doing such a crazy thing?
+%devil's teeth.
+%third curve also doing
+%rule out acceptance prob low: most BB paths don't dodge like this.
+
+%use that interval, can jump high in that interval
+%as long as time $\eta$ to go up, 
+
+%is there an easy modification of the non-touching RW model to make appear the other symmetry class GOE/GSE or even GbetaE?
+%general beta, no Gibbs property. 
+%Dyson beta, gauge transform, not true for other beta
+%versions of ... related to
+%best=1,2
+%halfspace line ensembles
+%0, paths from 0
+
+\subsection*{2020/6/9 Lecture 3}
+
+\subsection{KPZ line ensemble}
+The law itself is a random variable, measurable with respect to everything external.
+
+There are other line ensembles with other Gibbs properties.
+
+Another continuum, line ensemble that doesn't have such a strict condition of ordering of paths.
+
+I'll talk about something that has a soft Brownian Gibbs property (BGP), the KPZ line ensemble. 
+
+Constructing infinite-volume Gibbs measures is not easy, it often takes a lot of work. You shouldn't think that if I specify any Gibbs property, there exists an infinite-volume version of it.
+I won't give the construction, it goes though more sophisticated methods than the Schur process.
+
+Then I'll use the KPZ line ensemble to give temporal correlation of the KPZ equation.
+
+\subsubsection{KPZ line ensemble}
+
+Unlike the Airy line ensemble,
+%define in terms of finite dim dist
+as a stochastic process, I can't define it as a function of iid noise. 
+This admits a description in terms of spacetime white noise.
+
+Let $\xi(t,x)$ be Gaussian spacetime white noise.
+%little bit of stochastic PDEs.
+%1d white noice. cov
+
+An impressionistic definition of spacetime white noise: If I have 2 regions, the covariance of the integrals is the area of the overlap. $\si(t,x)$ is a generalized function with negative regularity. 
+
+I'll define something related to directed polymers. For $k=0$, let $Z_0(t,x)\equiv \one$; for $k\ge 1$ consider $k$ nonintersecting Brownian bridges $b_1,\ldots, b_k$ from $(0,0)$ to $(t,x)$. (A little work is needed to define that.)
+%A little work needed to define that. condition on nonintersecting epsilon apart, take limit.
+%imagine as poisson  point process. weak limit of that
+\begin{align*}
+Z_k(t,x) :&= p(t,x)^k
+%heat kernel to kth power
+\E_{b_1,\ldots, b_k} \ba{:\exp: \bc{\sumo jk \int_0^t \xi(s,b_j)\,ds}}.
+%integral of white noise along path
+\end{align*}•
+This is a continuum partition function. The noise is not a continuous function, so it's hard to integrate along a random path. Consider smoothing the noise: replace $\xi$ by the mollified $\xi_\ep = \xi*\de_\ep$. %$\ep$ wide
+There is some regularization that makes this a martingale:
+\begin{align*}
+:\exp:\text{ means }
+\exp\bc{\int_0^t\xi_\ep(\cdot) - \de_\ep*\de_\ep(0)t/2} \text{ as }\ep\searrow 0
+\end{align*}•
+I won't use this description, I'll use a fact about it which can be proved independently.
+$Z=Z_1$ soles the SHE
+\begin{align*}
+\pl_t Z &= \rc2 \pl_{xx} Z+\xi Z
+\end{align*}•
+(HJ equation with additive white noise)
+This is related to directed polymers, related to Branching/dying RWs in random environments, density evolution in random environment in algae or disease.
+$h=\log Z_1$ solves the KPZ equation
+\begin{align*}
+\pl_t h &= \rc 2\pl_{xx}h + \rc2 (\pl_xh)^2 + \xi,
+\end{align*}•
+about stochastic interface grown.
+For $k\ge 1$, $t$ fixed, define KPZ$^t$ line ensemble
+\begin{align*}
+h_k^{(t)} (x) &= \log\pf{Z_k(t,x)}{Z_{k-1}(t,x)}.
+\end{align*}•
+In particular, $h_1^{(t)}=h(t,x)$ is exactly the KPZ (``narrow wedge"). 
+
+Look at the collection $\{h_k^{(t)}(\cdot)\}_{k=1}^\iy$. They are not necessarily ordered. They are parabolic because $h(x)+x^2$ %x^2/2?
+is stationary in $x$. This is a cute way to see it: in the definition of $Z_K$, there is the heat kernel $p(t,x) = \rc{\sqrt{2\pi t}}e^{-x^2/(2t)}$. If I do an affine shift, I get back the law of $k$ BB's with different starting and ending points. White noise is also invariant to the shear. Stationarity is easy. The important point is that there is a hidden symmetry/invariant. 
+
+Going to the enhanced structure---looking at the bigger structure, embedding in the bigger ensemble---I have a Gibbs property.
+\begin{thm}
+For $t$ fixed, KPZ$^t$ line ensemble has a soft BGP:
+For any $k_1\le k_2$ and $a<b$ the law of $h_{[k_1,k_2]}^t[a,b]$ given $\si_{\text{ext}}$ only depends on the boundary data $h_{k_1-1}^t [a,b]$, $h_{k_2+1}^t[a,b]$, and is invariant under the following resampling procedure.
+
+Choose $\cal U\sim \mathsf{Unif}[0,1]$ and sample $k_2-k_1+1$ non-intersecting Brownian bridges (non-intersecting with themselves) $b_{[k_1,k_2]}$ from $h_{[k_1,k_2]}^t (a)$ to $h_{[k_1,k_2]}^t(b)$. %look between each pair, compute interaction energy
+
+Accept the first set of bridges for which 
+\begin{align*}
+\cal U&\le 
+\exp\bc{
+\sum_{k=k_1}^{k_2}\int_a^b H(h_{k-1}^t(s)-b_k(s)) + H(b_k(s)-h_{k+1}^t(s))\,ds
+}%gibbs weight by exp
+\end{align*}•
+where $H(x)=H_1(x)$, $H_r(x)=e^{-rx}$. 
+\end{thm}
+Consider the case when $r=\iy$. 
+Then the energy is 0 if x positive, $\iy$ if x negative.
+Depending on the order, we get no energy, or infinite energy
+If in order, no energy, if out of order, infinite energy.
+If every go out of order, RHS is 0.
+This recovers the nonintersecting property.
+In the case of finite $r$ we get penalization in exponential form, integrated over time out of order.
+Another way to interpret the formula is that it's a Radon-Nikodym derivative.
+
+\begin{conj}
+If we scale transversally $t^{2/3}$ and vertically $t^{1/3}$ we get a line ensemble which has the $H_{t^{1/3}}$ BGP. As $t\nearrow \iy$ this should converge to the Airy line ensemble minus parabola which has the $H_\iy$ BGP.
+\end{conj}
+%Top curve, 1 point distribution, converge to the 1 point distribution of the Airy line enseble. %TW GUE. 
+%If we had uniqueness, using Gibbs property, we can extract out the KPZ.
+%We don't know how to prove the uniqueness of the limit.
+
+We know one point convergence of top curve.
+\begin{thm}
+...%\frac{h(t,0)+\fc{t}{24}}{t^{1/3}}
+\end{thm}
+\subsubsection{KPZ equation temporal correlation}
+
+%How does KPZ growth decorrelate?
+
+It models growth interfaces. There are bumps that propagate in time and die out. How does KPZ growth decorrelate in (a long) time? 
+The KPZ equation is a universal model, but its universality is in its long-time behavior.
+
+Belief: correlation decays in $\ep^{-3}t$ time scale, vary transversally $\ep^{-2}x$, scale of fluctuations is $\ep^{-1}$. The $2/3$, $1/3$ we saw earlier is here as well.
+
+So we expect a nice scaling limit under this scaling:
+\begin{df}
+Define 3:2:1 scaled KPZ equation
+\begin{align*}
+h_\ep(t,x):&= \ep'\ba{h(\ep^{-3}t,\ep^{-2}t)+\fc{\ep^{-3}t}{24}}
+\end{align*}•
+\end{df}
+We know one point GUE-TW convergence and (via $H_1$-BGP) spatial tightness. What about temporal behavior?
+
+%spatial tightness
+%here is some lichen doing its best to model the math problab.ca/louigi/temp/lichen.jpg
+
+\begin{align*}
+\Corr(X,Y) &= \fc{\E[(X-\ol X)(Y-\ol Y)]}{\sqrt{\Var(X)\Var(Y)}}
+\end{align*}•
+%correlation between height fluctuation at 1, 1+\be
+%as \be\to 0, \to 1. as \be \to \iy, \to 0.
+%could be weird if scaling wrong, miss the transition between correlated and uncorrelated.
+%this shows that 3 is the right exponent.
+\begin{thm}
+For $\ep\searrow 0$, 
+\begin{align*}
+\Corr(h_\ep(1,0),h_\ep(1+\be)) &\approx
+\begin{cases}
+\Te(\be^{-1/3})&\text{as }\be\nearrow \iy\text{ (remote)}\\
+\Te(\be^{2/3})&\text{as }\be\nearrow \iy\text{ (remote)}\\
+\end{cases}•
+\end{align*}•
+and any subsequential limit of $h_\ep(1,x)$ is H\"older $\rc2-$ in space and $\rc 3-$ in time. 
+\end{thm}
+%holder cont in space 1/2
+%1/3 in time
+%different smoothness time in short scale and longscale
+%different beast
+(conjecture...)
+
+\subsubsection{Idea of proof}
+
+Three ingredients:
+\begin{enumerate}
+\item
+Two-time variational formula. 
+
+Show relation between 2 times. 
+\item
+Use KPZ$^t$ line ensemble to study.
+\item
+One point tail bounds.
+\end{enumerate}•
+
+\paragraph{(1) Variational formula:} For $s<t$ and $x,y\in \R$, let
+\begin{align*}
+Z(s,x;t,y) &- \E_{b(s)=x, b(t)=y} \ba{
+:\exp: \bc{
+\int_s^t \xi(t,b(r))\,dr
+}
+}
+\end{align*}•
+Then for every $s<t$, (Chapman-Kolmogorov property)
+\begin{align*}
+Z(t,y) &= Z(0,0;t,y) = \int_{\R} Z(0,0;s,x) Z(s,x;t,y) \,dx
+\end{align*}•
+%additive, split up. spacetime white noise indepdent
+%i fno noise, just semigroup property
+The two $Z$'s are independent. 
+%Time $t$ to time $x$.
+%reversible. 
+
+Expressing everything in terms of $h$ we get
+\begin{align*}
+\text{Law}\{h_\ep(1,0), h_\ep(1+\be,0)\} &= \text{Law} \bc{
+h_\ep(1,0),\sup_x {}_\ep(h_\ep(1,x), \wt h_\ep(\be,-x))
+}
+\end{align*}•
+where $\wt h_\ep(\be,\cdot)\stackrel d=\be^{1/3} h_{\be^{1/3}\ep}(1,\be^{-2/3})$ (independent copy) and
+\begin{align*}
+\sup_x{}_\ep f(x) :&= \ep \log\pa{\int_\R e^{\ep^{-1}f(\ep^2x)}\,dx}\xra{\ep\searrow 0} \sup_x \be(x).
+\end{align*}•
+See pic.
+%2 indep solutions, 1 scale in diffusive manner wrt 
+%if \be large, 2nd indep curve getting wider.
+%location of maximizer stays tight. It doesn't scale away with $\epsilon$.
+%The maximizer. 
+%value at 0 and x^* not too different. If I can do, then can control the correlation.
+%joint distribution, value of 0 of bottom, and the sum at maximizer $x^*$. 
+Let's imagine $\sup_\ep\to \sup$ and consider Airy $\cL$ instead on $h_\ep$. Focus on $\be\nearrow \iy$ case:
+\begin{align*}
+\Corr(\cL(0),\cL(x^*)+\be^{1/3}\wt (\be^{-2/3}x^*))
+\end{align*}•
+Everything boils down to controlling small-scale oscillations.
+\subsubsection{Small scale oscillations}
+Claim:
+\begin{align*}
+\Pj\pa{\sup_{x\in [0,\eta]} |\cL(0)-\cL(\eta)|\ge s\eta^{1/2}||\cL\{-2+\eta,0,\eta,2\}|\le s}
+&\le ce^{-cs^2}.
+\end{align*}•
+%right scale for brownian motion
+(Condition on 4 deterministic times. Pay a small amount to control. That I can do using tail bounds.)
+Extreme jumps on small intervals has Gaussian-type decay.
+Two parts:
+
+\paragraph{Fall:} %Top curve of line ensemble. Value at 0, 2 controllable. 
+%2nd curve prop up 1st curve.
+%if remove, drop, at most to being brownian bridge.
+%slope is at most s
+%BB with slope s, on small 0 to eta interval, decrase by >s\eta^{1/2} is exponentially small.
+%scaling os slope is $\eta^{1/2}$. For $s$ small, $s\ll \eta^{1/2}$. This shows prob of quick fall is gaussianly small.
+
+\paragraph{Rise:}
+%monotonicity doesn't help us. 2nd curve props up, may induce rise. No big max ruled out getting big at random time. Beneath can push you up. If happens, then something bad at deterministic time.
+%bounded below by brownian bridge, 1/2 chance...
+%stopping time unlikely
+%use strong gibbs property on \chi,2. A change between 0 and \eta by $s\eta^{1/2}$ is still a big change, unlikely by reversed fall argument.
+
+
+%prob tools and integrable tools
+\subsubsection{Questions and directions}
+
+\begin{itemize}
+\item
+Origins and other integrable Gibbsian line ensembles:
+
+All stochastic vertex models and their degenerations can be embedded as top curve of discrete Gibbsian line ensembles. Consequence of dynamics which preserve spin HL/q-Whitter process
+%whittaker?
+%tool: even if don't know how to take asympts, can take limit
+\item
+Other initial data:
+\begin{itemize}
+\item
+One point distribution expressible via variational formula
+\item
+Hammond's Patchwork Quilt
+\item
+Dauvergne-Orthman-Virag construct Airy sheet from Airy line ensemble
+%Airy line ensemble is the central object
+\end{itemize}•
+Airy line ensemble contains the entire KPZ fixed point.
+\item
+Uniqueness:
+
+Conjectured that Airy line ensemble is characterized by its Gibbs property, stationarity, and ergocidicity.
+%shift mode out by
+%nice, show that things go to ALS without needing to study formulas.
+
+Dimitrov-Matetshi prove it is characterized by its top curve and the Gibbs property.
+%if only prove top converge, can show for entire
+\end{itemize}•
+
+%https://web-eur.cvent.com/event/44bdce4a-9414-4c7f-928f-4ea3e4985835/summary?RefId=Fellows
+
+%nonint RW/BM in presence of wall
+%spatial invariance issue
+
+%other line ensembles constructed with other kernels appearing in RMT (sine, Pearcey, Bessel), included in Gibbsian line ensembles?
+
+%reps in DPP
+%in terms of Gibbs properties
+%how understand relationship between DPP/Gibb
+%functionals of nonintersecting line ensembles
+
+%rewrite DPP in terms of how act on curve on multiplicative functionals
+%Gibbs properties...
