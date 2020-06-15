@@ -1,0 +1,191 @@
+\section{Mixing and hitting times for Markov chains (Perla Sousi)}
+
+Mixing times for Markov chains is an active area of research in modern probability and it lies at the interface of mathematics, statistical physics and theoretical computer science. The mixing time of a Markov chain is defined to be the time it takes to come close to equilibrium. There is a variety of techniques used to estimate mixing times, coming from probability, representation theory and spectral theory. In this mini course I will focus on probabilistic techniques and in particular, I will present some recent results (see references below) on connections between mixing times and hitting times of large sets. 
+
+Website: \url{https://www.math.ubc.ca/Links/OOPS/abs_Sousi.php}
+
+\subsection*{2020/6/15 Lecture 1}
+
+I'll cover results from 3 papers.
+\begin{enumerate}
+\item
+Equivalence (up to constants) between mixing times and hitting times of large sets
+\item
+Hitting times: comparison for different sizes of sets
+\item
+Refined mixing and hitting equivalence
+\end{enumerate}•
+
+Let $X$ be an irreducible Markov chain in a finite state space $S$. (You can go from any state to any other state in a finite number of steps with positive probability.) Let $P$ be the transition matrix of $X$. 
+Let $P^t(i,j)=\Pj_i(X_t=j)$ for all $i,j\in S$ (starting at $i$, get to $j$ in $t$ steps. 
+
+There exists an invariant distribution $\pi$, $\pi=\pi P$. 
+If $X$ is also aperiodic, then $P^t(x,y)\to \pi(y)$ as $t\to \iy$, forall $x,y$. 
+
+We use the total variation distance. Let $\mu$ and $\nu$ be 2 probability distributions on $S$. Let 
+\begin{align*}
+\ve{\mu - \nu}_{TV}=\max_{A\sub S}|\mu(A)-\nu(A)|.
+\end{align*}•
+Let
+\begin{align*}
+d(t) &= \max_x\ve{P^t(x,\cdot)-\pi}_{TV}.
+\end{align*}•
+(Take over the worst starting state.). For all $\ep\in (0,1)$, 
+\begin{align*}
+t_{\text{mix}} &= \min \set{t\ge 0}{d(t)\le \ep}.
+\end{align*}•
+Define $t_{\text{mix}}\prc4$. 
+
+$X$ is called \vocab{reversible} if from the stationary distribution, running the Markov chain forwards or backwards in time is indistinguishable: for all $x,y$,
+\begin{align*}
+\pi(x)P(x,y) &= \pi(y)P(y,x).
+\end{align*}•
+I'll mostly talk about the reversible case.
+
+We always consider the lazy verion of the chain. The lazy version of $X$: either stay with probability $\rc 2$, or choose a state with respect to the transition matrix. So $P_L = \fc{P+I}2$.
+
+\begin{thm}[Oliveira, Peres-S, 2012]\label{t:mc1}
+For all $\al<\rc2$, there exist positive constants $c_\al$ and $c_\al'$ such that for all reversible  lazy Markov chains,
+\begin{align*}
+c_\al t_H(\al)&\le t_{\text{mix}} \le c_\al' t_H(\al).
+\end{align*}•
+\end{thm}
+Here $t_H(\al)$ is the maximum hitting time of sets of size at least $\al$.
+I will also write this as $t_{\max}\asymp_\al t_H(\al)$. 
+The lower inequality is the easy version: if we don't hit a big set, we cannot be mixed. The upper inequality is nontrivial, and where all of the work goes.
+
+\begin{proof}[Proof of Theorem~\ref{t:mc1}, lower bound]
+We show $t_{\text{mix}}\ge c_\al t_H(\al)$. We take $\al=\rc 8$, to make calculations easier.
+
+We show $t:=t_{\text{mix}}\prc 16\le 3t_{\text{mix}}$. Use submultiplicative (see notes on webpage), lose a factor of 2.
+
+For all $x, A$, $P^t(x,A)\ge \pi(A)-\rc{16}$. Take $A$ with $\pi(A)\ge \rc 8$, then $P^t(x,A)\ge \rc{16}$ for all $x$. 
+
+So $\tau_A \le t\cdot \text{Geo}\prc{16}$: if we haven't hit $A$ after time $t$, we have $\ge \rc{16}$ chance of hitting it in the next $t$ steps, and so on. 
+%perform an independent experiment
+Hence $\max_x \E_x[\tau_A]\le 16t$. 
+\end{proof}
+(The lower bound doesn't need reversibility.)
+Related result: Aldous in 1982 showed that for all reversible lazy MC's,
+\begin{align*}
+t_{\text{mix}} \asymp \max_{x,A}\pi(A) \E_x[\tau_A]
+\end{align*}•
+(He showed it for continuous MC, but this is similar to a lazy MC.)
+%hitting time for lazy and nonlazy MC a factor 1/2 apart.
+%balance out, small times big.
+Where is this maximum actually attained? The theorem says it is attained at large sets.
+
+\begin{rem}
+Reversibility is essential!
+\end{rem}
+\begin{exr}
+Consider a biased RW on $\Z_n$ (with laziness). With probability $\rc 3$ move to $i-1$, with probability $\fc23$ move to $i+1$, and take $P_L = \fc{P+I}2$. 
+
+Show $t_{\text{mix}}\asymp n^2$ and for all $\al$, $t_H(\al)\asymp n$. 
+
+This is a counterexample when the chain is not reversible.
+\end{exr}
+%constants explode as constant go to 1/2
+\begin{rem}
+If $\al>\rc 2$, then the theorem is false. The constants explose as the constant $\nearrow \rc2$.
+\end{rem}
+
+\begin{exr}
+Consider $K_n$ and $K_n$ joined by an edge.
+Show that $t_{\text{mix}}\asymp n^2$ and $t_H(\al)\asymp n$ if $\al>\rc2$.
+\end{exr}
+%another notion of mixing.
+%total variation before
+\begin{df}[Mixing at a geometric time]
+Let $Z_t$ be a geometric r.v. of parameter $\rc t$ taking values in $\{1,\ldots\}$ and independent of $X$. 
+Define $d_G(t)=\max_x\ve{P_x(X_{Z_t}=\cdot) - \pi}_{TV}$ and $t_G=\min\set{t\ge 0}{d_G(t)\le \rc 4}$ as the \vocab{geometric mixing time}.
+\end{df}
+%tails of hitting times of large sets
+%random time expectation order t.
+%If instead of $Z_t$ being geometric, we consider a uniform random variable
+\begin{rem}
+If instead of geometric, we take $U_t$ to be uniform on $\{1,\ldots,t\}$, then this gives rise to \vocab{Cesaro mixing time}.
+\end{rem}
+\begin{exr}
+Show that $d_G(t)$ is decreasing in $t$.
+\end{exr}
+This is not true of the Cesaro mixing time.
+\begin{thm}\label{t:mc2}
+For all (lazy) reversible chains, $t_G\asymp t_{\text{mix}}$.
+\end{thm}
+The ideas come from Aldous, and Lov\'asz and Winkler.
+\begin{thm}\label{t:mc3}
+For all chains (not necessarily lazy), $t_G\asymp_\al t_H(\al)$ for all $\al<\rc 2$.
+\end{thm}
+\begin{proof}[Proof of Theorem~\ref{t:mc1}, upper bound]
+Immediate from Theorems~\ref{t:mc2} amd~\ref{t:mc3}.
+\end{proof}
+\begin{proof}[Proof of Theorem~\ref{t:mc3}]
+$t_G\gtrsim_\al t_H(\al)$ is easy. 
+
+We prove $t_G\lesssim_\al t_H(\al)$. Take $\al=\rc8$.
+
+Let $t<t_G$.
+We want to find a set $B$  with $\pi(B)\ge \rc 8$ such that $\max_x\E_x[\tau_B]\ge \te t$ for some positive constant $\te$. 
+
+$t<t_G$ means that there exist $z,A$ such that $\Pj_z(X_{Z_t}\in A)< \pi(A)-\rc 4$.
+We automatically get that $\pi(A)>\rc 4$. This is not the set $B$, but will be used to define $B$.
+
+Define $B=\set{y}{\Pj_y(X_{Z_t}\in A)\ge \pi(A)-\rc 8}$. 
+%A lot of starting points bad for $A$ in this sense. 
+\begin{clm*}
+$\pi(B)>\rc 8$
+\end{clm*}
+%$A$ is large and $\pi$ is stationary.
+$\pi = \pi P$ implies
+\begin{align*}
+\pi(A) &= \ub{\sum_{y\in B} \pi(y) \ub{\Pj_y(X_{Z_t}\in A)}{\le 1}}{\le \pi(B)} + \ub{\sum_{y\in B^c} \pi(y)}{\le1} \ub{\Pj_y(X_{Z_t}\in A)}{\le \pi(A)-\rc 8}\\
+\pi(A) &\le \pi(B) + \pi(A)-\rc 8 \\
+\implies 
+\pi(B) &\ge \rc 8,
+\end{align*}•
+%stnry + independent time
+proving the claim.
+
+We will prove that assuming $\E_z[\tau_B]\le \te t$ for a suitable constant $\te$ leads to a contradiction.
+$B$ is the set of points, such that starting from there, we have substantial probability of hitting $A$. $z$ is bad starting state, the fact that we hit quickly from $z$ will contradict.
+
+By Markov's inequality, 
+\begin{align}\label{e:mc-mi}\Pj_z(\tau_B \ge 2\te Mt) &\le \rc{2M},
+\end{align}
+for $M\in \N$.
+\begin{align*}
+\Pj_z(X_{Z_t}\in A) 
+&\ge \ub{\Pj_z(X_{Z_t}\in A| Z_t\ge \tau_B,\tau_B<2\te Mt)}{\ge \min_{y\in B} (X_{Z_t}\in A)}
+\Pj_z(Z_t\ge \tau_B, \tau_B <2\te Mt)
+\end{align*}•
+by the memoryless property of $Z_t$ and strong Markov at $\tau_B$.
+\begin{align*}
+&\ge \pa{\pi(A) - \rc 8} \ub{\Pj_z(Z_t>2\te Mt, \tau_B<2\te Mt)}{\Pj_z(Z_t>2\te Mt) \Pj_z(\tau_B<2\te Mt)}\\
+&\ge \pa{\pi(A)-\rc 8} \pa{1-\rc t}^{2\te M t}\pa{1-\rc{2M}}&\text{by~\eqref{e:mc-mi}}\\
+&\ge \pa{\pi(A) - \rc 8}\pa{1-2\te M} \pa{1-\rc{2M}}&2\te Mt>1.
+\end{align*}•
+Choosing $\te = \rc{4M^2}$ gives $\Pj_z(X_{Z_t}\in A)\ge \pa{\pi(A)-\rc 8} \pa{1-\rc{2M}}^2$. 
+Taking $M$ large enough shows $\Pj_z(X_{Z_t}\in A)>\pi(A)-\rc 4$ which is a contradiction (to the fact that $z$ is a bad starting point for $A$.
+\end{proof}
+The idea of geometric mixing is due to Oded Schramm.
+
+%lower bound >\pi(A)-\rc 4$
+Idea of Theorem~\ref{t:mc2}: Let 
+\begin{align*}
+t_{\text{stop}} &= \max_x\min \set{\E_x[\La_x]}{\La_x \text{ is a randomised stopping time s.t. }\Pj_x(X_{\La_x}=\cdot)=\pi(\cdot)}.
+\end{align*}•
+%can include extra randomized.
+Take the worst starting state $x$, find a randomised stopping time which achieves stationarity. Find the stopping time with minimum expectation. It is not at all obvious that it exists. It's clear that there is one achieving stationarity, it's not clear that the minimum is attained.
+
+The filling rule: The construction goes back to Baxter and Chacon, '76, used by Aldous, Lov\'asz-Winkler. 
+
+The easy direction is $t_{\text{stop}}\le 8t_{\text{mix}}$. The hard direction is to show that $t_{\text{stop}}\gtrsim t_{\text{mix}}$. 
+\begin{exr}
+Prove that for reversible chains, $t_{\text{stop}}\le 8t_{\text{mix}}$. 
+
+Hint: use separation distance to define an appropriate stopping time.
+\end{exr}
+%Lovasz and Winkler, mixing times.
+%mixing time of the continuous-time version of a discrete time chain is up to a constant factor the same as that of the lazy one.
+%cts always aperiodic
