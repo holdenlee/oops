@@ -50,8 +50,11 @@ For all $\al<\rc2$, there exist positive constants $c_\al$ and $c_\al'$ such tha
 c_\al t_H(\al)&\le t_{\text{mix}} \le c_\al' t_H(\al).
 \end{align*}•
 \end{thm}
-Here $t_H(\al)$ is the maximum hitting time of sets of size at least $\al$.
 I will also write this as $t_{\max}\asymp_\al t_H(\al)$. 
+Here $t_H(\al)$ is the maximum hitting time of sets of size at least $\al$.
+\begin{align}
+t_H(\al) &= \max_{x,A:\pi(A)\ge \al} \E_x[\tau_A].
+\end{align}•
 The lower inequality is the easy version: if we don't hit a big set, we cannot be mixed. The upper inequality is nontrivial, and where all of the work goes.
 
 \begin{proof}[Proof of Theorem~\ref{t:mc1}, lower bound]
@@ -189,3 +192,150 @@ Hint: use separation distance to define an appropriate stopping time.
 %Lovasz and Winkler, mixing times.
 %mixing time of the continuous-time version of a discrete time chain is up to a constant factor the same as that of the lazy one.
 %cts always aperiodic
+
+
+\subsection*{2020/6/15 Lecture 2}
+
+We consider removing the reversibility assumption. Recall that the mixing time for the biased random walk on $\Z_n$ satisfies $t_{\text{mix}}\asymp n^2$, $t_H(\al)\asymp n$ for all $\al$, $\max_{x,y} \E_x[\tau_y]\asymp n$.
+%instead of specific set, hit moving set
+
+Instead of hitting a specific set, we can ask for hitting a moving set.
+For $\al\in (0,1)$ define $\cA(\al) = \set{A=(A_t)_{t\ge 0}}{\pi(A_t)\ge \al, \forall t\ge 0}$ and define also $\tau_A = \inf\set{t\ge 0}{X_t\in A_t}$ for $A=(A_t)_{t\ge 0}$.
+
+\begin{thm}[Winkler-S]
+Fix $\al<\rc 2$. Then there exists two positive constants $c_\al$ and $c_\al'$ such that for all irreducible finite Markov chains if
+\begin{align*}
+t_{\text{mov}}&= \sup_{x,A\in \cA(\al)} \E_x[\tau_A],
+\end{align*}•
+then 
+\begin{align*}
+c_\al t_{\text{mov}}(\al)\le t_{\text{mix}} \le c_\al't_{\text{mov}}.
+\end{align*}•
+\end{thm}
+The chain doesn't have to be lazy: If it's periodic, then both $t_{\text{mix}}$ and $t_{\text{mov}}$ are infinite.
+%does not go through geometric mixing times
+%first hit B then A
+
+The second thing I'll discuss is what happens when $\al=\rc2$. 
+\begin{thm}[Griffiths, Kang, Oliveira, Patel]\label{t:mc2-1}
+Let $0<\al<\be\le \rc2$. Then for every irreducible finite Markov chain, 
+\begin{align*}
+t_H(\al) \le t_H(\be) + \pa{\rc\al - 1}t_H(1-\be) \le \rc\al t_H(\be).
+\end{align*}•
+\end{thm}
+The only assumption is irreducible; reversibility is not needed. 
+Recall that $t_H(\al) = \max_{x,A:\pi(A)\ge \al}\E_x[\tau_A]$.
+The theorem compares the hitting times of sets of size at most $\al$ to hitting times of sets of size at most $\be$. Note $t_H(\be) \le t_H(\al)$. Note $1-\be \ge \be$, hence the RHS inequality.
+\begin{rem}
+These 2 inequalities are sharp, i.e., for all $0<\al<\be \le \rc 2$ there exists an irreducible finite Markov chain for which all three terms are equal. In fact, we can find a 3-state Markov chain.
+
+The condition $\be \le \rc2$ is sharp. $\be=\rc2$ is a boundary case, in the sense that for all $\be>\rc2$, there exists a class of irreducible finite MC's such that $t_H(\al)/t_H(\be)$ can be made arbitrarily large.
+%I'll give the proof, but first explain how it completes the previous theorem. 
+\end{rem}
+We'll need the following lemma to prove the theorem.
+\begin{lem}\label{l:mc2-1}
+For an irreducible finite MC with state space $S$, for any nonempty $A, B\subeq S$ define
+\begin{align*}
+d^+(A,B) &= \max_{x\in A} \E_x[\tau_B]\\
+d^-(A,B) &= \min_{x\in A} \E_x[\tau_B].
+\end{align*}•
+Then 
+\begin{align*}
+\pi(A) &\le \fc{d^+(A,B)}{d^+(A,B)+d^-(B,A)}. 
+\end{align*}•
+\end{lem}
+First I give a non-rigorous explanation. We want to show $\pi(A)\cdot (d^+(A,B)+d^-(B,A)) \le d^+(A,B)$. Let $x$ be such that $\E_x[\tau_B]=d^+(A,B)$. We want to show 
+\begin{align*}
+\pi(A) (\E_x [\tau_B] + d^-(A,B))\le d^+(A,B).
+\end{align*}•
+Because the Markov chain is irreducible and has an invariant distribution, by the ergodic theorem, by time $t$ the chain visits the set $A$ $\pi(A)t$ times. Define $\tau_{B,A}=\min\set{t\ge \tau_B}{X_t\in A}$. By time $\tau_{B,A}$, ``the chain spends time $\pi(A)\E_x[\tau_{B,A}]$."
+%only time 0 to tau_B. no more visits to A.
+Also the time spent is $\le \E_x[\tau_B]$ (after $\tau_B$ there are no more visits to $A$), so 
+\begin{align*}
+\pi(A) \ub{\E_x[\tau_{B,A}]}{\E_x[\tau_B]+d^-(B,A)} &\le \E_x[\tau_B] = d^+(A,B). 
+\end{align*}•
+%why after \tau_B there are no more visits to A
+%don't count first time in A
+%tau_B, tau_A-1
+
+%\tau_{B,A} was the first time after tau_B that the chain visits A. So in the time interval [\tau_B, \tau_{B,A}) the chain cannot visit $A$ by definition
+
+\begin{proof}[Proof of Theorem~\ref{t:mc2-1}]
+Fix $x$ and a set $A$ with $\pi(A)\ge \al$. We want to show $\E_x[\tau_A]\le \tau_H(\be) + \pa{\rc \al -1}t_H(1-\be)$. 
+
+The idea is the same: define the right set $B$ and first try to hit that set. We want to define a set $B$ with $\pi(B)\ge \be$, so that we first wait to hit $B$ and then starting from there the time to hit $A$ is controlled the second term.
+
+Define $B=\set{y}{\E_y[\tau_A]\le \pa{\rc \al - 1}t_H(1-\be)}$. If we show $\pi(B)\ge \be$, then we are done, because
+\begin{align*}
+\E_x[\tau_A] &\le \E_x [\tau_B] + \max_{y\in B}\E_y[\tau_A] \le \tau_H(\be) + \pa{\rc\al-1}t_H(1-\be).
+\end{align*}•
+
+We claim that $\pi(B)\ge \be$. 
+%could take longer - hit A on the way to B.
+
+Suppose not, i.e., $\pi(B)<\be$ and let $C=B^c$. Then $\pi(C)>1-\be$.
+\begin{align*}
+\pi(A) &\le \fc{d^+(A,C)}{d^+(A,C)+d^-(C,A)}
+\end{align*}•
+using Lemma. Now $d^+(A,C) \le t_H(1-\be)$ and $d^-(C,A)> \pa{\rc\al-1} t_H(1-\be)$. Substituting,
+\begin{align*}
+\pi(A) &< \fc{1}{1+\rc \al - 1}=\al.
+\end{align*}•
+which is a contradiction.
+\end{proof}
+
+We need the following to prove Lemma~\ref{l:mc2-1}.
+\begin{lem}[Lemma~\ref{l:mc2-2}]
+Let $X$ be an irreducible finite Markov chain with values in $S$. Let $\mu$ be a probability distribution and $\tau$ a stopping time such that $\Pj_\mu(X_\tau=x)=\mu(x)$ for all $x$.
+Then 
+\begin{align*}
+\E_\mu \ba{\sumz i{\tau-1} 1(X_i\in A)} &= \pi(A) \E_\mu[\tau]
+\end{align*}•
+for all $A\subeq S$. 
+\end{lem}
+\begin{proof}
+Exercise.
+
+Hint: Let $\nu(x) = \E_{x_0}\ba{\sumz i{\tau_{x_0}^+-1} 1(X_i=x)}$. Then $\nu = \nu P$. Normalizing gives the invariant distribution $\pi$. Here $\tau_{x_0}^+ = \min\set{t\ge 1}{X_t=x_0}$. 
+
+Instead of starting from a fixed point $x_0$, we run from distribution $\mu$, and we run until a stopping time with the given property. 
+\end{proof}
+
+%positive recurrence
+%how to prove invariant distribution?
+\begin{proof}[Proof of Lemma~\ref{l:mc2-1}]
+Define $$\tau_{B,A} = \min\set{t\ge \tau_B}{X_t\in A}$$
+%want to get to setting of lemma 2. 
+and an auxiliary Markov chain with transition matrix $Q$ given by 
+\begin{align*}
+Q(x,y) &= \Pj_x(X_{\tau_{B,A}}=y), \quad x,y\in A.
+\end{align*}•
+This is a finite irreducible Markov chain, so it possesses an invariant distribution $\mu$. Let $\nu(y)=\Pj_\mu(X_{\tau_B}=y)$, $y\in B$.
+Count the number of visits to $A$ up until $\tau_{B,A}$ starting from $\mu$. Call $\tau=\tau_{B,A}$.
+\begin{align*}
+\E_\mu\ba{\sumz i{\tau-1} 1(X_i\in A)}&\le \E_\mu[\tau_B].
+\end{align*}•
+Because $\mu$ is invariant for $Q$, $\Pj_\mu(X_\tau=x)=\mu(x)$ for all $x$.
+So the conditions of Lemma 2 are satisfied, and
+\begin{align*}
+\E_\mu\ba{\sumz i{\tau-1} 1(X_i\in A)}&= \pi(A) \E_\mu[\tau] = \pi(A) (\E_\mu[\tau_B]+\E_\nu[\tau_A]). 
+%first have to hit B. Then want to hit A. dist of first hitting time 
+\end{align*}•
+%support of Q is not all of A, but is irred
+%B can be the boundary of a bigger box than A and the domain of the whole graph
+So
+\begin{align*}
+\pi(A) (\E_\mu[\tau_B] + \E_\nu[\tau_A]) &\le \E_\mu[\tau_B]\\
+\implies
+\pi(A) \E_\nu [\tau_A] &\le (1-\pi(A))\E_\mu[\tau_B]. 
+\end{align*}•
+This now completes the proof, because $\pi(A) \le \fc{d^+(A,B)}{d^+(A,B) + d^-(B,A)}$, which implies
+\begin{align*}
+\pi(A) d^-(B,A) &\le (1-\pi(A))d^+(A,B)
+\end{align*}•
+and $\E_\nu[\tau_A]\ge d^-(A,B)$ and $\E_\mu[\tau_B]\le d^+(A,B)$ ($\nu$ is supported on $B$ and $\mu$ is supported on $A$). 
+\end{proof}
+%loosely speaking, \mu is the hitting distribution of $A$ at equilibrium, after a visit to $B$.
+%heuristic: time spent in $A$ by time $\tau_{A,B}$
+%\mu is precisely the initial distribution wrt which the heuristic is a rigorous statement.
+
