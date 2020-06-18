@@ -339,3 +339,169 @@ and $\E_\nu[\tau_A]\ge d^-(A,B)$ and $\E_\mu[\tau_B]\le d^+(A,B)$ ($\nu$ is supp
 %heuristic: time spent in $A$ by time $\tau_{A,B}$
 %\mu is precisely the initial distribution wrt which the heuristic is a rigorous statement.
 
+\subsection*{2020/6/18 Lecture 3}
+
+We give refined mixing and hitting relations.
+For $f,g:S\to \R$, define
+\begin{align*}
+\an{f,g}_\pi &= \sum_{x\in S} f(x)g(x)\pi(x).
+\end{align*}•
+The spectral representation theorem tells us that if $P$ is reversible wrt the invariant distribution $\pi$, then there exist $(\la_j)_{j=1}^{|S|}$ eigenvalues with corresponding eigenvectors $(f_j)_{j=1}^{|S|}$ and $\la_1$ and $f_1=(1,\ldots, 1)$. Then 
+\begin{align*}
+\fc{P^t(x,y)}{\pi(y)} &= 1+ \sum_{j=2}^{|S|} \la_j^t f_j(x) f_j(y).
+\end{align*}•
+\begin{proof}[Proof idea]
+Define $A(x,y) = \sfc{\pi(x)}{\pi(y)} P(x,y)$; it is symmetric. 
+\end{proof}
+If $P$ is reversible we write the eigenvalues in decreasing order
+\begin{align*}
+1=\la_1>\la_2\ge \cdots \ge \la_n\ge -1.
+\end{align*}•
+Define $\la_*=\max\set{|\la|}{\la\text{ is an eigenvalue of }P\text{ with }\la\ne 1}$, $\ga_*=1-\la_*$ the absolute spectral gap, and $\ga=1-\la_2$ the spectral gap.
+
+If a chain is lazy, then all eigenvalues are non-negative, so $\ga_*=\ga$. 
+
+\begin{df}
+The \vocab{relaxation time} is $t_{\text{rel}} = \rc{\ga_*}$. 
+For $f:S\to \R$, define 
+\begin{align*}
+\E_\pi[f] &= \sum_x f(x) \pi(x)\\
+\Var_\pi(f) &= \E_\pi[(f-\E_\pi[f])^2].
+\end{align*}•
+\end{df}
+The Poincar\'e inequality says that for $P$ reversible and lazy, and for all $f$, $t\ge 0$, 
+\begin{align*}
+\Var_\pi (P^t f) &\le e^{-2t/t_{\text{rel}}}\Var_\pi(f).
+\end{align*}•
+Here $Pf(x) = \sum_y P(x,y)f(y)$. 
+Define for $\ep,\al\in (0,1)$
+\begin{align*}
+\text{hit}_\al(\ep)&= \min\set{t}{\max_{x,A:\pi(A)\ge \al}\Pj(\tau_A>t)\le \ep}.
+\end{align*}•
+(Take the worst starting state and large $A$ such that the probability of hitting after time $t$ is small.)
+
+\begin{thm}[Basu-Hermon-Peres]
+Let $X$ be a reversible and lazy Markov chain on finite $S$ with $P$ and $\pi$. Then for all $\ep\in (0,1)$,
+\begin{align}
+\label{e:mc3-1}
+t_{\text{mix}}(2\ep) &\le \text{hit}_{1-\ep}(\ep) + \ce{2t_{\text{rel}} \log\pf{2}{\ep^3}}\\
+\label{e:mc3-2}
+t_{\text{mix}}(1-\ep) &\le \text{hit}_{1-\ep}(1-2\ep) + \ce{2t_{\text{rel}} \log\pf{8}{\ep^3}}
+\end{align}•
+\end{thm}
+The paper gave a bound on $t_{\text{mix}}(\ep+\de)$; the proof is the same so for sake of exposition we just show the bound for $2\ep$. We show~\eqref{e:mc3-1} and leave~\eqref{e:mc3-2} as an exercise.
+ %and get more precise
+
+This is the hard part; they also give a lower bound of similar order. As usual, the argument for the lower bound that if you haven't hit a big set you haven't mixed.
+
+\begin{rem}
+Mixing happens in 2 stages: in the first one $(\text{hit}_{1-\ep}(\ep))$ we have to wait to escape some small set with high probability and in the second one we wait for $t_{\text{rel}}$ steps and use the Poincar\'e inequality.
+\end{rem}
+
+\begin{proof}[Proof of~\eqref{e:mc3-1}]
+We want to show that if we wait for the RHS amount of time, we have mixed and the TV distance is at most $2\ep$. Set $t=\text{hit}_{1-\ep}(\ep)$ and $s=\ce{2t_{\text{rel}}\log\pf{2}{\ep^3}}$. We want to show that for all $x,A$,
+\begin{align*}
+|P^{t+s}(x,A) - \pi(A)|&\le 2\ep.
+\end{align*}•
+The idea is that we want to define an intermediate set $G$ such that we hit it whp (wp $1-\ep$) before time $t$ and conditional on hitting it by time $t$ we want to be close to $\pi(A)$ at time $t+s$ by at most $\ep$, i.e., 
+\begin{align*}
+|\Pj_x(X_{t+s}\in A|\tau_G\le \tau)-\pi(A)|&\le \ep.
+\end{align*}•
+%Once we hit $G$, we have good control 
+If $\Pj_x(\tau_G>t)<\ep$, then we will be done, because 
+\begin{align*}
+|\Pj_x(X_{t+s}\in A)-\pi(A)|
+&= |\Pj_x(X_{t+s}\in A|\tau_G\le t)\Pj_x(\tau_G\le t)
++ \Pj_x(X_{t+s}\in A|\tau_G> t)\Pj_x(\tau_G>t)-\pi(A)|\\
+&\le |\Pj_x(X_{t+s}\in A|\tau_G\le t)-\pi(A)| + \Pj_x(\tau_G>t)\\
+&\le \sup_{y\in G,r\ge s} |\Pj_y(X_s\in A)- \pi(A)| + \Pj_x(\tau_G>t).
+\end{align*}•
+Define $G=\set{y}{\sup_{r\ge s} |\Pj_y(X_r\in A)-\pi(A)|\le \ep}$. Then 
+\begin{align*}
+|\Pj_x(X_{t+s}\in A)-\pi(A)| &\le \ep + \Pj_x(\tau_G>t).
+\end{align*}•
+So it suffices to show that $\Pj_x(\tau_G>t)\le \ep$. 
+It suffices to prove that $\pi(G)>1-\ep$, since $\text{hit}_{1-\ep}(\ep)$. 
+
+We need to show $\pi(G)>1-\ep$. 
+%when close to equilibrium, worst case time to become decorrelated
+
+For $f:S\to \R$, define $f^*(x) = \sup_{k\ge 0}|P^{2k}f(x)|$. Let
+\begin{align*}
+f_t(x) &= P^t(x,A) - \pi(A) = P^t(1(A)-\pi(A))(x).
+\end{align*}•
+Then
+\begin{align*}
+f_t^*(x) &= \sup_{k\ge 0}|P^{2k}f_t(x)| = \sup_{k\ge 0} |P^{2k+t}(x,A)-\pi(A)|\\
+(Pf_t)^*(x) &= \sup_{k\ge 0} |P^{2k} Pf_t(x)| = \sup_{k\ge 0}|P^{2k+t+1}(x,A)-\pi(A)|\\
+G&= \set{y}{f_s^*(y), (Pf_s)^*(y)\le \ep}\\
+\pi(G^c) &\le \pi(\set{y}{f_s^*(y)>\ep}) + \pi(\set{y}{(Pf_s)^*(y)>\ep})\\
+&\le \fc{\E_\pi[(f_s^*)^2]}{\ep^2} + \fc{\E_\pi[((Pf_s)^*)^2]}{\ep^2}
+\end{align*}•
+by Markov's inequality.
+%rephrased definition
+We write for $p\in (1,\iy)$ $\ve{f}_p^p=\E_\pi[|f|^p]$. Then
+\begin{align*}
+\ve{Pf_s}_2^2 &\le \ve{f_s}_2^2 &P\text{ is a contraction}\\
+&=\Var_\pi(P^s(1(A)))\\
+&\le e^{-2s/t_{\text{rel}}} \Var_\pi(1(A)) & \text{Poincar\'e}\\
+&=\fc{\ep^3}2 \pi(A)(1-\pi(A)) \le \fc{\ep^3}{8} &\text{substituting }s
+\end{align*}•
+We want to control the norm; we do this by the following.
+\begin{thm}[Starr's maximal inequality]
+Let $P$ be reversible wrt $\pi$ and $p\in (1,\iy)$. For all $f:S\to \R$, 
+\begin{align*}
+\ve{f^*}_p &\le \fc{p}{p-1} \ve{f}_p.
+\end{align*}•
+\end{thm}
+This is reminiscent of Doob's maximal inequality; the $\fc{p}{p-1}$ comes from Doob's inequality applied to an appropriate martingale.
+
+By Starr,
+\begin{align*}
+\ve{(Pf_s)^*}_2^2 &\le 4 \ve{Pf_s}_2^2 \le \fc{\ep^3}{2}
+\end{align*}•
+and 
+\begin{align*}
+\ve{f_s^*}_2^2 &\le 4 \ve{f_s}_2^2 \le \fc{\ep^3}2.
+\end{align*}•
+Plug into (***) to get $\pi(G^c)<\eph+\eph=\ep$. 
+\end{proof}
+
+\begin{proof}[Proof of Starr]
+Recall $f^*(x) = \sup_{k\ge 0}|P^{2k}f(x)|$. Let $X$ be a MC with $X_0\sim \pi$. Then 
+\begin{align*}
+P^{2n} f(X_0) &= \E[f(X_{2n}|X_0)] \\
+&= \E[\E[f(X_{2n})|X_n,X_0]|X_0] &\text{tower property}\\
+&= \E[\E[f(X_{2n})|X_n]|X_0] &\text{Markov property}.
+\end{align*}•
+Set $R_n=\E[f(X_{2n})|X_n]$. The goal is to show that $R$ is a backwards martingale. In other words we will show that if $N$ is fixed, then $(R_{N-n})_{0\le n\le N}$ is a martingale. 
+Since $X_0\sim \pi$ and $X$ is reversible, it follows that $(X_n,X_{n+1},\ldots, X_{2n}) \sim (X_n,X_{n-1},\ldots, X_0)$. So 
+\begin{align*}
+R_n &= \E[f(X_{2n})|X_n] = \E[f(X_0)|X_n]\\
+&= \E[f(X_0)|X_n,X_{n+1},\ldots]&\text{Markov property}.
+\end{align*}•
+Set $\cF_n=\si(X_n,X_{n+1},\ldots)$ and fix $N\ge 0$. Then $(R_{N-n})_{0\le n\le N}$ is a martingale wrt $(\cF_n)$.
+This is good news because we want to control the maximum of $R_n$.
+\begin{align*}
+\ve{\max_{0\le n\le N}R_n}_p
+&=\ve{\max_{0\le n\le N} R_{N-n}}_p\\
+&\le \fc p{p-1} \ve{R_0}_0 = \fc{p}{p-1}\ve{f(X_0)}_p = \fc{p}{p-1}\ve{f}_p &\text{Doob's $L_p$-inequality}.
+\end{align*}•
+What we want to bound is
+\begin{align*}
+\ab{\max_{0\le n\le N} P^{2n}f(X_0)} &= \max_{0\le n\le N} \E [R_n|X_0] &\le \E[\max_{0\le n\le N} R_n|X_0].
+\end{align*}•
+Conditional Jensen implies that
+\begin{align*}
+\ve{\max_{0\le n\le N} P^{2n}f(X_0)}_p &\le \ve{\max_{0\le n\le N}R_n}_p
+\le \fc{p}{p-1}\ve{f_p}.
+\end{align*}•
+Letting $N\to \iy$ and using Monotone Convergence completes the proof.
+\end{proof}
+The goal was to find a martingale to apply Doob's maximal inequality. We found $R$. The last step is to use conditional Jensen, let $N\to \iy$ and use monotone convergence. %This is a powerful result because it relates the supremum over all $k\ge 0$
+%some absolute value signs are missing at the end of the proof (DMI and later)
+%time difference to hit big sets and small sets prop to t_{rel}
+%consider hitting sets of size at most 1-\ep
+%Starrs inequality works for nonreversible, but statment different
+%The elastic force with which the bdoy resists the deforming force diminishes with time. THe time which is necessary for the resisting force to fall to 1/e of its original value is called after Maxwell the relaxation time
+%William Hobbs, mechanics of formation of arcuate mountains, 1914.
